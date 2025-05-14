@@ -1,4 +1,5 @@
 <template>
+  <div class="scroll-progress" :style="{ width: scrollProgress + '%' }"></div>
   <nav class="navbar" :class="{ 'navbar-scrolled': isScrolled }">
     <div class="container navbar-container">
       <div class="logo">
@@ -25,15 +26,18 @@ export default {
   data() {
     return {
       isScrolled: false,
-      activeSection: 'home'
+      activeSection: 'home',
+      scrollProgress: 0
     }
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll)
+    window.addEventListener('scroll', this.updateScrollProgress)
     this.handleScroll() // Inicializar la sección activa
   },
   beforeUnmount() {
     window.removeEventListener('scroll', this.handleScroll)
+    window.removeEventListener('scroll', this.updateScrollProgress)
   },
   methods: {
     handleScroll() {
@@ -54,6 +58,11 @@ export default {
           }
         }
       }
+    },
+    updateScrollProgress() {
+      const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
+      const scrolled = (window.scrollY / windowHeight) * 100
+      this.scrollProgress = Math.min(100, Math.max(0, scrolled))
     },
     scrollToSection(sectionId) {
       const section = document.getElementById(sectionId)
@@ -81,6 +90,16 @@ export default {
 </script>
 
 <style scoped>
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-color), #ff8a00);
+  z-index: 1001;
+  transition: width 0.1s ease-out;
+}
+
 .navbar {
   position: fixed;
   top: 0;
@@ -94,6 +113,7 @@ export default {
 
 .navbar-scrolled {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: rgba(5, 57, 97, 0.95);
 }
 
 .navbar-container {
