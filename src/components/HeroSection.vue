@@ -35,18 +35,13 @@
         </div>
       </div>
 
-      <div class="hero-image">
-        <div class="image-wrapper">
-          <img src="../assets/hero_img.PNG" alt="Profesionales exitosos" class="hero-img" />
-          <div class="floating-card">
-            <div class="card-content">
-              <i class="fas fa-rocket card-icon"></i>
-              <div class="card-text">
-                <strong>¿Listo para el cambio?</strong>
-                <span>Agenda tu sesión hoy</span>
-              </div>
-            </div>
-          </div>
+      <div class="hero-profile">
+        <div class="profile-image-wrapper">
+          <img :src="aboutMeImage" alt="Vivian Castellanos - Especialista en Transición Laboral" class="profile-image" />
+        </div>
+        <div class="profile-message">
+          <p class="intro-text">En VJobs creemos que cada persona tiene un talento que merece ser visto.</p>
+          <p class="personal-message">Mi nombre es <strong>Vivian Castellanos</strong>, una migrante como tú y mi misión es ayudarte a comunicarlo, potenciarlo y abrir el camino hacia un trabajo que te permita crecer en Canadá o en el mundo tecnológico.</p>
         </div>
       </div>
     </div>
@@ -61,6 +56,8 @@
 <script setup>
 import { ref } from 'vue';
 import ContactModal from './ContactModal.vue';
+// Imagen desde la carpeta public
+const aboutMeImage = '/aboutme_img.PNG';
 
 const showModal = ref(false);
 
@@ -92,10 +89,103 @@ const handleFormSubmit = (formData) => {
   align-items: center;
   position: relative;
   z-index: 2;
-  padding: 0 2rem;
+  padding: 2rem;
   max-width: 1400px;
   margin: 0 auto;
   width: 100%;
+  min-height: 80vh;
+}
+
+/* Estilos para la sección de perfil */
+.hero-profile {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.profile-image-wrapper {
+  border-radius: 0;
+  overflow: visible;
+  box-shadow: none;
+  background: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 400px;
+}
+
+.profile-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.3s ease;
+  object-fit: contain;
+  opacity: 1; /* Aseguramos opacidad completa */
+  filter: none; /* Eliminamos cualquier filtro que pueda afectar la opacidad */
+  background: transparent;
+  mix-blend-mode: normal; /* Desactivamos el blend mode */
+  -webkit-backface-visibility: hidden; /* Previene problemas de renderizado en algunos navegadores */
+  backface-visibility: hidden;
+  image-rendering: -webkit-optimize-contrast; /* Mejora la nitidez */
+  image-rendering: crisp-edges;
+}
+
+.profile-message {
+  color: var(--text-color);
+  line-height: 1.7;
+  padding: 1rem 0;
+}
+
+.intro-text {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.personal-message {
+  font-size: 1rem;
+  color: #4a5568;
+  line-height: 1.6;
+}
+
+.personal-message strong {
+  color: var(--secondary-color);
+  font-weight: 600;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 1024px) {
+  .hero-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 1.5rem;
+    text-align: center;
+  }
+  
+  .hero-profile {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .trust-badges {
+    justify-content: center;
+  }
+  
+  .hero-stats {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding-top: 1rem;
+  }
+  
+  .profile-image-wrapper {
+    max-width: 80%;
+    margin: 0 auto;
+  }
 }
 
 .hero-bg-shape {
