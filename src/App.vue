@@ -5,12 +5,18 @@
         <component :is="Component" />
       </transition>
     </router-view>
+    <FloatingMagnet />
   </div>
 </template>
 
 <script>
+import FloatingMagnet from './components/FloatingMagnet.vue'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    FloatingMagnet
+  }
 }
 </script>
 
