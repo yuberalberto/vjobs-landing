@@ -8,14 +8,12 @@
       </div>
       <div class="nav-links">
         <a href="#home" class="nav-link" :class="{ active: activeSection === 'home' }" @click.prevent="scrollToSection('home')">Home</a>
-        <a href="#about" class="nav-link" :class="{ active: activeSection === 'about' }" @click.prevent="scrollToSection('about')">About</a>
         <a href="#services" class="nav-link" :class="{ active: activeSection === 'services' }" @click.prevent="scrollToSection('services')">Services</a>
         <a href="#testimonials" class="nav-link" :class="{ active: activeSection === 'testimonials' }" @click.prevent="scrollToSection('testimonials')">Testimonials</a>
         <a href="#faqs" class="nav-link" :class="{ active: activeSection === 'faqs' }" @click.prevent="scrollToSection('faqs')">FAQs</a>
-        <a href="#contact" class="nav-link" :class="{ active: activeSection === 'contact' }" @click.prevent="scrollToSection('contact')">Contact</a>
       </div>
       <div class="nav-buttons">
-        <a href="#contact" class="btn btn-primary" @click.prevent="scrollToSection('contact')">Get Started</a>
+        <a href="#contact" class="btn btn-primary" @click.prevent="scrollToSection('contact')">Diagnóstico inicial gratuito</a>
       </div>
     </div>
   </nav>
@@ -43,7 +41,7 @@ export default {
       this.updateActiveSection()
     },
     updateActiveSection() {
-      const sections = ['home', 'about', 'services', 'testimonials', 'faqs', 'contact']
+      const sections = ['home', 'services', 'testimonials', 'contact', 'faqs']
       const scrollPosition = window.scrollY + window.innerHeight / 3
 
       for (const section of sections) {

@@ -10,11 +10,11 @@
     <section id="testimonials">
       <Testimonials />
     </section>
+    <section id="contact">
+      <ContactSection />
+    </section>
     <section id="faqs">
       <FAQs />
-    </section>
-    <section id="contact">
-      <CallToAction />
     </section>
     <Footer />
   </div>
@@ -26,7 +26,7 @@ import HeroSection from '@/components/HeroSection.vue'
 import Services from '@/components/Services.vue'
 import Testimonials from '@/components/Testimonials.vue'
 import FAQs from '@/components/FAQs.vue'
-import CallToAction from '@/components/CallToAction.vue'
+import ContactSection from '@/components/ContactSection.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
@@ -37,7 +37,7 @@ export default {
     Services,
     Testimonials,
     FAQs,
-    CallToAction,
+    ContactSection,
     Footer
   }
 }
