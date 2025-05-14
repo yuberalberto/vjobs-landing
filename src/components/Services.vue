@@ -1,22 +1,66 @@
 <template>
   <section class="services" id="services">
     <div class="container">
-      <h2>Our Services</h2>
-      <p class="section-subtitle">Everything you need to advance your career</p>
+      <div class="section-header">
+        <span class="section-tag">Nuestros Servicios</span>
+        <h2>Soluciones para tu éxito profesional</h2>
+        <p class="section-subtitle">Elige el plan que mejor se adapte a tus objetivos</p>
+      </div>
       
       <div class="services-grid">
         <div 
           v-for="(service, index) in services" 
           :key="index"
           class="service-card"
-          @click="openService(index)"
+          :class="{ 'featured': service.featured }"
+          @mouseover="hoveredService = index"
+          @mouseleave="hoveredService = null"
         >
-          <div class="service-icon">
-            <i :class="service.icon"></i>
+          <div class="service-content">
+            <div class="service-header">
+              <div class="service-icon">
+                <i :class="service.icon"></i>
+              </div>
+              <div class="service-badge" v-if="service.badge">
+                {{ service.badge }}
+              </div>
+            </div>
+
+            <h3>{{ service.title }}</h3>
+            <p class="service-description">{{ service.shortDescription }}</p>
+
+            <ul class="service-benefits">
+              <li v-for="(benefit, idx) in service.benefits" :key="idx">
+                <i class="fas fa-check"></i>
+                {{ benefit }}
+              </li>
+            </ul>
+
+            <div class="service-pricing" v-if="service.pricing">
+              <div class="price">
+                <span class="currency">$</span>
+                <span class="amount">{{ service.pricing.amount }}</span>
+                <span class="period">/{{ service.pricing.period }}</span>
+              </div>
+            </div>
+
+            <button 
+              class="btn btn-service" 
+              :class="service.featured ? 'btn-primary' : 'btn-outline'"
+              @click.stop="openService(index)"
+            >
+              {{ service.buttonText }}
+              <i class="fas fa-arrow-right"></i>
+            </button>
           </div>
-          <h3>{{ service.title }}</h3>
-          <p>{{ service.shortDescription }}</p>
         </div>
+      </div>
+
+      <div class="services-footer">
+        <p class="guarantee">
+          <i class="fas fa-shield-alt"></i>
+          Garantía de satisfacción del 100% • Cancela en cualquier momento
+        </p>
       </div>
     </div>
 
@@ -71,32 +115,78 @@ import { ref, onMounted, onUnmounted } from 'vue';
 
 const services = [
   {
-    title: 'Job Search',
-    icon: 'fas fa-search',
-    shortDescription: 'Find the perfect job that matches your skills and experience with our advanced search engine.',
-    description: 'Our advanced job search platform helps you find the perfect position that matches your skills, experience, and career goals. Filter by location, salary, company size, and more to discover opportunities that align with your professional aspirations.'
+    title: 'Sesión Diagnóstica',
+    icon: 'fas fa-compass',
+    badge: 'Gratuita',
+    shortDescription: 'Evalúa tu situación actual y define tu plan de acción personalizado.',
+    description: 'En esta sesión gratuita, analizaremos tu perfil profesional, objetivos y desafíos actuales para crear un plan de acción efectivo.',
+    benefits: [
+      'Evaluación personalizada',
+      'Plan de acción inicial',
+      'Sin compromiso'
+    ],
+    buttonText: 'Agendar Sesión',
+    featured: false
   },
   {
-    title: 'Career Coaching',
-    icon: 'fas fa-user-tie',
-    shortDescription: 'Get personalized guidance from industry experts to advance your career.',
-    description: 'Connect with experienced career coaches who can help you navigate your professional journey. From resume reviews to interview preparation and career planning, our experts provide personalized guidance to help you achieve your career objectives.'
+    title: 'Plan Profesional',
+    icon: 'fas fa-rocket',
+    badge: 'Más Popular',
+    shortDescription: 'Asesoría completa para tu transición profesional exitosa.',
+    description: 'Programa integral que incluye coaching personalizado, revisión de CV, preparación para entrevistas y estrategia de búsqueda laboral.',
+    benefits: [
+      '4 sesiones de coaching',
+      'Optimización de LinkedIn y CV',
+      'Simulación de entrevistas',
+      'Acceso a red de contactos'
+    ],
+    pricing: {
+      amount: '299',
+      period: 'mes'
+    },
+    buttonText: 'Comenzar Ahora',
+    featured: true
   },
   {
-    title: 'Company Profiles',
-    icon: 'fas fa-building',
-    shortDescription: 'Explore detailed company profiles and learn about their culture and values.',
-    description: 'Gain valuable insights into potential employers with our comprehensive company profiles. Learn about company culture, values, benefits, and employee experiences to find organizations that align with your professional values and goals.'
+    title: 'Mentoría IT',
+    icon: 'fas fa-laptop-code',
+    shortDescription: 'Guía especializada para tu transición al sector tecnológico.',
+    description: 'Programa diseñado para profesionales que buscan hacer una transición exitosa al sector IT, con mentores expertos en la industria.',
+    benefits: [
+      'Mentor IT personalizado',
+      'Plan de estudio adaptado',
+      'Proyectos prácticos',
+      'Conexiones en la industria'
+    ],
+    pricing: {
+      amount: '399',
+      period: 'mes'
+    },
+    buttonText: 'Explorar Programa',
+    featured: false
   },
   {
-    title: 'Salary Insights',
-    icon: 'fas fa-chart-line',
-    shortDescription: 'Access comprehensive salary data to negotiate better compensation.',
-    description: 'Make informed decisions about your career with our salary insights. Access up-to-date compensation data for various roles and industries, helping you understand your market value and negotiate better compensation packages.'
+    title: 'Empleo en Canadá',
+    icon: 'fas fa-flag',
+    shortDescription: 'Estrategia integral para encontrar trabajo en Canadá.',
+    description: 'Programa especializado para profesionales que buscan oportunidades laborales en Canadá, incluyendo asesoría migratoria y laboral.',
+    benefits: [
+      'Asesoría migratoria',
+      'Búsqueda laboral local',
+      'Preparación cultural',
+      'Red de contactos en Canadá'
+    ],
+    pricing: {
+      amount: '499',
+      period: 'mes'
+    },
+    buttonText: 'Más Información',
+    featured: false
   }
 ];
 
 const currentService = ref(null);
+const hoveredService = ref(null);
 
 const openService = (index) => {
   currentService.value = index;
@@ -146,186 +236,292 @@ onUnmounted(() => {
   position: relative;
 }
 
-.services h2 {
+.section-header {
   text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-tag {
+  display: inline-block;
+  background-color: rgba(102, 154, 207, 0.1);
+  color: var(--accent-color);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.section-header h2 {
   font-size: 2.5rem;
   color: var(--primary-color);
   margin-bottom: 1rem;
 }
 
 .section-subtitle {
-  text-align: center;
-  color: #666;
-  margin-bottom: 4rem;
-  font-size: 1.2rem;
+  color: var(--text-color);
+  font-size: 1.1rem;
+  opacity: 0.8;
 }
 
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
+  margin: 2rem 0;
+}
+
+@media (max-width: 1200px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .service-card {
-  padding: 2rem;
-  text-align: center;
-  background-color: #f8f9fa;
-  border-radius: 8px;
+  background: rgba(255, 220, 190, 0.85); /* Naranja un poco más intenso con 85% de opacidad */
+  border-radius: 16px;
+  overflow: hidden;
   transition: all 0.3s ease;
-  cursor: pointer;
-  border: 2px solid transparent;
+  box-shadow: 0 2px 4px rgba(5, 57, 97, 0.05);
+  border: 1px solid rgba(214, 125, 9, 0.2);
+  position: relative;
+}
+
+.service-card.featured {
+  border: 2px solid var(--accent-color);
+  transform: translateY(-10px);
 }
 
 .service-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 24px rgba(5, 57, 97, 0.12);
   border-color: var(--accent-color);
 }
 
+.service-content {
+  padding: 2rem;
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.service-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
 .service-icon {
-  width: 60px;
-  height: 60px;
-  margin: 0 auto 1.5rem;
-  background-color: var(--primary-color);
-  border-radius: 50%;
+  width: 50px;
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+  border-radius: 12px;
   color: white;
-  font-size: 1.5rem;
-  transition: all 0.3s ease;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 8px rgba(102, 154, 207, 0.2);
 }
 
-.service-card:hover .service-icon {
-  background-color: var(--accent-color);
-  transform: scale(1.1);
+.service-badge {
+  background-color: rgba(214, 125, 9, 0.1);
+  color: var(--secondary-color);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid rgba(214, 125, 9, 0.2);
 }
 
 .service-card h3 {
+  font-size: 1.5rem;
   color: var(--primary-color);
   margin-bottom: 1rem;
-  transition: color 0.3s ease;
 }
 
-.service-card p {
-  color: #666;
+.service-description {
+  color: var(--text-color);
+  opacity: 0.8;
+  margin-bottom: 1.5rem;
   line-height: 1.6;
-  transition: color 0.3s ease;
 }
 
-/* Popup Styles */
+.service-benefits {
+  list-style: none;
+  margin: 1.5rem 0;
+  padding: 0;
+}
+
+.service-benefits li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-color);
+}
+
+.service-benefits i {
+  color: var(--accent-color);
+  font-size: 0.9rem;
+}
+
+.service-pricing {
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+.price {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.currency {
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+.amount {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.period {
+  color: var(--text-color);
+  opacity: 0.7;
+}
+
+.btn-service {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  color: white;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+.btn-service:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(5, 57, 97, 0.1);
+}
+
+.btn-primary:hover {
+  background: var(--accent-color);
+}
+
+.btn-outline:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.services-footer {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.guarantee {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-color);
+  opacity: 0.8;
+}
+
+.guarantee i {
+  color: var(--accent-color);
+}
+
+/* Service Popup Styles */
 .service-popup-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.8);
+  background: rgba(5, 57, 97, 0.8);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   z-index: 1000;
-  padding: 1rem;
   backdrop-filter: blur(5px);
-  animation: fadeIn 0.3s ease;
 }
 
 .service-popup {
-  background-color: white;
-  border-radius: 12px;
-  max-width: 700px;
-  width: 100%;
+  background: white;
+  border-radius: 20px;
+  padding: 2.5rem;
+  max-width: 600px;
+  width: 90%;
+  position: relative;
   max-height: 90vh;
   overflow-y: auto;
-  position: relative;
-  padding: 3rem 2rem 2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .close-btn {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 1.5rem;
+  right: 1.5rem;
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: #666;
   cursor: pointer;
-  transition: color 0.3s ease;
-  padding: 0.5rem;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: var(--text-color);
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
 }
 
 .close-btn:hover {
-  color: var(--primary-color);
-  background-color: #f0f0f0;
+  opacity: 1;
 }
 
 .popup-content {
-  text-align: center;
+  text-align: left;
 }
 
 .popup-icon {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 1.5rem;
-  background-color: var(--primary-color);
-  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+  border-radius: 16px;
   color: white;
-  font-size: 2rem;
-  transition: all 0.3s ease;
-}
-
-.popup-content h3 {
-  color: var(--primary-color);
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
 }
 
 .popup-description {
-  color: #444;
+  margin: 1.5rem 0;
   line-height: 1.8;
-  margin-bottom: 2.5rem;
-  font-size: 1.1rem;
+  color: var(--text-color);
+  opacity: 0.8;
 }
 
 .popup-actions {
   margin: 2rem 0;
-  display: flex;
-  justify-content: center;
-}
-
-.action-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.9rem 2rem;
-  font-size: 1.05rem;
-  font-weight: 500;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-}
-
-.primary-btn {
-  background-color: var(--accent-color);
-  color: white;
-  box-shadow: 0 4px 15px rgba(214, 125, 9, 0.3);
-}
-
-.primary-btn:hover {
-  background-color: var(--secondary-color);
-  transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(214, 125, 9, 0.4);
 }
 
@@ -362,8 +558,23 @@ onUnmounted(() => {
 }
 
 .nav-btn:not(:disabled):hover {
-  background-color: var(--accent-color);
-  transform: translateY(-2px);
+  background: linear-gradient(135deg, #f8f9fa 0%, #f0f4f8 100%);
+  padding: 4rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.services::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 300px;
+  background: rgba(214, 125, 9, 0.03);
+  transform: skewY(-3deg);
+  transform-origin: top left;
+  z-index: 0;
 }
 
 .pagination {
@@ -379,8 +590,18 @@ onUnmounted(() => {
 
 /* Responsive Styles */
 @media (max-width: 768px) {
+  .services {
+    padding: 3rem 0;
+  }
+
+  .section-header h2 {
+    font-size: 2rem;
+  }
+
   .services-grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin: 1rem 0;
   }
   
   .service-popup {

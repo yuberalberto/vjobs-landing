@@ -4,9 +4,6 @@
     <section id="home">
       <HeroSection />
     </section>
-    <section id="about">
-      <AboutMe />
-    </section>
     <section id="services">
       <Services />
     </section>
@@ -26,7 +23,6 @@
 <script>
 import Navbar from '@/components/Navbar.vue'
 import HeroSection from '@/components/HeroSection.vue'
-import AboutMe from '@/components/AboutMe.vue'
 import Services from '@/components/Services.vue'
 import Testimonials from '@/components/Testimonials.vue'
 import FAQs from '@/components/FAQs.vue'
@@ -38,7 +34,6 @@ export default {
   components: {
     Navbar,
     HeroSection,
-    AboutMe,
     Services,
     Testimonials,
     FAQs,
