@@ -45,7 +45,11 @@ Legend:
         - [x] Email validation (format, length)
         - [x] Message sanitization
         - [x] Honeypot implementation
-    - [ ] Lead Magnet Form
+    - [-] Lead Magnet Form
+        - [ ] Email validation (format, length)
+        - [ ] Job type validation
+        - [ ] Input sanitization
+        - [ ] Honeypot implementation
 [F7] - [x] Success/error messages
     - [x] Mensajes de éxito
     - [x] Mensajes de error
