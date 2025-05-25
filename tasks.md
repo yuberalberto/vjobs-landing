@@ -52,6 +52,11 @@ Legend:
         - [ ] Job type validation
         - [ ] Input sanitization
         - [ ] Honeypot implementation
+    - [ ] Contact Modal Form
+        - [ ] Sync validation with ContactSection
+        - [ ] Add Brevo API integration
+        - [ ] Implement honeypot and security measures
+        - [ ] Add loading states and feedback
 [F7] - [x] Success/error messages
     - [x] Mensajes de éxito
     - [x] Mensajes de error
@@ -202,5 +207,5 @@ Legend:
 
 ---
 
-**Last update**: May 25, 2025 17:24
+**Last update**: May 25, 2025 18:05
 **Current branch**: feature/brevo-contact-integration
