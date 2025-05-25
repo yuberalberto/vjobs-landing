@@ -29,3 +29,6 @@ dist-ssr
 
 # DNS Configuration
 dns-records-*.txt
+
+# Environment variables
+.env

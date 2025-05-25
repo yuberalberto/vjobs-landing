@@ -160,6 +160,13 @@ export default {
   setup() {
     const showEmail = ref(false);
     const isLoading = ref(false);
+    const lastSubmitTime = ref(0);
+    const SUBMIT_COOLDOWN = 30000; // 30 seconds cooldown between submissions
+    const formStatus = reactive({
+      message: '',
+      type: '', // 'success' or 'error'
+      icon: ''
+    });
     const formData = ref({
       name: '',
       phone: '',
@@ -167,8 +174,10 @@ export default {
       email: '',
       stage: '',
       message: '',
-      website: ''  // Campo honeypot
+      website: ''  // Honeypot field
     });
+
+    // formStatus ya está declarado anteriormente
 
     const formatCountryCode = () => {
       // Ensure it starts with +
@@ -297,11 +306,7 @@ export default {
       return true;
     };
 
-    const formStatus = reactive({
-      type: '', // 'success' or 'error'
-      message: '',
-      icon: ''
-    });
+    // formStatus is already declared above
 
     const toggleContactMethod = () => {
       showEmail.value = !showEmail.value;
@@ -319,6 +324,15 @@ export default {
       // Check honeypot
       if (formData.value.website) {
         console.log('Honeypot detected possible spam submission');
+        return;
+      }
+
+      // Rate limiting check
+      const now = Date.now();
+      const timeSinceLastSubmit = now - lastSubmitTime.value;
+      if (timeSinceLastSubmit < SUBMIT_COOLDOWN) {
+        const waitTimeSeconds = Math.ceil((SUBMIT_COOLDOWN - timeSinceLastSubmit) / 1000);
+        showError(`Por favor espera ${waitTimeSeconds} segundos antes de enviar el formulario nuevamente.`);
         return;
       }
 
@@ -346,68 +360,95 @@ export default {
       console.log('Form submission started with data:', JSON.stringify(formData.value, null, 2));
       
       try {
-        // SIMULATED API CALL - FOR TESTING PURPOSES ONLY
-        // In a real application, this would be replaced with an actual API call
-        console.log('Simulating API call...');
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        
-        // This is just test data - in a real app, you would use the API response
-        const testResponse = {
-          success: true,
-          message: 'Form submitted successfully (test data)',
-          timestamp: new Date().toISOString()
+        // Preparar los datos para Brevo
+        const contactData = {
+          email: formData.value.email,
+          attributes: {
+            FULLNAME: formData.value.name,
+            PHONE: formData.value.countryCode + formData.value.phone.replace(/\D/g, ''),
+            STAGE: formData.value.stage,
+            MESSAGE: formData.value.message
+          },
+          listIds: [3], // ID de la lista en Brevo
+          updateEnabled: true
         };
+
+        // Enviar a la API de Brevo
+        const response = await fetch(`${import.meta.env.VITE_BREVO_API_URL}/contacts`, {
+          method: 'POST',
+          headers: {
+            'accept': 'application/json',
+            'api-key': import.meta.env.VITE_BREVO_API_KEY,
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify(contactData)
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Error al enviar el formulario');
+        }
+
+        // Mostrar mensaje de éxito
+        showSuccess('¡Gracias por contactarnos! Nos pondremos en contacto contigo pronto.');
         
-        console.log('Simulated API response:', testResponse);
+        // Update last submit time for rate limiting
+        lastSubmitTime.value = Date.now();
         
-        // Show success message
-        formStatus.type = 'success';
-        formStatus.message = '¡Gracias por contactarnos! Nos pondremos en contacto contigo pronto.';
-        formStatus.icon = 'fas fa-check-circle';
-        
-        // Reset form
-        formData.value = {
-          name: '',
-          phone: '',
-          email: '',
-          stage: '',
-          message: ''
-        };
-        
-        // Reset form status after 5 seconds
-        console.log('Form submission successful, showing success message');
-        setTimeout(() => {
-          console.log('Hiding success message');
-          resetFormStatus();
-        }, 5000);
-        
+        // Resetear el formulario
+        resetForm();
       } catch (error) {
-        console.error('Error in form submission:', error);
-        formStatus.type = 'error';
-        formStatus.message = 'Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo más tarde.';
-        formStatus.icon = 'fas fa-exclamation-circle';
+        console.error('Error al enviar el formulario:', error);
+        showError(error.message || 'Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.');
       } finally {
         isLoading.value = false;
-        console.log('Form submission process completed');
       }
+    };
+
+    const resetForm = () => {
+      formData.value = {
+        name: '',
+        phone: '',
+        countryCode: '+1',
+        email: '',
+        stage: '',
+        message: '',
+        website: ''
+      };
+    };
+
+    const showSuccess = (message) => {
+      formStatus.message = message;
+      formStatus.type = 'success';
+      formStatus.icon = 'fas fa-check-circle';
+    };
+
+    const showError = (message) => {
+      formStatus.message = message;
+      formStatus.type = 'error';
+      formStatus.icon = 'fas fa-exclamation-circle';
     };
 
     return {
       showEmail,
+      isLoading,
       formData,
       formErrors,
-      isLoading,
       formStatus,
+      lastSubmitTime,
+      SUBMIT_COOLDOWN,
       MESSAGE_MAX_LENGTH,
-      toggleContactMethod,
       submitForm,
-      validateName,
       formatName,
-      formatPhoneNumber,
-      validatePhone,
-      formatCountryCode,
+      validateName,
       validateEmail,
-      sanitizeMessage
+      validatePhone,
+      formatPhoneNumber,
+      formatCountryCode,
+      sanitizeMessage,
+      resetForm,
+      showSuccess,
+      showError
     };
   }
 };
