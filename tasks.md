@@ -21,11 +21,13 @@ Legend:
     - [x] Animación de entrada
     - [x] CTA principal
 
-[F3] - [x] Contact form with email/phone toggle
-    - [x] Diseño del formulario
-    - [x] Toggle email/teléfono
-    - [x] Campos requeridos
-    - [x] Estilos responsive
+[F3] - [x] Contact form with email/phone fields
+    - [x] Form design
+    - [x] Always visible email and phone fields
+    - [x] Required fields with visual indicators
+    - [x] Responsive styles
+    - [x] Form validation
+    - [ ] Connect to Brevo API
 
 [F4] - [x] Simplified footer design
     - [x] Links importantes
@@ -87,7 +89,11 @@ Legend:
 ## 2. Backend Development
 
 ### 2.1 API Development
-[B1] - [ ] Contact form endpoint
+[B1] - [ ] Contact form to Brevo integration
+    - [ ] Connect form submission to Brevo API
+    - [ ] Register contacts in Brevo database
+    - [ ] Implement error handling
+    - [ ] Set up success/error UI responses
 [B2] - [ ] Newsletter subscription
 [B3] - [ ] Lead magnet delivery system
 
