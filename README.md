@@ -187,4 +187,8 @@ npm run build
 
 Each component follows the established color palette and typography guidelines while maintaining consistent spacing and alignment throughout the interface.
 
+## References
+
+- [Brevo API Documentation](https://developers.brevo.com/)
+
 ---
