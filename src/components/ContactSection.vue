@@ -42,7 +42,7 @@
             <input 
               type="text" 
               v-model="formData.name" 
-              placeholder="Nombre completo" 
+              placeholder="Nombre completo *" 
               :disabled="isLoading"
               required
               @input="validateName(formData.name)"
@@ -52,7 +52,24 @@
             <span v-if="formErrors.name" class="error-message">{{ formErrors.name }}</span>
           </div>
 
-          <div v-if="!showEmail" class="form-group phone-group">
+          <!-- Email Field (always visible) -->
+          <div class="form-group">
+            <input 
+              type="email" 
+              v-model="formData.email" 
+              placeholder="Correo electrónico *" 
+              :disabled="isLoading"
+              required
+              maxlength="100"
+              @input="validateEmail"
+              @blur="validateEmail"
+              :class="{ 'input-error': formErrors.email }"
+            >
+            <span v-if="formErrors.email" class="error-message">{{ formErrors.email }}</span>
+          </div>
+
+          <!-- Phone Field (always visible) -->
+          <div class="form-group phone-group">
             <div class="phone-input-container">
               <input 
                 type="text" 
@@ -66,7 +83,7 @@
               <input 
                 type="tel" 
                 v-model="formData.phone" 
-                placeholder="(XXX) XXX-XXXX"
+                placeholder="Número de teléfono *"
                 :disabled="isLoading"
                 @input="formatPhoneNumber"
                 @blur="validatePhone"
@@ -76,46 +93,31 @@
               >
             </div>
             <span v-if="formErrors.phone" class="error-message">{{ formErrors.phone }}</span>
-            <p class="contact-switch">
-              Solo lo usaremos para esta sesión. 
-              <a href="#" @click.prevent="toggleContactMethod">
-                Si prefieres, puedes dejar tu correo aquí
-              </a>
-            </p>
-          </div>
-
-          <div v-else class="form-group">
-            <input 
-              type="email" 
-              v-model="formData.email" 
-              placeholder="Correo electrónico" 
-              :disabled="isLoading"
-              required
-              maxlength="100"
-              @input="validateEmail"
-              :class="{ 'input-error': formErrors.email }"
-            >
-            <span v-if="formErrors.email" class="error-message">{{ formErrors.email }}</span>
-            <p class="contact-switch">
-              <a href="#" @click.prevent="toggleContactMethod">
-                Prefiero dejar mi número de teléfono
-              </a>
+            <p class="contact-note">
+              Te contactaremos por teléfono para coordinar la sesión. El correo lo usaremos para enviarte recordatorios.
             </p>
           </div>
 
           <div class="form-group">
-            <select v-model="formData.stage" :disabled="isLoading" required>
-              <option value="" disabled selected>¿En qué etapa estás?</option>
+            <select 
+              v-model="formData.stage" 
+              :disabled="isLoading" 
+              required
+              :class="{ 'input-error': formErrors.stage }"
+              @change="validateStage"
+            >
+              <option value="" disabled selected>¿En qué etapa estás? *</option>
               <option value="canada">Buscando empleo en Canadá</option>
               <option value="it">En transición a IT</option>
               <option value="exploring">Explorando opciones</option>
             </select>
+            <span v-if="formErrors.stage" class="error-message">{{ formErrors.stage }}</span>
           </div>
 
           <div class="form-group">
             <textarea 
               v-model="formData.message" 
-              placeholder="Mensaje (opcional)"
+              placeholder="¿Algo más que debamos saber? (opcional)"
               rows="3"
               :disabled="isLoading"
               maxlength="500"
@@ -124,7 +126,7 @@
             ></textarea>
             <span v-if="formErrors.message" class="error-message">{{ formErrors.message }}</span>
             <span class="character-count" :class="{ 'near-limit': formData.message.length > MESSAGE_MAX_LENGTH * 0.9 }">
-              {{ formData.message.length }}/{{ MESSAGE_MAX_LENGTH }}
+              {{ formData.message.length }}/{{ MESSAGE_MAX_LENGTH }} caracteres
             </span>
           </div>
 
