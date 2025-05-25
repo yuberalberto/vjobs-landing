@@ -160,6 +160,8 @@ export default {
   setup() {
     const showEmail = ref(false);
     const isLoading = ref(false);
+    const lastSubmitTime = ref(0);
+    const SUBMIT_COOLDOWN = 30000; // 30 seconds cooldown between submissions
     const formStatus = reactive({
       message: '',
       type: '', // 'success' or 'error'
@@ -325,6 +327,15 @@ export default {
         return;
       }
 
+      // Rate limiting check
+      const now = Date.now();
+      const timeSinceLastSubmit = now - lastSubmitTime.value;
+      if (timeSinceLastSubmit < SUBMIT_COOLDOWN) {
+        const waitTimeSeconds = Math.ceil((SUBMIT_COOLDOWN - timeSinceLastSubmit) / 1000);
+        showError(`Por favor espera ${waitTimeSeconds} segundos antes de enviar el formulario nuevamente.`);
+        return;
+      }
+
       // Reset status
       resetFormStatus();
       
@@ -381,6 +392,9 @@ export default {
         // Mostrar mensaje de éxito
         showSuccess('¡Gracias por contactarnos! Nos pondremos en contacto contigo pronto.');
         
+        // Update last submit time for rate limiting
+        lastSubmitTime.value = Date.now();
+        
         // Resetear el formulario
         resetForm();
       } catch (error) {
@@ -421,6 +435,8 @@ export default {
       formData,
       formErrors,
       formStatus,
+      lastSubmitTime,
+      SUBMIT_COOLDOWN,
       MESSAGE_MAX_LENGTH,
       submitForm,
       formatName,
