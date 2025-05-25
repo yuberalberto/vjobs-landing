@@ -42,7 +42,7 @@
             <input 
               type="text" 
               v-model="formData.name" 
-              placeholder="Nombre completo" 
+              placeholder="Nombre completo *" 
               :disabled="isLoading"
               required
               @input="validateName(formData.name)"
