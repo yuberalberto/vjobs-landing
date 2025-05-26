@@ -6,13 +6,13 @@
           <img src="@/assets/logo.png" alt="VJobs Logo" class="logo" />
           <p class="slogan">Impulsando tu carrera profesional en el mundo digital</p>
           <div class="social-links">
-            <a href="https://linkedin.com" target="_blank" rel="noopener" class="social-link">
+            <a href="https://www.linkedin.com/company/vjobs-hr-advisory/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
               <i class="fab fa-linkedin"></i>
             </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener" class="social-link">
+            <a href="https://instagram.com/vjobs.resume" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
               <i class="fab fa-instagram"></i>
             </a>
-            <a href="https://youtube.com" target="_blank" rel="noopener" class="social-link">
+            <a href="https://www.youtube.com/@VJobs.Resume" target="_blank" rel="noopener" class="social-link" aria-label="YouTube">
               <i class="fab fa-youtube"></i>
             </a>
           </div>
@@ -20,8 +20,7 @@
 
         <div class="footer-contact">
           <h4>Contacto</h4>
-          <p><i class="fas fa-envelope"></i> contacto@vjobs.com</p>
-          <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+          <p><i class="fas fa-envelope"></i> contacto@vjobs.ca</p>
           <p><i class="fas fa-map-marker-alt"></i> Toronto, Canadá</p>
         </div>
 
@@ -38,13 +37,13 @@
       </div>
       
       <div class="footer-bottom">
-        <p>&copy; 2024 VJobs. Todos los derechos reservados.</p>
+        <p>&copy; 2025 VJobs. Todos los derechos reservados.</p>
         <div class="legal-links">
-          <a href="#" class="legal-link">Términos de Servicio</a>
+          <router-link to="/legal/terms" class="legal-link">Términos de Servicio</router-link>
           <span>|</span>
-          <a href="#" class="legal-link">Política de Privacidad</a>
+          <router-link to="/legal/privacy" class="legal-link">Política de Privacidad</router-link>
           <span>|</span>
-          <a href="#" class="legal-link">Cookies</a>
+          <router-link to="/legal/cookies" class="legal-link">Cookies</router-link>
         </div>
       </div>
     </div>

@@ -12,14 +12,14 @@ Legend:
 
 ### 1.1 UI Components
 [F1] - [x] Responsive navbar with progress bar
-    - [x] Implementar barra de progreso
-    - [x] Diseño responsive
-    - [x] Animaciones de scroll
+    - [x] Implement progress bar
+    - [x] Responsive design
+    - [x] Scroll animations
 
 [F2] - [x] Hero section with main CTA
-    - [x] Diseño responsive
-    - [x] Animación de entrada
-    - [x] CTA principal
+    - [x] Responsive design
+    - [x] Entrance animation
+    - [x] Main CTA
 
 [F3] - [x] Contact form with email/phone fields
     - [x] Form design
@@ -31,17 +31,29 @@ Legend:
     - [x] Custom country code dropdown
 
 [F4] - [x] Simplified footer design
-    - [x] Links importantes
-    - [x] Diseño minimalista
-    - [x] Versión móvil
+    - [x] Important links
+    - [x] Minimalist design
+    - [x] Mobile version
 
 [F5] - [x] Floating lead magnet button
-    - [x] Botón flotante
-    - [x] Animación de entrada
-    - [x] Comportamiento responsive
+    - [x] Floating button
+    - [x] Entrance animation
+    - [x] Responsive behavior
+
+[F6] - [] Polish UI details
+    - [] Review and correct English texts in navigation buttons
+    - [] Update service texts for consistency
+    - [] Improve form validation messages
+    - [] Review text consistency throughout the application
+    - [] Verify and update tooltips and help messages
+    - [] Ensure consistency in capitalization and punctuation
+    - [] Review and update image alt texts
+    - [] Verify all links are relevant and functional
+    - [] Review spelling and grammar site-wide
+    - [] Ensure error messages are clear and helpful
 
 ### 1.2 User Experience
-[F6] - [x] Form validation and security
+[F7] - [x] Form validation and security
     - [x] Contact Form
         - [x] Name validation (length, format)
         - [x] Phone validation (format, country code)
@@ -57,14 +69,14 @@ Legend:
         - [x] Add Brevo API integration
         - [x] Implement honeypot and security measures
         - [x] Add loading states and feedback
-[F7] - [x] Success/error messages
-    - [x] Mensajes de éxito
-    - [x] Mensajes de error
-    - [x] Animaciones de transición
+[F8] - [x] Success/error messages
+    - [x] Success messages
+    - [x] Error messages
+    - [x] Transition animations
 
-[F8] - [x] Scroll animations
-    - [x] Animación al hacer scroll
-    - [x] Efecto fade-in
+[F9] - [x] Scroll animations
+    - [x] On-scroll animation
+    - [x] Fade-in effect
     - [x] Performance optimization
 
 [F9] - [x] Loading states
@@ -76,14 +88,14 @@ Legend:
 
 ### 1.3 Conversion Optimization
 [F11] - [x] Clear CTAs
-    - [x] Diseño llamativo
-    - [x] Texto persuasivo
-    - [x] Posicionamiento estratégico
+    - [x] Attractive design
+    - [x] Persuasive text
+    - [x] Strategic positioning
 
 [F12] - [x] Lead magnet modal
-    - [x] Diseño del modal
+    - [x] Modal design
     - [x] Trigger events
-    - [x] Animaciones
+    - [x] Animations
 
 [F13] - [-] A/B testing setup
 
