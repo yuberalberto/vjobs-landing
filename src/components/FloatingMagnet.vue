@@ -18,11 +18,12 @@
       <div class="pulse-effect"></div>
     </button>
 
-    <!-- Modal -->
-    <div v-if="showModal" class="magnet-modal">
-      <button class="close-button" @click="showModal = false">
-        <i class="fas fa-times"></i>
-      </button>
+    <!-- Modal with click outside handling -->
+    <div v-if="showModal" class="modal-overlay" @click.self="handleClickOutside">
+      <div class="magnet-modal">
+        <button class="close-button" @click.stop="closeModal">
+          <i class="fas fa-times"></i>
+        </button>
       
       <div class="modal-content" v-if="!submitted">
         <!-- Honeypot field -->
@@ -81,6 +82,7 @@
         <h3>¡Gracias!</h3>
         <p>Hemos enviado la guía a tu correo.</p>
         <p class="check-spam">Si no la encuentras, revisa tu carpeta de spam.</p>
+        </div>
       </div>
     </div>
 
@@ -105,6 +107,7 @@ export default {
       submitted: false,
       shouldAnimate: false,
       animationInterval: null,
+      escapeListener: null,
       // Validation configuration
       validation: {
         email: {
@@ -120,12 +123,57 @@ export default {
     this.startAnimationInterval()
   },
   beforeUnmount() {
-    // Limpiar intervalo al desmontar
+    // Clean up interval
     if (this.animationInterval) {
       clearInterval(this.animationInterval)
     }
+    // Clean up event listener
+    if (this.escapeListener) {
+      document.removeEventListener('keydown', this.escapeListener);
+    }
+  },
+  
+  watch: {
+    showModal(newVal, oldVal) {
+      if (newVal === oldVal) return;
+      
+      if (newVal) {
+        // Modal is opening
+        document.body.style.overflow = 'hidden';
+        this.escapeListener = (e) => e.key === 'Escape' && this.closeModal();
+        document.addEventListener('keydown', this.escapeListener);
+      } else {
+        // Modal is closing - clean up
+        this.clearForm();
+        document.body.style.overflow = '';
+        if (this.escapeListener) {
+          document.removeEventListener('keydown', this.escapeListener);
+          this.escapeListener = null;
+        }
+      }
+    }
   },
   methods: {
+    handleClickOutside() {
+      this.closeModal();
+    },
+    
+    clearForm() {
+      // Clear all form state
+      this.email = '';
+      this.emailError = '';
+      this.honeypot = '';
+      this.isValidating = false;
+      this.submitted = false;
+    },
+    
+    closeModal() {
+      // Just close the modal - cleanup happens in the watcher
+      this.showModal = false;
+    },
+    
+
+    
     sanitizeInput(input) {
       // Handle undefined, null or empty input
       if (!input) return '';
@@ -395,16 +443,29 @@ export default {
   pointer-events: none;
 }
 
-.magnet-modal {
-  position: absolute;
-  bottom: calc(100% + 1rem);
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
   right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.magnet-modal {
+  position: relative;
   width: 350px;
   background: white;
   border-radius: 16px;
   padding: 2rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   animation: slideIn 0.3s ease-out;
+  margin-bottom: 60px; /* Space for the floating button */
 }
 
 @keyframes slideIn {
@@ -605,7 +666,7 @@ export default {
 
   .magnet-modal {
     width: calc(100vw - 2rem);
-    right: -1rem;
+    margin: 0;
   }
 
   .floating-button {
