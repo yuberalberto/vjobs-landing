@@ -216,29 +216,69 @@ export default {
       this.email = this.sanitizeInput(this.email);
       
       this.isValidating = true;
+      
+      try {
+        // Prepare data for Brevo - Solo email y lista
+        const payload = {
+          email: this.email,
+          listIds: [7], // ID de la lista para el lead magnet
+          updateEnabled: true // Permitir actualizar contactos existentes
+        };
         
-        try {
-          // Aquí iría la lógica para enviar el email y el PDF
-          // Por ahora solo simulamos el envío
-          this.submitted = true;
-          
-          // Simular tiempo de envío
-          await new Promise(resolve => setTimeout(resolve, 1500));
-          
-          // Resetear el formulario después de mostrar el mensaje de éxito
-          setTimeout(() => {
-            this.showModal = false;
-            this.submitted = false;
-            this.email = '';
-            this.emailError = '';
-          }, 3000);
-        } catch (error) {
-          console.error('Error al enviar el formulario:', error);
-          this.emailError = 'Ocurrió un error. Por favor, inténtalo de nuevo.';
-        } finally {
-          this.isValidating = false;
+        console.log('Enviando a Brevo:', payload);
+        
+        // Send to Brevo API
+        const response = await fetch(`${import.meta.env.VITE_BREVO_API_URL}/contacts`, {
+          method: 'POST',
+          headers: {
+            'accept': 'application/json',
+            'content-type': 'application/json',
+            'api-key': import.meta.env.VITE_BREVO_API_KEY
+          },
+          body: JSON.stringify(payload)
+        });
+        
+        // Procesamos la respuesta
+        if (response.ok) {
+          console.log('Contacto creado exitosamente en Brevo');
+        } else {
+          // Intentamos obtener el mensaje de error
+          let errorMessage = 'Error al enviar el formulario';
+          try {
+            const responseData = await response.json();
+            console.log('Respuesta de error de Brevo:', responseData);
+            
+            // Si el error es porque el contacto ya existe, lo consideramos un éxito
+            if (responseData.message && responseData.message.includes('already associated')) {
+              console.log('El correo ya existe en la lista, continuando como éxito');
+              // Continuamos como si fuera exitoso
+            } else {
+              throw new Error(responseData.message || errorMessage);
+            }
+          } catch (parseError) {
+            console.error('Error al procesar la respuesta:', parseError);
+            throw new Error(errorMessage);
+          }
         }
+        
+        // Show success message
+        this.submitted = true;
+        
+        // Reset form after showing success message
+        setTimeout(() => {
+          this.showModal = false;
+          this.submitted = false;
+          this.email = '';
+          this.emailError = '';
+        }, 3000);
+        
+      } catch (error) {
+        console.error('Error al enviar el formulario a Brevo:', error);
+        this.emailError = 'Ocurrió un error al enviar el formulario. Por favor, inténtalo de nuevo.';
+      } finally {
+        this.isValidating = false;
       }
+    }
   }
 }
 </script>
