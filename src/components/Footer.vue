@@ -6,13 +6,13 @@
           <img src="@/assets/logo.png" alt="VJobs Logo" class="logo" />
           <p class="slogan">Impulsando tu carrera profesional en el mundo digital</p>
           <div class="social-links">
-            <a href="https://linkedin.com" target="_blank" rel="noopener" class="social-link">
+            <a href="https://www.linkedin.com/company/vjobs-hr-advisory/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
               <i class="fab fa-linkedin"></i>
             </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener" class="social-link">
+            <a href="https://instagram.com/vjobs.resume" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
               <i class="fab fa-instagram"></i>
             </a>
-            <a href="https://youtube.com" target="_blank" rel="noopener" class="social-link">
+            <a href="https://www.youtube.com/@VJobs.Resume" target="_blank" rel="noopener" class="social-link" aria-label="YouTube">
               <i class="fab fa-youtube"></i>
             </a>
           </div>
@@ -20,8 +20,7 @@
 
         <div class="footer-contact">
           <h4>Contacto</h4>
-          <p><i class="fas fa-envelope"></i> contacto@vjobs.com</p>
-          <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+          <p><i class="fas fa-envelope"></i> contacto@vjobs.ca</p>
           <p><i class="fas fa-map-marker-alt"></i> Toronto, Canadá</p>
         </div>
 
