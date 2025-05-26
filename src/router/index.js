@@ -14,11 +14,6 @@ const router = createRouter({
       component: Home
     },
     {
-      path: '/:section',
-      name: 'section',
-      component: Home
-    },
-    {
       path: '/legal',
       component: LegalLayout,
       children: [
@@ -38,19 +33,34 @@ const router = createRouter({
           component: CookiesPolicy
         }
       ]
+    },
+    // Catch-all route
+    {
+      path: '/:pathMatch(.*)*',
+      redirect: '/'
     }
   ],
   scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition
-    } else if (to.hash) {
-      return {
-        el: to.hash,
-        behavior: 'smooth',
-      }
-    } else {
+    // Check if it's a page refresh
+    if (window.performance && window.performance.navigation.type === 1) {
       return { top: 0 }
     }
+
+    // If there's a saved position (like when using browser back/forward)
+    if (savedPosition) {
+      return savedPosition
+    }
+    
+    // If navigating to a hash on the same page
+    if (to.hash && to.path === from.path) {
+      return {
+        el: to.hash,
+        behavior: 'smooth'
+      }
+    }
+    
+    // Default: scroll to top
+    return { top: 0 }
   }
 })
 
