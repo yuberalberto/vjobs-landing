@@ -37,13 +37,13 @@
       </div>
       
       <div class="footer-bottom">
-        <p>&copy; 2024 VJobs. Todos los derechos reservados.</p>
+        <p>&copy; 2025 VJobs. Todos los derechos reservados.</p>
         <div class="legal-links">
-          <a href="#" class="legal-link">Términos de Servicio</a>
+          <router-link to="/legal/terms" class="legal-link">Términos de Servicio</router-link>
           <span>|</span>
-          <a href="#" class="legal-link">Política de Privacidad</a>
+          <router-link to="/legal/privacy" class="legal-link">Política de Privacidad</router-link>
           <span>|</span>
-          <a href="#" class="legal-link">Cookies</a>
+          <router-link to="/legal/cookies" class="legal-link">Cookies</router-link>
         </div>
       </div>
     </div>
