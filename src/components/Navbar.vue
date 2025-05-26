@@ -1,114 +1,128 @@
 <template>
-  <div class="scroll-progress" :style="{ width: scrollProgress + '%' }"></div>
   <nav class="navbar" :class="{ 'navbar-scrolled': isScrolled }">
     <div class="container navbar-container">
       <div class="logo">
-        <router-link to="/" class="logo-link">
+        <router-link to="/" class="logo-link" @click="goHome">
           <img src="@/assets/logo.png" alt="VJobs Logo" class="logo-img" />
         </router-link>
       </div>
       <div class="nav-links">
-        <a href="#home" class="nav-link" :class="{ active: activeSection === 'home' }" @click.prevent="scrollToSection('home')">Home</a>
-        <a href="#services" class="nav-link" :class="{ active: activeSection === 'services' }" @click.prevent="scrollToSection('services')">Services</a>
-        <a href="#testimonials" class="nav-link" :class="{ active: activeSection === 'testimonials' }" @click.prevent="scrollToSection('testimonials')">Testimonials</a>
-        <a href="#faqs" class="nav-link" :class="{ active: activeSection === 'faqs' }" @click.prevent="scrollToSection('faqs')">FAQs</a>
-      </div>
-      <div class="nav-buttons">
-        <a href="#contact" class="btn btn-primary" @click.prevent="scrollToSection('contact')">Diagnóstico inicial gratuito</a>
-      </div>
+  <router-link v-for="section in ['home', 'services', 'testimonials', 'faqs']"
+    :key="section"
+    :to="{ path: '/', hash: `#${section}` }"
+    class="nav-link"
+    :class="{ active: activeSection === section }"
+    @click="scrollToSection(section)"
+  >
+    {{ section.charAt(0).toUpperCase() + section.slice(1) }}
+  </router-link>
+</div>
+<div class="nav-buttons">
+  <router-link
+    :to="{ path: '/', hash: '#contact' }"
+    class="btn btn-primary"
+    @click="scrollToSection('contact')"
+  >Diagnóstico inicial gratuito</router-link>
+</div>
     </div>
   </nav>
 </template>
 
-<script>
-export default {
-  name: 'Navbar',
-  data() {
-    return {
-      isScrolled: false,
-      activeSection: 'home',
-      scrollProgress: 0
-    }
-  },
-  mounted() {
-    window.addEventListener('scroll', this.handleScroll)
-    window.addEventListener('scroll', this.updateScrollProgress)
-    this.handleScroll() // Inicializar la sección activa
-  },
-  beforeUnmount() {
-    window.removeEventListener('scroll', this.handleScroll)
-    window.removeEventListener('scroll', this.updateScrollProgress)
-  },
-  methods: {
-    handleScroll() {
-      this.isScrolled = window.scrollY > 50
-      this.updateActiveSection()
-    },
-    updateActiveSection() {
-      const sections = ['home', 'services', 'testimonials', 'contact', 'faqs']
-      const scrollPosition = window.scrollY + window.innerHeight / 3
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 
-      for (const section of sections) {
-        const element = document.getElementById(section)
-        if (element) {
-          const { offsetTop, offsetHeight } = element
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            this.activeSection = section
-            break
-          }
-        }
-      }
-    },
-    updateScrollProgress() {
-      const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
-      const scrolled = (window.scrollY / windowHeight) * 100
-      this.scrollProgress = Math.min(100, Math.max(0, scrolled))
-    },
-    scrollToSection(sectionId) {
-      const section = document.getElementById(sectionId)
-      if (section) {
-        // Añadir clase para la animación de página
-        document.body.classList.add('page-transitioning')
-        
-        // Scroll suave a la sección
-        section.scrollIntoView({ behavior: 'smooth' })
-        
-        // Actualizar la URL sin recargar
-        history.pushState(null, '', `/#${sectionId}`)
-        
-        // Actualizar la sección activa
-        this.activeSection = sectionId
-        
-        // Remover la clase de animación después de la transición
-        setTimeout(() => {
-          document.body.classList.remove('page-transitioning')
-        }, 500)
+const router = useRouter()
+const route = useRoute()
+
+// Reactive state
+const isScrolled = ref(false)
+const activeSection = ref('home')
+
+// Methods
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > 50
+  updateActiveSection()
+}
+
+const updateActiveSection = () => {
+  const sections = ['home', 'services', 'testimonials', 'contact', 'faqs']
+  const scrollPosition = window.scrollY + window.innerHeight / 3
+
+  for (const section of sections) {
+    const element = document.getElementById(section)
+    if (element) {
+      const { offsetTop, offsetHeight } = element
+      if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+        activeSection.value = section
+        break
       }
     }
   }
 }
+
+// No longer needed as progress is tracked in App.vue
+
+const scrollToSection = (sectionId) => {
+  // Only handle smooth scrolling if already on home page
+  if (route.path === '/') {
+    const section = document.getElementById(sectionId)
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' })
+      activeSection.value = sectionId
+    }
+  }
+  // If not on home, router-link will handle navigation
+}
+
+const goHome = (event) => {
+  event.preventDefault()
+  
+  // If not on home page, navigate to home
+  if (route.path !== '/') {
+    router.push('/')
+    return
+  }
+  
+  // If already on home page, just scroll to top and clean URL
+  window.history.pushState({}, '', '/')
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+  activeSection.value = 'home'
+}
+
+// Lifecycle hooks
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+  handleScroll() // Initialize active section
+  
+  // Handle hash navigation when route changes
+  router.afterEach((to) => {
+    if (to.path === '/' && to.hash) {
+      // Extract section ID from hash
+      const sectionId = to.hash.substring(1)
+      // Wait for DOM to update
+      setTimeout(() => {
+        const section = document.getElementById(sectionId)
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth' })
+          activeSection.value = sectionId
+        }
+      }, 100)
+    }
+  })
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <style scoped>
-.scroll-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--accent-color), #ff8a00);
-  z-index: 1001;
-  transition: width 0.1s ease-out;
-}
-
 .navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  width: 100%;
   background-color: var(--primary-color);
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
-  z-index: 1000;
 }
 
 .navbar-scrolled {
