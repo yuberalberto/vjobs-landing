@@ -1,23 +1,45 @@
 <template>
   <div class="app">
-    <router-view v-slot="{ Component }">
-      <transition name="page" mode="out-in">
-        <component :is="Component" />
-      </transition>
-    </router-view>
+    <!-- Fixed elements outside router-view -->
+    <div class="fixed-elements">
+      <Navbar />
+      <div class="scroll-progress" :style="{ width: scrollProgress + '%' }"></div>
+    </div>
+    
+    <!-- Main content -->
+    <div class="content-wrapper">
+      <router-view />
+    </div>
+    
+    <Footer />
     <FloatingMagnet />
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+import Navbar from './components/Navbar.vue'
+import Footer from './components/Footer.vue'
 import FloatingMagnet from './components/FloatingMagnet.vue'
 
-export default {
-  name: 'App',
-  components: {
-    FloatingMagnet
-  }
+// Scroll progress tracking
+const scrollProgress = ref(0)
+
+const updateScrollProgress = () => {
+  const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
+  const scrolled = (window.scrollY / windowHeight) * 100
+  scrollProgress.value = Math.min(100, Math.max(0, scrolled))
 }
+
+onMounted(() => {
+  window.addEventListener('scroll', updateScrollProgress)
+  updateScrollProgress() // Initialize progress
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', updateScrollProgress)
+})
+
 </script>
 
 <style>
@@ -49,20 +71,32 @@ body, .app {
   padding: 0 1rem;
 }
 
-/* Page Transitions */
-.page-enter-active,
-.page-leave-active {
-  transition: opacity 0.3s ease, transform 0.3s ease;
+/* Fixed Elements */
+.fixed-elements {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9000;
 }
 
-.page-enter-from {
-  opacity: 0;
-  transform: translateY(20px);
+/* Scroll Progress Bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-color), #ff8a00);
+  z-index: 9999; /* Extremely high z-index to ensure it's always on top */
+  transition: width 0.1s ease-out;
+  pointer-events: none; /* Allow clicking through the progress bar */
 }
 
-.page-leave-to {
-  opacity: 0;
-  transform: translateY(-20px);
+/* Content Wrapper */
+.content-wrapper {
+  min-height: calc(100vh - 140px); /* Adjust based on navbar and footer heights */
+  position: relative;
+  padding-top: 70px; /* Add padding to account for fixed navbar height */
 }
 
 /* Utility Classes */
