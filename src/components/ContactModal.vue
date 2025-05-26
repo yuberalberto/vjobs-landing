@@ -7,85 +7,168 @@
       <p class="modal-subtitle">Un experto te ayudará a evaluar tus opciones</p>
 
       <form @submit.prevent="submitForm" class="contact-form">
+        <!-- Honeypot field - hidden from users -->
+        <div class="hp-field">
+          <input
+            type="text"
+            v-model="formData.website"
+            autocomplete="off"
+            tabindex="-1"
+            placeholder="Leave this empty"
+          >
+        </div>
+
+        <!-- Name field -->
         <div class="form-group">
           <input 
             type="text" 
             v-model="formData.name" 
-            placeholder="Nombre completo" 
+            placeholder="Nombre completo *" 
+            :disabled="isLoading"
             required
+            @input="validateName(formData.name)"
+            @blur="formData.name = formatName(formData.name)"
+            :class="{ 'input-error': formErrors.name }"
           >
+          <span v-if="formErrors.name" class="error-message">{{ formErrors.name }}</span>
         </div>
 
-        <div v-if="!showEmail" class="form-group">
-          <input 
-            type="tel" 
-            v-model="formData.phone" 
-            placeholder="Tu número para contactarte fácilmente" 
-            required
-          >
-          <p class="contact-switch">
-            Solo lo usaremos para esta sesión. 
-            <a href="#" @click.prevent="toggleContactMethod">
-              Si prefieres, puedes dejar tu correo aquí
-            </a>
-          </p>
-        </div>
-
-        <div v-else class="form-group">
+        <!-- Email field -->
+        <div class="form-group">
           <input 
             type="email" 
             v-model="formData.email" 
-            placeholder="Correo electrónico" 
+            placeholder="Correo electrónico *" 
+            :disabled="isLoading"
             required
+            maxlength="100"
+            @input="validateEmail"
+            @blur="validateEmail"
+            :class="{ 'input-error': formErrors.email }"
           >
-          <p class="contact-switch">
-            <a href="#" @click.prevent="toggleContactMethod">
-              Prefiero dejar mi número de teléfono
-            </a>
-          </p>
+          <span v-if="formErrors.email" class="error-message">{{ formErrors.email }}</span>
         </div>
 
+        <!-- Phone field with country code -->
+        <div class="form-group phone-group">
+          <div class="phone-input-container">
+            <input 
+              type="text" 
+              v-model="formData.countryCode"
+              :disabled="isLoading"
+              class="country-code-input"
+              placeholder="+1"
+              @input="formatCountryCode"
+              maxlength="4"
+            >
+            <input 
+              type="tel" 
+              v-model="formData.phone" 
+              placeholder="Número de teléfono *"
+              :disabled="isLoading"
+              @input="formatPhoneNumber"
+              @blur="validatePhone"
+              :class="{ 'input-error': formErrors.phone }"
+              required
+              maxlength="14"
+            >
+          </div>
+          <span v-if="formErrors.phone" class="error-message">{{ formErrors.phone }}</span>
+        </div>
+
+        <!-- Stage selection -->
         <div class="form-group">
-          <select v-model="formData.stage" required>
-            <option value="" disabled selected>¿En qué etapa estás?</option>
+          <select 
+            v-model="formData.stage" 
+            :disabled="isLoading" 
+            required
+            :class="{ 'input-error': formErrors.stage }"
+            @change="validateStage"
+          >
+            <option value="" disabled selected>¿En qué etapa estás? *</option>
             <option value="canada">Buscando empleo en Canadá</option>
             <option value="it">En transición a IT</option>
             <option value="exploring">Explorando opciones</option>
           </select>
+          <span v-if="formErrors.stage" class="error-message">{{ formErrors.stage }}</span>
         </div>
 
+        <!-- Message field -->
         <div class="form-group">
           <textarea 
             v-model="formData.message" 
-            placeholder="Mensaje (opcional)"
+            placeholder="¿Algo más que debamos saber? (opcional)"
             rows="3"
+            :disabled="isLoading"
+            maxlength="500"
+            @input="sanitizeMessage"
+            :class="{ 'input-error': formErrors.message }"
           ></textarea>
+          <span v-if="formErrors.message" class="error-message">{{ formErrors.message }}</span>
+          <span class="character-count" :class="{ 'near-limit': formData.message.length > MESSAGE_MAX_LENGTH * 0.9 }">
+            {{ formData.message.length }}/{{ MESSAGE_MAX_LENGTH }} caracteres
+          </span>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-large">
-          <i class="fas fa-calendar-check"></i> Agendar mi sesión gratuita
+        <!-- Submit button with loading state -->
+        <button type="submit" class="btn btn-primary btn-large" :disabled="isLoading">
+          <span v-if="!isLoading">
+            <i class="fas fa-calendar-check"></i> Agendar mi sesión gratuita
+          </span>
+          <span v-else>
+            <i class="fas fa-spinner fa-spin"></i> Enviando...
+          </span>
         </button>
-      </form>
+        
+        <!-- Form status messages -->
+        <div v-if="formStatus.message" :class="['form-feedback', formStatus.type]">
+          <i :class="formStatus.icon"></i> {{ formStatus.message }}
+        </div>
 
-      <p class="privacy-notice">
-        <i class="fas fa-shield-alt"></i> 
-        Tu información está segura. No la compartiremos con nadie.
-      </p>
+        <p class="privacy-notice">
+          <i class="fas fa-shield-alt"></i> 
+          Tu información está segura. No la compartiremos con nadie.
+        </p>
+      </form>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, reactive, watch } from 'vue';
 
 const props = defineProps({
   modelValue: Boolean
 });
 
-const emit = defineEmits(['update:modelValue', 'submit']);
+const emit = defineEmits(['update:modelValue', 'form-success']);
 
-const showEmail = ref(false);
+// Reset form and messages when modal opens
+watch(() => props.modelValue, (newValue) => {
+  if (newValue === true) {
+    // Modal is opening, reset everything
+    resetForm();
+    resetFormStatus();
+  }
+});
+
+// Form state
+const isLoading = ref(false);
+const lastSubmitTime = ref(0);
+const SUBMIT_COOLDOWN = 30000; // 30 seconds cooldown between submissions
+
+// Form data and validation
 const formData = ref({
+  name: '',
+  phone: '',
+  countryCode: '+1',  // Default to Canada/USA
+  email: '',
+  stage: '',
+  message: '',
+  website: ''  // Honeypot field - invisible to users
+});
+
+const formErrors = reactive({
   name: '',
   phone: '',
   email: '',
@@ -93,19 +176,265 @@ const formData = ref({
   message: ''
 });
 
-const toggleContactMethod = () => {
-  showEmail.value = !showEmail.value;
-  formData.value.phone = '';
-  formData.value.email = '';
+const formStatus = reactive({
+  message: '',
+  type: '', // 'success' or 'error'
+  icon: ''
+});
+
+const MESSAGE_MAX_LENGTH = 500;
+
+// Format country code, ensure it starts with + and only contains digits after
+const formatCountryCode = () => {
+  if (!formData.value.countryCode.startsWith('+')) {
+    formData.value.countryCode = '+' + formData.value.countryCode;
+  }
+  formData.value.countryCode = '+' + formData.value.countryCode.slice(1).replace(/\D/g, '');
 };
 
+// Format name: trim and standardize spaces
+const formatName = (name) => {
+  return name.trim().replace(/\s+/g, ' ');
+};
+
+// Format phone number as (XXX) XXX-XXXX
+const formatPhoneNumber = () => {
+  let cleaned = formData.value.phone.replace(/\D/g, '');
+  cleaned = cleaned.slice(0, 10);
+  
+  if (cleaned.length >= 6) {
+    formData.value.phone = `(${cleaned.slice(0,3)}) ${cleaned.slice(3,6)}-${cleaned.slice(6)}`;
+  } else if (cleaned.length >= 3) {
+    formData.value.phone = `(${cleaned.slice(0,3)}) ${cleaned.slice(3)}`;
+  } else if (cleaned.length > 0) {
+    formData.value.phone = `(${cleaned}`;
+  }
+  
+  validatePhone();
+};
+
+// Sanitize message content
+const sanitizeMessage = () => {
+  formErrors.message = '';
+  
+  // Remove HTML tags
+  formData.value.message = formData.value.message.replace(/<[^>]*>/g, '');
+  
+  // Remove control characters and malicious Unicode
+  formData.value.message = formData.value.message.replace(/[\u0000-\u001F\u007F-\u009F\u2000-\u200F\u2028-\u202F]/g, '');
+  
+  // Normalize multiple spaces/line breaks
+  formData.value.message = formData.value.message.replace(/\s+/g, ' ');
+  
+  // Enforce length limit
+  if (formData.value.message.length > MESSAGE_MAX_LENGTH) {
+    formData.value.message = formData.value.message.slice(0, MESSAGE_MAX_LENGTH);
+  }
+  
+  return true;
+};
+
+// Validate email format
+const validateEmail = () => {
+  formErrors.email = '';
+  
+  if (!formData.value.email) {
+    return false;
+  }
+  
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(formData.value.email)) {
+    formErrors.email = 'Ingresa un email válido';
+    return false;
+  }
+  
+  return true;
+};
+
+// Validate phone number
+const validatePhone = () => {
+  formErrors.phone = '';
+  
+  const digits = formData.value.phone.replace(/\D/g, '');
+  
+  if (digits.length === 0) {
+    if (formData.value.phone) {
+      formErrors.phone = 'Ingresa un número de teléfono válido';
+    }
+    return false;
+  }
+  
+  if (digits.length !== 10) {
+    formErrors.phone = 'El teléfono debe tener 10 dígitos';
+    return false;
+  }
+  
+  return true;
+};
+
+// Validate name
+const validateName = (name) => {
+  formErrors.name = '';
+  
+  if (name.length < 2) {
+    formErrors.name = 'El nombre es muy corto (mínimo 2 caracteres)';
+    return false;
+  }
+  
+  if (name.length > 50) {
+    formErrors.name = 'El nombre es muy largo (máximo 50 caracteres)';
+    return false;
+  }
+  
+  if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]*$/.test(name)) {
+    formErrors.name = 'El nombre solo puede contener letras y espacios';
+    return false;
+  }
+  
+  return true;
+};
+
+// Validate stage selection
+const validateStage = () => {
+  formErrors.stage = '';
+  if (!formData.value.stage) {
+    formErrors.stage = 'Selecciona una etapa';
+    return false;
+  }
+  return true;
+};
+
+// Reset form status messages
+const resetFormStatus = () => {
+  formStatus.type = '';
+  formStatus.message = '';
+  formStatus.icon = '';
+};
+
+// Reset form data to initial state
+const resetForm = () => {
+  formData.value = {
+    name: '',
+    phone: '',
+    countryCode: '+1',
+    email: '',
+    stage: '',
+    message: '',
+    website: ''
+  };
+};
+
+// Show success message
+const showSuccess = (message) => {
+  formStatus.message = message;
+  formStatus.type = 'success';
+  formStatus.icon = 'fas fa-check-circle';
+};
+
+// Show error message
+const showError = (message) => {
+  formStatus.message = message;
+  formStatus.type = 'error';
+  formStatus.icon = 'fas fa-exclamation-circle';
+};
+
+// Close the modal
 const closeModal = () => {
   emit('update:modelValue', false);
 };
 
-const submitForm = () => {
-  emit('submit', formData.value);
-  closeModal();
+// Validate all form fields
+const validateForm = () => {
+  return validateName(formData.value.name) && 
+         validatePhone() && 
+         validateEmail() && 
+         validateStage();
+};
+
+// Submit form to Brevo API
+const submitForm = async () => {
+  resetFormStatus();
+  
+  // Check for honeypot
+  if (formData.value.website) {
+    console.log('Honeypot triggered');
+    // Show success message to the bot but close modal immediately
+    setTimeout(() => {
+      closeModal();
+      // Emit a custom event that parent components can listen to for showing a toast/notification
+      emit('form-success', 'Formulario enviado con éxito');
+    }, 500);
+    return;
+  }
+  
+  // Rate limiting check
+  const now = Date.now();
+  const timeSinceLastSubmit = now - lastSubmitTime.value;
+  if (timeSinceLastSubmit < SUBMIT_COOLDOWN) {
+    const waitTimeSeconds = Math.ceil((SUBMIT_COOLDOWN - timeSinceLastSubmit) / 1000);
+    showError(`Por favor espera ${waitTimeSeconds} segundos antes de enviar el formulario nuevamente.`);
+    return;
+  }
+  
+  if (!validateForm()) {
+    return;
+  }
+  
+  isLoading.value = true;
+  
+  try {
+    // Prepare data for API
+    const payload = {
+      email: formData.value.email,
+      attributes: {
+        FULLNAME: formData.value.name,
+        PHONE: formData.value.countryCode + formData.value.phone.replace(/\D/g, ''),
+        STAGE: formData.value.stage,
+        MESSAGE: formData.value.message || 'No message provided',
+        FUENTE: 'Modal de contacto'
+      },
+      listIds: [3], // Match the list ID used in ContactSection
+      updateEnabled: true
+    };
+    
+    console.log('Sending to Brevo API:', payload);
+    
+    // Call Brevo API
+    const response = await fetch(`${import.meta.env.VITE_BREVO_API_URL}/contacts`, {
+      method: 'POST',
+      headers: {
+        'accept': 'application/json',
+        'api-key': import.meta.env.VITE_BREVO_API_KEY,
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Error al enviar el formulario');
+    }
+    
+    // Show success briefly then close modal
+    showSuccess('¡Gracias por contactarnos! Te llamaremos pronto para coordinar tu sesión.');
+    
+    // Update last submit time for rate limiting
+    lastSubmitTime.value = Date.now();
+    
+    // Reset form data
+    resetForm();
+    
+    // Close modal after a short delay and emit success event for parent notification
+    setTimeout(() => {
+      closeModal();
+      emit('form-success', 'Formulario enviado con éxito');
+    }, 1500);
+  } catch (error) {
+    console.error('Error submitting form:', error);
+    showError(error.message || 'Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.');
+  } finally {
+    isLoading.value = false;
+  }
 };
 </script>
 
@@ -167,10 +496,54 @@ h2 {
   gap: 1.2rem;
 }
 
+/* Honeypot field - completely hidden from users */
+.hp-field {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 0;
+  width: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
 .form-group {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+.phone-group {
+  margin-bottom: 0.5rem;
+}
+
+.phone-input-container {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.phone-input-container input {
+  height: 42px;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 0.9rem;
+}
+
+.phone-input-container input[type="text"].country-code-input {
+  width: 45px;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  text-align: center;
+  min-width: unset;
+  flex: 0 0 45px;
+}
+
+.phone-input-container input[type="tel"] {
+  flex: 1;
 }
 
 .form-group input,
@@ -185,32 +558,71 @@ h2 {
   width: 100%;
 }
 
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
+.form-group input:focus:not(:disabled),
+.form-group select:focus:not(:disabled),
+.form-group textarea:focus:not(:disabled) {
   outline: none;
   border-color: var(--accent-color);
   box-shadow: 0 0 0 3px rgba(102, 154, 207, 0.2);
 }
 
-.contact-switch {
-  font-size: 0.9rem;
+.input-error {
+  border-color: #dc3545 !important;
+  background-color: #fff8f8;
+}
+
+.input-error:focus {
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.2) !important;
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.character-count {
+  font-size: 0.8rem;
   color: #666;
+  text-align: right;
+  display: block;
+  margin-top: 0.25rem;
 }
 
-.contact-switch a {
-  color: var(--accent-color);
-  text-decoration: none;
+.character-count.near-limit {
+  color: #dc3545;
 }
 
-.contact-switch a:hover {
-  text-decoration: underline;
+.contact-note {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+.form-feedback {
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.form-feedback.success {
+  background-color: #dff0d8;
+  color: #3c763d;
+  border: 1px solid #3c763d;
+}
+
+.form-feedback.error {
+  background-color: #f2dede;
+  color: #a94442;
+  border: 1px solid #a94442;
 }
 
 .privacy-notice {
   font-size: 0.8rem;
   color: #666;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   text-align: center;
   display: flex;
   align-items: center;
