@@ -336,7 +336,7 @@ export default {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  z-index: 999;
+  z-index: 1000;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -420,21 +420,27 @@ export default {
 }
 
 .minimize-button {
-  background: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(45deg, var(--accent-color), #ff8a00);
   border: none;
   border-radius: 50%;
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   cursor: pointer;
   transition: all 0.3s ease;
+  position: absolute;
+  right: 0;
+  top: -34px;
+  z-index: 1001;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .minimize-button:hover {
-  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px) scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .minimized .floating-button {
