@@ -28,6 +28,7 @@ Legend:
     - [x] Responsive styles
     - [x] Form validation
     - [x] Connect to Brevo API
+    - [x] Custom country code dropdown
 
 [F4] - [x] Simplified footer design
     - [x] Links importantes

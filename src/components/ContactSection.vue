@@ -71,15 +71,23 @@
           <!-- Phone Field (always visible) -->
           <div class="form-group phone-group">
             <div class="phone-input-container">
-              <input 
-                type="text" 
-                v-model="formData.countryCode"
-                :disabled="isLoading"
-                class="country-code-input"
-                placeholder="+1"
-                @input="formatCountryCode"
-                maxlength="4"
-              >
+              <!-- Custom dropdown implementation -->
+              <div class="custom-dropdown">
+                <div class="selected-option" @click="toggleDropdown">
+                  {{ selectedCountryDisplay }}
+                  <span class="dropdown-arrow"></span>
+                </div>
+                <div class="dropdown-options" v-if="dropdownOpen">
+                  <div 
+                    v-for="(country, index) in countryCodes" 
+                    :key="index"
+                    class="dropdown-option"
+                    @click="selectCountryCode(country.code)"
+                  >
+                    {{ country.name }} ({{ country.code }})
+                  </div>
+                </div>
+              </div>
               <input 
                 type="tel" 
                 v-model="formData.phone" 
@@ -154,7 +162,7 @@
 </template>
 
 <script>
-import { ref, reactive } from 'vue';
+import { ref, reactive, watch, computed, onMounted } from 'vue';
 
 export default {
   setup() {
@@ -167,6 +175,32 @@ export default {
       type: '', // 'success' or 'error'
       icon: ''
     });
+    // Lista de códigos de país para las Américas
+    const countryCodes = [
+      { code: '+1', name: 'US/CA' },    // Estados Unidos/Canadá
+      { code: '+52', name: 'MX' },      // México
+      { code: '+54', name: 'AR' },      // Argentina
+      { code: '+55', name: 'BR' },      // Brasil
+      { code: '+56', name: 'CL' },      // Chile
+      { code: '+57', name: 'CO' },      // Colombia
+      { code: '+51', name: 'PE' },      // Perú
+      { code: '+58', name: 'VE' },      // Venezuela
+      { code: '+506', name: 'CR' },     // Costa Rica
+      { code: '+53', name: 'CU' },      // Cuba
+      { code: '+593', name: 'EC' },     // Ecuador
+      { code: '+502', name: 'GT' },     // Guatemala
+      { code: '+504', name: 'HN' },     // Honduras
+      { code: '+52', name: 'MX' },      // México
+      { code: '+505', name: 'NI' },     // Nicaragua
+      { code: '+507', name: 'PA' },     // Panamá
+      { code: '+595', name: 'PY' },     // Paraguay
+      { code: '+51', name: 'PE' },      // Perú
+      { code: '+1', name: 'PR' },       // Puerto Rico
+      { code: '+1', name: 'DO' },       // República Dominicana
+      { code: '+598', name: 'UY' },     // Uruguay
+      { code: '+58', name: 'VE' }       // Venezuela
+    ];
+
     const formData = ref({
       name: '',
       phone: '',
@@ -175,6 +209,37 @@ export default {
       stage: '',
       message: '',
       website: ''  // Honeypot field
+    });
+
+    // Custom dropdown state
+    const dropdownOpen = ref(false);
+
+    // Get the display text for the selected country code
+    const selectedCountryDisplay = computed(() => {
+      const country = countryCodes.find(c => c.code === formData.value.countryCode);
+      return country ? `${country.name} (${country.code})` : 'US/CA (+1)';
+    });
+
+    // Toggle dropdown open/closed
+    const toggleDropdown = () => {
+      dropdownOpen.value = !dropdownOpen.value;
+    };
+
+    // Select a country code and close dropdown
+    const selectCountryCode = (code) => {
+      formData.value.countryCode = code;
+      dropdownOpen.value = false;
+      formatCountryCode();
+    };
+
+    // Close dropdown when clicking outside
+    onMounted(() => {
+      document.addEventListener('click', (event) => {
+        const dropdown = document.querySelector('.custom-dropdown');
+        if (dropdown && !dropdown.contains(event.target)) {
+          dropdownOpen.value = false;
+        }
+      });
     });
 
     // formStatus ya está declarado anteriormente
@@ -429,6 +494,19 @@ export default {
       formStatus.icon = 'fas fa-exclamation-circle';
     };
 
+    // Limpiar el estado del formulario cuando se cierre la sección
+    watch(() => formStatus.message, (newMessage) => {
+      if (newMessage) {
+        // Limpiar el mensaje después de 5 segundos
+        const timer = setTimeout(() => {
+          resetFormStatus();
+        }, 5000);
+        
+        // Limpiar el timer cuando el componente se desmonte o cambie el mensaje
+        return () => clearTimeout(timer);
+      }
+    });
+
     return {
       showEmail,
       isLoading,
@@ -438,6 +516,7 @@ export default {
       lastSubmitTime,
       SUBMIT_COOLDOWN,
       MESSAGE_MAX_LENGTH,
+      countryCodes,
       submitForm,
       formatName,
       validateName,
@@ -448,7 +527,12 @@ export default {
       sanitizeMessage,
       resetForm,
       showSuccess,
-      showError
+      showError,
+      // Custom dropdown
+      dropdownOpen,
+      selectedCountryDisplay,
+      toggleDropdown,
+      selectCountryCode
     };
   }
 };
@@ -554,7 +638,7 @@ h2 {
   gap: 0.5rem;
   align-items: center;
 
-  input {
+  input, select {
     height: 42px;
     padding: 0.5rem;
     border: 1px solid #ccc;
@@ -563,13 +647,59 @@ h2 {
     font-size: 0.9rem;
   }
 
-  input[type="text"].country-code-input {
-    width: 45px;
-    padding-left: 0.25rem;
-    padding-right: 0.25rem;
-    text-align: center;
-    min-width: unset;
-    flex: 0 0 45px;
+  /* Custom dropdown styles */
+  .custom-dropdown {
+    position: relative;
+    min-width: 130px;
+    width: auto;
+    flex: 0 1 auto;
+    height: 42px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+  }
+
+  .selected-option {
+    display: flex;
+    align-items: center;
+    padding: 0.25rem 1.5rem 0.25rem 0.5rem;
+    height: 100%;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .dropdown-arrow {
+    position: absolute;
+    right: 0.5rem;
+    width: 12px;
+    height: 12px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+
+  .dropdown-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    z-index: 1060;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+
+  .dropdown-option {
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+
+  .dropdown-option:hover {
+    background-color: #f5f5f5;
   }
 
   input[type="tel"] {
