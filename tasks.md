@@ -41,18 +41,17 @@ Legend:
     - [x] Comportamiento responsive
 
 ### 1.2 User Experience
-[F6] - [-] Form validation and security
+[F6] - [x] Form validation and security
     - [x] Contact Form
         - [x] Name validation (length, format)
         - [x] Phone validation (format, country code)
         - [x] Email validation (format, length)
         - [x] Message sanitization
         - [x] Honeypot implementation
-    - [] Lead Magnet Form
-        - [] Email validation (format, length)
-        - [] Job type validation
-        - [] Input sanitization
-        - [] Honeypot implementation
+    - [x] Lead Magnet Form
+        - [x] Email validation (format, length)
+        - [x] Input sanitization
+        - [x] Honeypot implementation
     - [x] Contact Modal Form
         - [x] Sync validation with ContactSection
         - [x] Add Brevo API integration

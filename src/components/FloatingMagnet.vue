@@ -25,6 +25,16 @@
       </button>
       
       <div class="modal-content" v-if="!submitted">
+        <!-- Honeypot field -->
+        <div class="hp-field">
+          <input
+            type="text"
+            v-model="honeypot"
+            autocomplete="off"
+            tabindex="-1"
+            placeholder="Leave this empty"
+          >
+        </div>
         <div class="modal-icon">
           <i class="fab fa-linkedin"></i>
         </div>
@@ -43,14 +53,19 @@
           <div class="form-group">
             <input 
               type="email" 
-              v-model="email" 
+              v-model="email"
+              @input="handleEmailInput"
+              @blur="handleEmailBlur"
               placeholder="Tu mejor correo electrónico" 
               required
-              class="form-input"
+              :class="{ 'input-error': emailError }"
+              :disabled="isValidating"
             >
+            <span v-if="emailError" class="error-message">{{ emailError }}</span>
           </div>
-          <button type="submit" class="submit-button">
-            <span>Descargar Guía</span>
+          <button type="submit" class="btn btn-primary btn-large" :disabled="isValidating">
+            <span v-if="!isValidating">Descargar Guía</span>
+            <span v-else>Enviando...</span>
             <i class="fas fa-arrow-right"></i>
           </button>
         </form>
@@ -84,10 +99,21 @@ export default {
       showModal: false,
       isMinimized: false,
       email: '',
+      emailError: '',
+      honeypot: '',
+      isValidating: false,
       submitted: false,
       shouldAnimate: false,
-      animationInterval: null
-    }
+      animationInterval: null,
+      // Validation configuration
+      validation: {
+        email: {
+          minLength: 6,
+          maxLength: 254,
+          pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        }
+      }
+    };
   },
   mounted() {
     // Iniciar animación periódica
@@ -100,6 +126,61 @@ export default {
     }
   },
   methods: {
+    sanitizeInput(input) {
+      // Handle undefined, null or empty input
+      if (!input) return '';
+      
+      // Convert to string and remove any potentially dangerous characters
+      return String(input)
+        .replace(/[<>&"']/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+    },
+
+    validateEmail(email) {
+      // Sanitize input first
+      const sanitizedEmail = this.sanitizeInput(email);
+      
+      // Reset error
+      this.emailError = '';
+
+      // Check if empty
+      if (!sanitizedEmail) {
+        this.emailError = 'Por favor ingresa tu correo electrónico';
+        return false;
+      }
+
+      // Check minimum length
+      if (sanitizedEmail.length < this.validation.email.minLength) {
+        this.emailError = `El correo debe tener al menos ${this.validation.email.minLength} caracteres`;
+        return false;
+      }
+
+      // Check maximum length
+      if (sanitizedEmail.length > this.validation.email.maxLength) {
+        this.emailError = `El correo no puede tener más de ${this.validation.email.maxLength} caracteres`;
+        return false;
+      }
+
+      // Check email pattern
+      if (!this.validation.email.pattern.test(sanitizedEmail)) {
+        this.emailError = 'Por favor ingresa un correo electrónico válido';
+        return false;
+      }
+
+      return true;
+    },
+    
+    handleEmailInput() {
+      if (this.emailError) {
+        this.validateEmail(this.email);
+      }
+    },
+    
+    handleEmailBlur() {
+      this.validateEmail(this.email);
+    },
+    
     startAnimationInterval() {
       // Animar cada 30 segundos si no está minimizado
       this.animationInterval = setInterval(() => {
@@ -111,22 +192,53 @@ export default {
         }
       }, 15000)
     },
+    
     toggleMinimize() {
       this.isMinimized = !this.isMinimized
       if (!this.isMinimized) {
         this.showModal = false
       }
     },
+    
     async submitForm() {
-      // Aquí iría la lógica para enviar el email y el PDF
-      // Por ahora solo simulamos el envío
-      this.submitted = true
-      setTimeout(() => {
-        this.showModal = false
-        this.submitted = false
-        this.email = ''
-      }, 3000)
-    }
+      // Check honeypot first
+      if (this.honeypot) {
+        console.log('Bot detected by honeypot');
+        return;
+      }
+
+      // Validate email before submission
+      if (!this.validateEmail(this.email)) {
+        return;
+      }
+
+      // Sanitize email before submission
+      this.email = this.sanitizeInput(this.email);
+      
+      this.isValidating = true;
+        
+        try {
+          // Aquí iría la lógica para enviar el email y el PDF
+          // Por ahora solo simulamos el envío
+          this.submitted = true;
+          
+          // Simular tiempo de envío
+          await new Promise(resolve => setTimeout(resolve, 1500));
+          
+          // Resetear el formulario después de mostrar el mensaje de éxito
+          setTimeout(() => {
+            this.showModal = false;
+            this.submitted = false;
+            this.email = '';
+            this.emailError = '';
+          }, 3000);
+        } catch (error) {
+          console.error('Error al enviar el formulario:', error);
+          this.emailError = 'Ocurrió un error. Por favor, inténtalo de nuevo.';
+        } finally {
+          this.isValidating = false;
+        }
+      }
   }
 }
 </script>
@@ -316,40 +428,101 @@ export default {
   margin-top: 1.5rem;
 }
 
-.form-input {
-  width: 100%;
-  padding: 0.8rem 1rem;
-  border: 2px solid #eee;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  transition: all 0.3s ease;
+.hp-field {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 0;
+  width: 0;
+  z-index: -1;
+  overflow: hidden;
 }
 
-.form-input:focus {
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 0.9rem 1.2rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: #f8f9fa;
+  width: 100%;
+}
+
+.form-group input:focus:not(:disabled),
+.form-group select:focus:not(:disabled),
+.form-group textarea:focus:not(:disabled) {
   outline: none;
   border-color: var(--accent-color);
-  box-shadow: 0 0 0 3px rgba(255, 138, 0, 0.1);
+  box-shadow: 0 0 0 3px rgba(102, 154, 207, 0.2);
 }
 
-.submit-button {
-  width: 100%;
-  padding: 1rem;
-  background: linear-gradient(45deg, var(--accent-color), #ff8a00);
-  border: none;
-  border-radius: 8px;
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
+.input-error {
+  border-color: #dc3545 !important;
+  background-color: #fff8f8;
+}
+
+.input-error:focus {
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.2) !important;
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.btn {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid transparent;
+  border-radius: 8px;
   transition: all 0.3s ease;
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
-.submit-button:hover {
+.btn-primary {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  width: 100%;
+  justify-content: center;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #3a7ebf;
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(255, 138, 0, 0.3);
+  box-shadow: 0 4px 15px rgba(102, 154, 207, 0.3);
+}
+
+.btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btn-large {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
 }
 
 .privacy-note {
