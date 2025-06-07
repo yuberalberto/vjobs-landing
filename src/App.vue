@@ -96,7 +96,6 @@ body, .app {
 .content-wrapper {
   min-height: calc(100vh - 140px); /* Adjust based on navbar and footer heights */
   position: relative;
-  padding-top: 70px; /* Add padding to account for fixed navbar height */
 }
 
 /* Utility Classes */

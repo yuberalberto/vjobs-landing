@@ -40,20 +40,7 @@ Legend:
     - [x] Entrance animation
     - [x] Responsive behavior
 
-[F6] - [] Polish UI details
-    - [] Review and correct English texts in navigation buttons
-    - [] Update service texts for consistency
-    - [] Improve form validation messages
-    - [] Review text consistency throughout the application
-    - [] Verify and update tooltips and help messages
-    - [] Ensure consistency in capitalization and punctuation
-    - [] Review and update image alt texts
-    - [] Verify all links are relevant and functional
-    - [] Review spelling and grammar site-wide
-    - [] Ensure error messages are clear and helpful
-
-### 1.2 User Experience
-[F7] - [x] Form validation and security
+[F8] - [x] Form validation and security
     - [x] Contact Form
         - [x] Name validation (length, format)
         - [x] Phone validation (format, country code)
@@ -69,37 +56,56 @@ Legend:
         - [x] Add Brevo API integration
         - [x] Implement honeypot and security measures
         - [x] Add loading states and feedback
-[F8] - [x] Success/error messages
+
+[F9] - [x] Success/error messages
     - [x] Success messages
     - [x] Error messages
     - [x] Transition animations
 
-[F9] - [x] Scroll animations
+[F10] - [x] Scroll animations
     - [x] On-scroll animation
     - [x] Fade-in effect
     - [x] Performance optimization
 
-[F9] - [x] Loading states
+[F11] - [x] Loading states
     - [x] Spinner animation
     - [x] Disabled states
     - [x] Feedback visual
 
-[F10] - [] Form auto-save
+[F12] - [] Form auto-save
 
-### 1.3 Conversion Optimization
-[F11] - [x] Clear CTAs
+[F13] - [x] Clear CTAs
     - [x] Attractive design
     - [x] Persuasive text
     - [x] Strategic positioning
 
-[F12] - [x] Lead magnet modal
+[F14] - [x] Lead magnet modal
     - [x] Modal design
     - [x] Trigger events
     - [x] Animations
 
-[F13] - [-] A/B testing setup
+[F15] - [] Polish UI details
+    - [] Review and correct English texts in navigation buttons
+    - [] Update service texts for consistency
+    - [] Improve form validation and error messages
+    - [] Review text consistency throughout the application
+    - [] Verify and update tooltips and help messages
+    - [] Ensure consistency in capitalization and punctuation
+    - [] Review and update image alt texts
+    - [] Verify all links are relevant and functional
+    - [] Review spelling and grammar site-wide
 
-[F14] - [] Exit intent popup
+[F16] - [] Enhance Mobile Experience
+    - [] Optimize service cards layout and spacing for mobile
+    - [] Improve touch targets (buttons, links, inputs)
+    - [] Implement responsive images
+        - [] Generate and use optimized image sizes for mobile
+        - [] Add loading="lazy" for images below the fold
+    - [] Adjust typography and spacing for better mobile readability
+    - [] Test on various mobile devices and connections
+
+### 1.3 Conversion Optimization
+[F17] - [] Newsletter subscription
 
 ---
 
