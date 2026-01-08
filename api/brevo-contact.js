@@ -69,11 +69,20 @@ module.exports = async function handler(req, res) {
       });
     }
 
-    const result = await response.json();
-    console.log('Brevo API success:', { email, contactId: result.id });
+    // Handle response - some Brevo endpoints return empty body on success
+    let result = {};
+    const contentType = response.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      const text = await response.text();
+      if (text) {
+        result = JSON.parse(text);
+      }
+    }
+    
+    console.log('Brevo API success:', { email, contactId: result.id || 'created' });
 
     // Return success response
-    res.status(200).json(result);
+    res.status(200).json({ success: true, ...result });
 
   } catch (error) {
     console.error('Serverless function error:', error);
