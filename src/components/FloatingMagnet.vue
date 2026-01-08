@@ -275,13 +275,11 @@ export default {
         
         console.log('Enviando a Brevo:', payload);
         
-        // Send to Brevo API
-        const response = await fetch(`${import.meta.env.VITE_BREVO_API_URL}/contacts`, {
+        // Send to Brevo API via secure serverless function
+        const response = await fetch('/api/brevo-contact', {
           method: 'POST',
           headers: {
-            'accept': 'application/json',
-            'content-type': 'application/json',
-            'api-key': import.meta.env.VITE_BREVO_API_KEY
+            'content-type': 'application/json'
           },
           body: JSON.stringify(payload)
         });
