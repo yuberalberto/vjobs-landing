@@ -165,6 +165,12 @@ npm run build
 
 ---
 
+## AI Pairing Guidelines
+
+To keep AI-assisted collaboration predictable and auditable, review `.windsurf/rules/project_rules.md` before pairing. That document explains mindset, workflow expectations, tool usage, and the protected-files policy enforced in this repository.
+
+---
+
 ## Style Guide
 
 ### Color Palette

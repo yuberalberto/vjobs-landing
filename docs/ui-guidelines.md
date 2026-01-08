@@ -1,24 +1,3 @@
-# Reglas de Control de Versiones
-
-1. **Flujo de Trabajo**
-   - `main` - Rama principal estable
-   - `feature/*` - Para desarrollo de nuevas características
-   - `fix/*` - Para correcciones de bugs
-
-2. **Reglas de Commits**
-   - No hacer commits sin aprobación explícita
-   - Hacer commit cuando:
-     - Se completa una característica significativa
-     - Antes de cambiar a otra tarea
-     - Como punto de retorno importante
-
-3. **Proceso de Revisión**
-   - Pull Requests para revisión antes de mergear a `main`
-   - Revisión de código por pares
-   - Tests pasando antes de mergear
-
----
-
 ## UI Cleanup Plan
 
 This project has some inconsistent UI and visual styles. Please assist with:

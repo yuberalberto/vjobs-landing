@@ -155,36 +155,92 @@ const handleFormSubmit = (formData) => {
 }
 
 /* Ajustes responsivos */
-@media (max-width: 1024px) {
+@media (max-width: 992px) {
   .hero-container {
     grid-template-columns: 1fr;
-    gap: 2rem;
-    padding: 1.5rem;
     text-align: center;
+    gap: 3rem;
+    padding: 2rem;
   }
   
-  .hero-profile {
-    max-width: 500px;
+  .hero-content {
+    max-width: 100%;
+    margin: 0 auto;
+    order: 1;
+  }
+  
+  .hero-subtitle {
+    max-width: 100%;
     margin: 0 auto;
   }
   
-  .trust-badges {
-    justify-content: center;
+  .search-box {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+    margin: 2rem auto;
   }
   
   .hero-stats {
-    justify-content: center;
+    max-width: 500px;
+    margin: 2rem auto;
+  }
+  
+  .hero-image {
+    order: 0;
+  }
+  
+  .image-wrapper {
+    margin: 0 auto;
+    max-width: 90%;
+  }
+  
+  .hero-bg-shape {
+    width: 100%;
+    height: 50%;
+    border-radius: 0 0 50% 50%;
   }
 }
 
 @media (max-width: 768px) {
   .hero {
-    padding-top: 1rem;
+    padding: 5rem 0 3rem;
   }
   
-  .profile-image-wrapper {
-    max-width: 80%;
-    margin: 0 auto;
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+  
+  .hero p {
+    font-size: 1.1rem;
+  }
+  
+  .hero-buttons {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .hero-buttons .btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero {
+    padding: 4rem 0;
+  }
+  
+  .hero h1 {
+    font-size: 2rem;
+  }
+  
+  .hero-stats {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .image-wrapper {
+    max-width: 100%;
   }
 }
 
@@ -468,151 +524,36 @@ const handleFormSubmit = (formData) => {
   border: 2px solid rgba(255, 255, 255, 0.1);
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
   .hero-container {
     grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 1.5rem;
     text-align: center;
-    gap: 3rem;
-    padding: 2rem;
   }
   
-  .hero-content {
-    max-width: 100%;
-    margin: 0 auto;
-    order: 1;
-  }
-  
-  .hero-subtitle {
-    max-width: 100%;
-    margin: 0 auto;
-  }
-  
-  .search-box {
-    grid-template-columns: 1fr;
+  .hero-profile {
     max-width: 500px;
-    margin: 2rem auto;
+    margin: 0 auto;
+  }
+  
+  .trust-badges {
+    justify-content: center;
   }
   
   .hero-stats {
-    max-width: 500px;
-    margin: 2rem auto;
-  }
-  
-  .hero-image {
-    order: 0;
-  }
-  
-  .image-wrapper {
-    margin: 0 auto;
-    max-width: 90%;
-  }
-  
-  .hero-bg-shape {
-    width: 100%;
-    height: 50%;
-    border-radius: 0 0 50% 50%;
-  }
-}
-
-@media (max-width: 576px) {
-  .hero {
-    padding: 4rem 0;
-  }
-  
-  .hero h1 {
-    font-size: 2rem;
-  }
-  
-  .hero-stats {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-  
-  .image-wrapper {
-    max-width: 100%;
+    justify-content: center;
   }
 }
 
 @media (max-width: 768px) {
   .hero {
-    padding: 5rem 0 3rem;
+    padding-top: 1rem;
   }
   
-  .hero h1 {
-    font-size: 2.5rem;
-  }
-  
-  .hero p {
-    font-size: 1.1rem;
-  }
-  
-  .hero-buttons {
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .hero-buttons .btn {
-    width: 100%;
-    text-align: center;
-  }
-}
-
-/* Scroll indicator */
-.scroll-indicator {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  z-index: 3;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  animation: bounce 2s infinite;
-  transition: opacity 0.3s ease;
-}
-
-.scroll-indicator:hover {
-  opacity: 0.8;
-}
-
-.arrow {
-  width: 24px;
-  height: 24px;
-  margin-top: 8px;
-  border-right: 2px solid currentColor;
-  border-bottom: 2px solid currentColor;
-  transform: rotate(45deg);
-  animation: arrowPulse 1.5s infinite;
-}
-
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
-    transform: translateY(0) translateX(-50%);
-  }
-  40% {
-    transform: translateY(-10px) translateX(-50%);
-  }
-  60% {
-    transform: translateY(-5px) translateX(-50%);
-  }
-}
-
-@keyframes arrowPulse {
-  0% {
-    opacity: 0.3;
-    transform: rotate(45deg) translate(-5px, -5px);
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0.3;
-    transform: rotate(45deg) translate(0, 0);
+  .profile-image-wrapper {
+    max-width: 80%;
+    margin: 0 auto;
   }
 }
 </style>
