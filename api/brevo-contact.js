@@ -11,9 +11,22 @@ module.exports = async function handler(req, res) {
     // Get API key from environment (server-side only)
     const apiKey = process.env.BREVO_API_KEY;
     
+    // Debug logging
+    console.log('Environment check:', {
+      hasApiKey: !!apiKey,
+      nodeEnv: process.env.NODE_ENV,
+      allEnvKeys: Object.keys(process.env).filter(k => k.includes('BREVO'))
+    });
+    
     if (!apiKey) {
       console.error('BREVO_API_KEY not configured in Vercel environment');
-      return res.status(500).json({ error: 'Server configuration error' });
+      return res.status(500).json({ 
+        error: 'Server configuration error',
+        debug: {
+          hasApiKey: !!apiKey,
+          availableBrevoKeys: Object.keys(process.env).filter(k => k.includes('BREVO'))
+        }
+      });
     }
 
     // Validate request body
