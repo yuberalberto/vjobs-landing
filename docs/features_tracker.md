@@ -95,8 +95,18 @@ Legend:
     - [] Verify all links are relevant and functional
     - [] Review spelling and grammar site-wide
 
-[F16] - [] Enhance Mobile Experience
+[F16] - [-] Enhance Mobile Experience
     - [] Optimize service cards layout and spacing for mobile
+    - [x] Agregar un botón de menú hamburguesa para mostrar/ocultar la navegación
+    - [x] Ocultar los enlaces de navegación y mostrarlos en un menú desplegable en móviles
+    - [-] Mantener el botón "Diagnóstico inicial gratuito" visible, pero:
+        - [] Ajustar su tamaño para que sea más compacto en móviles
+        - [] Optimizar el padding y márgenes para mejor usabilidad táctil
+        - [] Asegurar que el texto se ajuste correctamente (posiblemente abreviarlo)
+        - [] Mantener su estilo visual consistente con la versión de escritorio
+    - [x] Asegurar transiciones suaves al abrir/cerrar el menú móvil
+    - [] Implementar un cierre automático del menú al hacer clic en un enlace
+    - [] Optimizar el espacio vertical para evitar que el menú ocupe demasiada pantalla
     - [] Improve touch targets (buttons, links, inputs)
     - [] Implement responsive images
         - [] Generate and use optimized image sizes for mobile

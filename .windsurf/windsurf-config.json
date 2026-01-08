@@ -1,0 +1,9 @@
+{
+  "protectedFiles": [
+    ".env",
+    ".gitignore",
+    "package.json",
+    "package-lock.json",
+    "vercel.json"
+  ]
+}
