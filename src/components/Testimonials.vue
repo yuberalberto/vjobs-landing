@@ -10,7 +10,7 @@
             <p>"VJobs helped me find my dream job in tech. The platform is intuitive and the job matching is spot on!"</p>
           </div>
           <div class="testimonial-author">
-            <img src="https://via.placeholder.com/60x60" alt="Sarah Johnson" />
+            <img src="https://picsum.photos/seed/sarah/60/60.jpg" alt="Sarah Johnson" />
             <div class="author-info">
               <h4>Sarah Johnson</h4>
               <p>Software Engineer</p>
@@ -23,7 +23,7 @@
             <p>"As a hiring manager, I've found exceptional talent through VJobs. The quality of candidates is outstanding."</p>
           </div>
           <div class="testimonial-author">
-            <img src="https://via.placeholder.com/60x60" alt="Michael Chen" />
+            <img src="https://picsum.photos/seed/michael/60/60.jpg" alt="Michael Chen" />
             <div class="author-info">
               <h4>Michael Chen</h4>
               <p>HR Director</p>
@@ -36,7 +36,7 @@
             <p>"The career coaching feature helped me transition into a new industry. Highly recommended!"</p>
           </div>
           <div class="testimonial-author">
-            <img src="https://via.placeholder.com/60x60" alt="Emily Rodriguez" />
+            <img src="https://picsum.photos/seed/emily/60/60.jpg" alt="Emily Rodriguez" />
             <div class="author-info">
               <h4>Emily Rodriguez</h4>
               <p>Marketing Manager</p>
