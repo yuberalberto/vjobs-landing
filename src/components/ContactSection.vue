@@ -451,7 +451,8 @@ export default {
 
         if (!response.ok) {
           const errorData = await response.json();
-          throw new Error(errorData.message || 'Error al enviar el formulario');
+          console.error('Brevo API error:', errorData);
+          throw new Error('Error al enviar el formulario');
         }
 
         // Mostrar mensaje de éxito
@@ -464,7 +465,7 @@ export default {
         resetForm();
       } catch (error) {
         console.error('Error al enviar el formulario:', error);
-        showError(error.message || 'Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.');
+        showError('Lo sentimos, tenemos un problema técnico temporal. Por favor, intenta nuevamente en unos minutos o contáctanos directamente.');
       } finally {
         isLoading.value = false;
       }

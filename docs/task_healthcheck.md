@@ -17,10 +17,10 @@ Legend:
     - [x] Documented outdated packages (vue, vue-router, @vitejs/plugin-vue, vue-tel-input)
     - [!] Decide: Update dependencies now or defer to post-launch?
 
-[H2] - [] Vercel Production Health
-    - [] Access Vercel dashboard, verify latest deployment succeeded
-    - [] Check for active alerts or warnings
-    - [] Test live site loads correctly
+[H2] - [x] Vercel Production Health
+    - [x] Access Vercel dashboard, verify latest deployment succeeded
+    - [x] Check for active alerts or warnings
+    - [x] Test live site loads correctly
 
 [H3] - [] Critical Functionality Tests
     - [] Submit contact form → verify Brevo email received
@@ -47,7 +47,7 @@ Legend:
 ## Follow-ups & Findings
 
 - **H1:** Fixed 2 moderate vulnerabilities. Outdated packages identified: vue (3.5.13→3.5.26), vue-router (4.5.1→4.6.4), @vitejs/plugin-vue (4.6.2→6.0.3), vue-tel-input (6.0.5→9.5.1). Decision pending on update timing.
-- **H2:** _Pending_
+- **H2:** Vercel deployment successful after fixing @vitejs/plugin-vue compatibility. No active alerts. Live site loads correctly.
 - **H3:** _Pending_
 - **H4:** _Pending_
 - **H5:** _Pending_

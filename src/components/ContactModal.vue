@@ -477,7 +477,8 @@ const submitForm = async () => {
     
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || 'Error al enviar el formulario');
+      console.error('Brevo API error:', errorData);
+      throw new Error('Error al enviar el formulario');
     }
     
     // Show success briefly then close modal
@@ -496,7 +497,7 @@ const submitForm = async () => {
     }, 1500);
   } catch (error) {
     console.error('Error submitting form:', error);
-    showError(error.message || 'Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.');
+    showError('Lo sentimos, tenemos un problema técnico temporal. Por favor, intenta nuevamente en unos minutos o contáctanos directamente.');
   } finally {
     isLoading.value = false;
   }
