@@ -438,12 +438,10 @@ export default {
           updateEnabled: true
         };
 
-        // Enviar a la API de Brevo
-        const response = await fetch(`${import.meta.env.VITE_BREVO_API_URL}/contacts`, {
+        // Enviar a la API de Brevo via serverless function segura
+        const response = await fetch('/api/brevo-contact', {
           method: 'POST',
           headers: {
-            'accept': 'application/json',
-            'api-key': import.meta.env.VITE_BREVO_API_KEY,
             'content-type': 'application/json'
           },
           body: JSON.stringify(contactData)

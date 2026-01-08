@@ -464,12 +464,10 @@ const submitForm = async () => {
     
     console.log('Sending to Brevo API:', payload);
     
-    // Call Brevo API
-    const response = await fetch(`${import.meta.env.VITE_BREVO_API_URL}/contacts`, {
+    // Call Brevo API via secure serverless function
+    const response = await fetch('/api/brevo-contact', {
       method: 'POST',
       headers: {
-        'accept': 'application/json',
-        'api-key': import.meta.env.VITE_BREVO_API_KEY,
         'content-type': 'application/json'
       },
       body: JSON.stringify(payload)
