@@ -251,7 +251,6 @@ export default {
     async submitForm() {
       // Check honeypot first
       if (this.honeypot) {
-        console.log('Bot detected by honeypot');
         return;
       }
 
@@ -273,7 +272,6 @@ export default {
           updateEnabled: true // Permitir actualizar contactos existentes
         };
         
-        console.log('Enviando a Brevo:', payload);
         
         // Send to Brevo API via secure serverless function
         const response = await fetch('/api/brevo-contact', {
@@ -286,23 +284,20 @@ export default {
         
         // Procesamos la respuesta
         if (response.ok) {
-          console.log('Contacto creado exitosamente en Brevo');
+          // Success - contact created or updated
         } else {
           // Intentamos obtener el mensaje de error
-          let errorMessage = 'Error al enviar el formulario';
+          const errorMessage = 'Error al enviar el formulario';
           try {
             const responseData = await response.json();
-            console.log('Respuesta de error de Brevo:', responseData);
             
             // Si el error es porque el contacto ya existe, lo consideramos un éxito
             if (responseData.message && responseData.message.includes('already associated')) {
-              console.log('El correo ya existe en la lista, continuando como éxito');
               // Continuamos como si fuera exitoso
             } else {
               throw new Error(responseData.message || errorMessage);
             }
-          } catch (parseError) {
-            console.error('Error al procesar la respuesta:', parseError);
+          } catch {
             throw new Error(errorMessage);
           }
         }
@@ -318,8 +313,7 @@ export default {
           this.emailError = '';
         }, 3000);
         
-      } catch (error) {
-        console.error('Error al enviar el formulario a Brevo:', error);
+      } catch {
         this.emailError = 'Ocurrió un error al enviar el formulario. Por favor, inténtalo de nuevo.';
       } finally {
         this.isValidating = false;

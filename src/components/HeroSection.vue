@@ -61,8 +61,7 @@ const aboutMeImage = '/aboutme_img.PNG';
 
 const showModal = ref(false);
 
-const handleFormSubmit = (formData) => {
-  console.log('Form submitted:', formData);
+const handleFormSubmit = () => {
   // Aquí iría la lógica para procesar el formulario
   // Por ejemplo, enviar a un API, mostrar mensaje de éxito, etc.
 };

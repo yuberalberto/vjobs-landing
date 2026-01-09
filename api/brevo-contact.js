@@ -12,14 +12,8 @@ module.exports = async function handler(req, res) {
     const apiKey = process.env.BREVO_API_KEY;
     
     // Debug logging
-    console.log('Environment check:', {
-      hasApiKey: !!apiKey,
-      nodeEnv: process.env.NODE_ENV,
-      allEnvKeys: Object.keys(process.env).filter(k => k.includes('BREVO'))
-    });
     
     if (!apiKey) {
-      console.error('BREVO_API_KEY not configured in Vercel environment');
       return res.status(500).json({ 
         error: 'Server configuration error',
         debug: {
@@ -44,7 +38,6 @@ module.exports = async function handler(req, res) {
       updateEnabled: updateEnabled !== false // default to true
     };
 
-    console.log('Forwarding to Brevo API:', { email, listIds });
 
     // Make request to Brevo API
     const response = await fetch('https://api.brevo.com/v3/contacts', {
@@ -60,7 +53,6 @@ module.exports = async function handler(req, res) {
     // Handle Brevo API response
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      console.error('Brevo API error:', errorData);
       
       // Return generic error to frontend, log details server-side
       return res.status(response.status).json({ 
@@ -79,13 +71,11 @@ module.exports = async function handler(req, res) {
       }
     }
     
-    console.log('Brevo API success:', { email, contactId: result.id || 'created' });
 
     // Return success response
     res.status(200).json({ success: true, ...result });
 
-  } catch (error) {
-    console.error('Serverless function error:', error);
+  } catch {
     res.status(500).json({ error: 'Internal server error' });
   }
 }

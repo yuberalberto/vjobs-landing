@@ -286,7 +286,7 @@ const sanitizeMessage = () => {
   formData.value.message = formData.value.message.replace(/<[^>]*>/g, '');
   
   // Remove control characters and malicious Unicode
-  formData.value.message = formData.value.message.replace(/[\u0000-\u001F\u007F-\u009F\u2000-\u200F\u2028-\u202F]/g, '');
+  formData.value.message = formData.value.message.replace(/[\0-\031\177-\237]/g, '');
   
   // Normalize multiple spaces/line breaks
   formData.value.message = formData.value.message.replace(/\s+/g, ' ');
@@ -422,7 +422,6 @@ const submitForm = async () => {
   
   // Check for honeypot
   if (formData.value.website) {
-    console.log('Honeypot triggered');
     // Show success message to the bot but close modal immediately
     setTimeout(() => {
       closeModal();
@@ -462,7 +461,6 @@ const submitForm = async () => {
       updateEnabled: true
     };
     
-    console.log('Sending to Brevo API:', payload);
     
     // Call Brevo API via secure serverless function
     const response = await fetch('/api/brevo-contact', {
@@ -474,8 +472,7 @@ const submitForm = async () => {
     });
     
     if (!response.ok) {
-      const errorData = await response.json();
-      console.error('Brevo API error:', errorData);
+      await response.json(); // Consume the response body
       throw new Error('Error al enviar el formulario');
     }
     
@@ -493,8 +490,7 @@ const submitForm = async () => {
       closeModal();
       emit('form-success', 'Formulario enviado con éxito');
     }, 1500);
-  } catch (error) {
-    console.error('Error submitting form:', error);
+  } catch {
     showError('Lo sentimos, tenemos un problema técnico temporal. Por favor, intenta nuevamente en unos minutos o contáctanos directamente.');
   } finally {
     isLoading.value = false;

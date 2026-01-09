@@ -294,7 +294,7 @@ export default {
       formData.value.message = formData.value.message.replace(/<[^>]*>/g, '');
       
       // Eliminar caracteres de control y Unicode malicioso
-      formData.value.message = formData.value.message.replace(/[\u0000-\u001F\u007F-\u009F\u2000-\u200F\u2028-\u202F]/g, '');
+      formData.value.message = formData.value.message.replace(/[\0-\031\177-\237]/g, '');
       
       // Reemplazar múltiples espacios/saltos de línea con uno solo
       formData.value.message = formData.value.message.replace(/\s+/g, ' ');
@@ -373,12 +373,7 @@ export default {
 
     // formStatus is already declared above
 
-    const toggleContactMethod = () => {
-      showEmail.value = !showEmail.value;
-      formData.value.phone = '';
-      formData.value.email = '';
-    };
-
+    
     const resetFormStatus = () => {
       formStatus.type = '';
       formStatus.message = '';
@@ -388,7 +383,6 @@ export default {
     const submitForm = async () => {
       // Check honeypot
       if (formData.value.website) {
-        console.log('Honeypot detected possible spam submission');
         return;
       }
 
@@ -422,7 +416,6 @@ export default {
       
       isLoading.value = true;
       
-      console.log('Form submission started with data:', JSON.stringify(formData.value, null, 2));
       
       try {
         // Preparar los datos para Brevo
@@ -448,8 +441,7 @@ export default {
         });
 
         if (!response.ok) {
-          const errorData = await response.json();
-          console.error('Brevo API error:', errorData);
+          await response.json(); // Consume the response body
           throw new Error('Error al enviar el formulario');
         }
 
@@ -461,8 +453,7 @@ export default {
         
         // Resetear el formulario
         resetForm();
-      } catch (error) {
-        console.error('Error al enviar el formulario:', error);
+      } catch {
         showError('Lo sentimos, tenemos un problema técnico temporal. Por favor, intenta nuevamente en unos minutos o contáctanos directamente.');
       } finally {
         isLoading.value = false;
