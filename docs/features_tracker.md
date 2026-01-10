@@ -65,11 +65,8 @@ Legend:
     - [] Verify all links functionality
 
 ### 1.4 Client Customization
-[F11] - [] Client content and branding integration (see client-requirements.md)
-    - [] Update content with client messaging
-    - [] Apply client branding and assets
-    - [] Restructure components per requirements
-    - [] Review and finalize with client
+[F11] - [] Client customizations and requests
+    - [] See detailed tasks in client-requirements.md
 
 ### 1.5 Advanced Features
 [F12] - [] Form auto-save functionality

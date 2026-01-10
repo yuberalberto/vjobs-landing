@@ -27,14 +27,14 @@
       <div class="nav-content" :class="{ 'mobile-visible': isMenuOpen }">
         <div class="nav-links">
           <router-link 
-            v-for="section in ['home', 'services', 'testimonials', 'faqs']"
+            v-for="section in ['services', 'testimonials', 'faqs']"
             :key="section"
             :to="{ path: '/', hash: `#${section}` }"
             class="nav-link"
             :class="{ active: activeSection === section }"
             @click="handleNavClick(section)"
           >
-            {{ section.charAt(0).toUpperCase() + section.slice(1) }}
+            {{ navigationLabels[section] }}
           </router-link>
         </div>
         
@@ -60,9 +60,16 @@ import { useRouter, useRoute } from 'vue-router'
 const router = useRouter()
 const route = useRoute()
 
+// Navigation labels mapping
+const navigationLabels = {
+  'services': 'Soluciones',
+  'testimonials': 'Casos Reales', 
+  'faqs': 'Sobre VJobs'
+}
+
 // Reactive state
 const isScrolled = ref(false)
-const activeSection = ref('home')
+const activeSection = ref(null)
 const isMenuOpen = ref(false)
 
 // Methods
@@ -111,7 +118,7 @@ const handleResize = () => {
 }
 
 const updateActiveSection = () => {
-  const sections = ['home', 'services', 'testimonials', 'contact', 'faqs']
+  const sections = ['services', 'testimonials', 'faqs', 'contact']
   const scrollPosition = window.scrollY + window.innerHeight / 3
 
   for (const section of sections) {
