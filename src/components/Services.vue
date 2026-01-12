@@ -270,7 +270,7 @@ onUnmounted(() => {
   margin: 2rem 0;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 992px) {
   .services-grid {
     grid-template-columns: repeat(2, 1fr);
   }

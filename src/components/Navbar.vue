@@ -386,7 +386,7 @@ onBeforeUnmount(() => {
   }
   
   .navbar-container {
-    padding: 1rem;
+    padding: 0.5rem;
     position: relative;
   }
   

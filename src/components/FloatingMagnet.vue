@@ -656,7 +656,35 @@ export default {
   margin-top: 0.5rem;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 992px) {
+  .floating-magnet-wrapper {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    right: auto;
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: rgba(5, 57, 97, 0.95);
+    backdrop-filter: blur(10px);
+  }
+
+  .floating-button {
+    padding: 0.8rem 1.2rem;
+    border-radius: 12px;
+    max-width: 300px;
+  }
+
+  .minimize-button {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
   .floating-magnet-wrapper {
     bottom: 1rem;
     right: 1rem;

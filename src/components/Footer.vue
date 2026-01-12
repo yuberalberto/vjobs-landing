@@ -384,7 +384,7 @@ h4:hover::after {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 576px) {
   .footer-content {
     grid-template-columns: 1fr;
   }

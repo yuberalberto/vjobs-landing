@@ -752,7 +752,7 @@ h2 {
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 576px) {
   .modal-content {
     padding: 1.5rem;
   }
