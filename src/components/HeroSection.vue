@@ -4,7 +4,6 @@
     <div class="container hero-container">
       <div class="hero-content">
         <div class="trust-badges">
-          <span class="badge"><i class="fas fa-check-circle"></i> Expertos en Transición Laboral</span>
           <span class="badge"><i class="fas fa-star"></i> +100 Profesionales Asesorados</span>
         </div>
         
@@ -156,7 +155,10 @@ const handleFormSubmit = () => {
 /* Ajustes responsivos */
 @media (max-width: 992px) {
   .hero-container {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     gap: 3rem;
     padding: 2rem;
@@ -165,7 +167,24 @@ const handleFormSubmit = () => {
   .hero-content {
     max-width: 100%;
     margin: 0 auto;
-    order: 1;
+    order: 0;
+    text-align: center;
+  }
+  
+  .trust-badges {
+    justify-content: center;
+  }
+  
+  .cta-section {
+    text-align: center;
+  }
+  
+  .hero-stats {
+    justify-content: center;
+  }
+  
+  .btn-cta {
+    margin: 0 auto;
   }
   
   .hero-subtitle {
@@ -184,6 +203,10 @@ const handleFormSubmit = () => {
     margin: 2rem auto;
   }
   
+  .hero-profile {
+    order: 1;
+  }
+  
   .hero-image {
     order: 0;
   }
@@ -197,30 +220,6 @@ const handleFormSubmit = () => {
     width: 100%;
     height: 50%;
     border-radius: 0 0 50% 50%;
-  }
-}
-
-@media (max-width: 768px) {
-  .hero {
-    padding: 5rem 0 3rem;
-  }
-  
-  .hero h1 {
-    font-size: 2.5rem;
-  }
-  
-  .hero p {
-    font-size: 1.1rem;
-  }
-  
-  .hero-buttons {
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .hero-buttons .btn {
-    width: 100%;
-    text-align: center;
   }
 }
 
@@ -523,11 +522,31 @@ const handleFormSubmit = () => {
   border: 2px solid rgba(255, 255, 255, 0.1);
 }
 
-@media (max-width: 1024px) {
-  .hero-container {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    padding: 1.5rem;
+@media (max-width: 768px) {
+  .hero {
+    padding: 5rem 0 3rem;
+    padding-top: 1rem;
+  }
+  
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+  
+  .hero p {
+    font-size: 1.1rem;
+  }
+  
+  .hero-content {
+    padding: 0;
+  }
+  
+  .hero-buttons {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .hero-buttons .btn {
+    width: 100%;
     text-align: center;
   }
   
@@ -543,15 +562,9 @@ const handleFormSubmit = () => {
   .hero-stats {
     justify-content: center;
   }
-}
-
-@media (max-width: 768px) {
-  .hero {
-    padding-top: 1rem;
-  }
   
   .profile-image-wrapper {
-    max-width: 80%;
+    max-width: 260px;
     margin: 0 auto;
   }
 }
