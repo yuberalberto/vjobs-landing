@@ -816,17 +816,4 @@ h2 {
   }
 }
 
-@media (max-width: 576px) {
-  .contact-section {
-    padding: 3rem 0;
-  }
-
-  .contact-container {
-    padding: 1.5rem;
-  }
-
-  h2 {
-    font-size: 1.8rem;
-  }
-}
 </style>

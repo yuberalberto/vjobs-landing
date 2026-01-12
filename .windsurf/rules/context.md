@@ -12,6 +12,12 @@ trigger: always_on
 If any of the above is wrong, ask and update this file before continuing.
 </project_stack>
 
+<project_infrastructure>
+## Infrastructure
+- **Hosting**: Vercel (deployment, serverless functions)
+- **Domain**: registered on Namecheap (DNS pointing to Vercel)
+</project_infrastructure>
+
 <responsive_breakpoints>
 ## Breakpoints
 Use these only. Do not invent new ones.

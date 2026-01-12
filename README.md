@@ -58,10 +58,12 @@ Professional landing page designed to convert visitors into leads and present VJ
   * Contact management
 
 ### Infrastructure
-* **Deployment**: 
-  * Vercel hosting
-  * Serverless functions
+* **Hosting**: 
+  * Vercel hosting (deployment, serverless functions)
   * Environment-based config
+* **Domain**: 
+  * Registered on Namecheap
+  * DNS pointing to Vercel
 
 ## Project Structure
 ```

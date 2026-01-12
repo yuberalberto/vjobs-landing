@@ -656,13 +656,13 @@ export default {
   margin-top: 0.5rem;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 768px) {
   .floating-magnet-wrapper {
     position: fixed;
-    bottom: 0;
+    bottom: 1rem;
     left: 0;
+    right: 1rem;
     width: 100%;
-    right: auto;
     z-index: 999;
     display: flex;
     justify-content: center;
@@ -674,7 +674,7 @@ export default {
   }
 
   .floating-button {
-    padding: 0.8rem 1.2rem;
+    padding: 0.8rem 1rem;
     border-radius: 12px;
     max-width: 300px;
   }
@@ -682,21 +682,10 @@ export default {
   .minimize-button {
     display: none;
   }
-}
-
-@media (max-width: 576px) {
-  .floating-magnet-wrapper {
-    bottom: 1rem;
-    right: 1rem;
-  }
 
   .magnet-modal {
     width: calc(100vw - 2rem);
     margin: 0;
-  }
-
-  .floating-button {
-    padding: 0.8rem 1rem;
   }
 }
 </style>

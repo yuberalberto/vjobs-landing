@@ -4,10 +4,10 @@
     <div class="container hero-container">
       <div class="hero-content">
         <div class="trust-badges">
-          <span class="badge"><i class="fas fa-star"></i> +100 Profesionales Asesorados</span>
+          <span class="badge"><i class="fas fa-star"></i> Especialistas en Transision Laboral y Empleabilidad</span>
         </div>
         
-        <h1>Impulsa tu carrera <span class="highlight">hacia el próximo nivel</span></h1>
+        <h1>Te ayudo a definir una <span class="highlight">estrategia laboral clara y realista</span></h1>
         <p class="hero-subtitle">Te ayudamos a navegar tu transición profesional con estrategias probadas y asesoría personalizada.</p>
         
         <div class="cta-section">
@@ -153,7 +153,7 @@ const handleFormSubmit = () => {
 }
 
 /* Ajustes responsivos */
-@media (max-width: 992px) {
+@media (max-width: 768px) {
   .hero-container {
     display: flex;
     flex-direction: column;
@@ -223,25 +223,6 @@ const handleFormSubmit = () => {
   }
 }
 
-@media (max-width: 576px) {
-  .hero {
-    padding: 4rem 0;
-  }
-  
-  .hero h1 {
-    font-size: 2rem;
-  }
-  
-  .hero-stats {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-  
-  .image-wrapper {
-    max-width: 100%;
-  }
-}
-
 .hero-bg-shape {
   position: absolute;
   top: 0;
@@ -276,13 +257,15 @@ const handleFormSubmit = () => {
   padding: 0.5rem 1rem;
   border-radius: 20px;
   font-size: 0.9rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }
 
 .badge i {
   color: var(--accent-color);
+}
+
+.badge span {
+  font-size: 0.8rem;
+  color: #666;
 }
 
 .cta-section {
@@ -443,9 +426,13 @@ const handleFormSubmit = () => {
 .hero h1 {
   font-size: clamp(2.5rem, 5vw, 3.5rem);
   line-height: 1.2;
-  margin: 0 0 1.5rem 0;
+  margin: 0 auto 1.5rem;
   color: var(--primary-color);
   font-weight: 700;
+  text-align: center;
+  max-width: 15ch;
+  text-wrap: balance;
+  text-wrap: pretty;
 }
 
 .hero-subtitle {

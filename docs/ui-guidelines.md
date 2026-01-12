@@ -35,3 +35,25 @@ Ensure that all changes keep accessibility and visual clarity in mind.
 Use Tailwind CSS if installed. Otherwise, suggest a design token approach.
 
 Goal: visually cohesive, clean, modern, and maintainable UI, with less aggressive orange usage.
+
+## Responsive Breakpoints Strategy
+
+**Updated: January 11, 2026**
+
+The project uses a **two-breakpoint system** for optimal UX across all devices:
+
+### Breakpoint Definitions
+- **Desktop:** >992px - Full desktop layout with all columns and features
+- **Tablet:** 769-992px - Desktop layout adapted for medium screens (includes landscape phones)
+- **Mobile:** ≤768px - Simplified mobile layout (portrait orientation)
+
+### Implementation Rules
+- Use only `@media (max-width: 992px)` and `@media (max-width: 768px)`
+- **Do not use** `@media (max-width: 576px)` - This breakpoint has been deprecated
+- Mobile-first approach: Base styles are for mobile, media queries add complexity for larger screens
+- Test all changes on: mobile portrait (~375px), tablet portrait (~768px), landscape phones (~915px), and desktop (>1200px)
+
+### Rationale
+- Landscape phones (e.g., S24 Ultra at ~915px width) should display desktop layout for better space utilization
+- Single mobile breakpoint (768px) simplifies maintenance while covering all portrait orientations
+- Tablet range (769-992px) provides optimized experience for medium-sized devices

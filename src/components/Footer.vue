@@ -384,22 +384,4 @@ h4:hover::after {
   }
 }
 
-@media (max-width: 576px) {
-  .footer-content {
-    grid-template-columns: 1fr;
-  }
-  
-  .footer-bottom {
-    flex-direction: column;
-  }
-  
-  .legal-links {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  
-  .legal-links span {
-    display: none;
-  }
-}
 </style>
