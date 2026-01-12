@@ -44,7 +44,7 @@
             class="btn btn-primary"
             @click="handleNavClick('contact')"
           >
-            <span class="desktop-text">Diagnóstico inicial gratuito</span>
+            <span class="desktop-text">Diagnóstico<br>Gratuito</span>
             <span class="mobile-text">Contacto</span>
           </router-link>
         </div>
@@ -286,7 +286,15 @@ onBeforeUnmount(() => {
   border-radius: 25px;
   text-decoration: none;
   font-weight: 500;
+  font-size: 0.8em;
+  white-space: normal;
+  text-align: center;
   transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 44px;
 }
 
 .btn-primary:hover {
@@ -381,7 +389,9 @@ onBeforeUnmount(() => {
   }
   
   .desktop-text {
-    display: none;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
   }
   
   .mobile-text {
