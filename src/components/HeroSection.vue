@@ -4,32 +4,28 @@
     <div class="container hero-container">
       <div class="hero-content">
         <div class="trust-badges">
-          <span class="badge"><i class="fas fa-star"></i> Especialistas en Transision Laboral y Empleabilidad</span>
+          <span class="badge"><i class="fas fa-star"></i> Especialistas en Transición Laboral y Empleabilidad</span>
         </div>
         
-        <h1>Te ayudo a definir una <span class="highlight">estrategia laboral clara y realista</span></h1>
-        <p class="hero-subtitle">Te ayudamos a navegar tu transición profesional con estrategias probadas y asesoría personalizada.</p>
+        <h1>Te ayudo a definir <span class="highlight">una estrategia laboral clara y realista</span></h1>
+        <p class="hero-subtitle">Tanto si buscas empleo en Canadá como si quieres transicionar a IT, te ayudo a tomar decisiones informadas que se alineen con tu perfil y las exigencias del mercado actual. <br>Solicita tu sesión diagnóstica gratuita aqui: </p>
         
         <div class="cta-section">
           <button @click="showModal = true" class="btn btn-primary btn-large btn-cta">
             <i class="fas fa-calendar-check"></i>
-            Solicita tu sesión diagnóstica gratuita
+            Diagnostico Gratis
           </button>
           <p class="cta-subtext">Sin compromiso • Cupos limitados</p>
         </div>
 
         <div class="hero-stats">
           <div class="stat-item">
-            <h3>95%</h3>
-            <p>Tasa de Éxito</p>
-          </div>
-          <div class="stat-item">
             <h3>+500</h3>
-            <p>Asesorías</p>
+            <p>Asesorías Profesionales Realizadas</p>
           </div>
           <div class="stat-item">
-            <h3>24/7</h3>
-            <p>Soporte</p>
+            <h3>+16</h3>
+            <p>Profesionales Acompañados en América</p>
           </div>
         </div>
       </div>
@@ -39,8 +35,8 @@
           <img :src="aboutMeImage" alt="Vivian Castellanos - Especialista en Transición Laboral" class="profile-image" />
         </div>
         <div class="profile-message">
-          <p class="intro-text">En VJobs creemos que cada persona tiene un talento que merece ser visto.</p>
-          <p class="personal-message">Mi nombre es <strong>Vivian Castellanos</strong>, una migrante como tú y mi misión es ayudarte a comunicarlo, potenciarlo y abrir el camino hacia un trabajo que te permita crecer en Canadá o en el mundo tecnológico.</p>
+          <p class="intro-text">En VJobs creemos que el talento necesita estrategia para ser visible.</p>
+          <p class="personal-message">Soy <strong>Vivian</strong>, profesional en Recursos Humanos y migrante como tú. Acompaño a profesionales latinos a definir una estrategia clara para comunicar su perfil y avanzar en el mercado laboral o en su transición al sector IT.</p>
         </div>
       </div>
     </div>
@@ -275,20 +271,21 @@ const handleFormSubmit = () => {
 .btn-cta {
   padding: 1.2rem 2rem;
   font-size: 1.1rem;
-  width: 100%;
-  max-width: 400px;
+  width: auto;
+  max-width: none;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.8rem;
   transition: transform 0.2s ease;
+  margin: 0 auto;
 }
 
 .btn-cta:hover {
   transform: translateY(-2px);
 }
 
-.cta-subtext {
+.hero .cta-subtext {
   font-size: 0.9rem;
   color: #666;
   margin-top: 0.8rem;
@@ -401,9 +398,9 @@ const handleFormSubmit = () => {
 
 .hero-stats {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
-  margin-top: 3rem;
+  margin-top: 2rem;
 }
 
 .stat-item {
@@ -426,10 +423,10 @@ const handleFormSubmit = () => {
 .hero h1 {
   font-size: clamp(2.5rem, 5vw, 3.5rem);
   line-height: 1.2;
-  margin: 0 auto 1.5rem;
+  margin: 0 0 1.5rem 0;
   color: var(--primary-color);
   font-weight: 700;
-  text-align: center;
+  text-align: left;
   max-width: 15ch;
   text-wrap: balance;
   text-wrap: pretty;
@@ -441,6 +438,8 @@ const handleFormSubmit = () => {
   color: var(--text-color);
   opacity: 0.9;
   max-width: 90%;
+  text-align: left;
+  margin: 0 0 0 0;
 }
 
 .hero p {
