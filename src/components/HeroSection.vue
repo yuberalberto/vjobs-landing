@@ -12,8 +12,8 @@
         
         <div class="cta-section">
           <button @click="showModal = true" class="btn btn-primary btn-large btn-cta">
-            <i class="fas fa-calendar-check"></i>
-            Diagnostico Gratis
+            Agendar mi Diagnóstico
+            <span class="arrow-icon">→</span>
           </button>
           <p class="cta-subtext">Sin compromiso • Cupos limitados</p>
         </div>
@@ -266,30 +266,55 @@ const handleFormSubmit = () => {
 
 .cta-section {
   margin: 2rem 0;
+  text-align: left;
 }
 
 .btn-cta {
-  padding: 1.2rem 2rem;
+  padding: 1.2rem 2.5rem;
   font-size: 1.1rem;
+  font-weight: 600;
   width: auto;
   max-width: none;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 0.8rem;
-  transition: transform 0.2s ease;
-  margin: 0 auto;
+  transition: all 0.3s ease;
+  margin: 0;
+  
+  /* Modern styling */
+  background: linear-gradient(135deg, var(--primary-color) 0%, #064a7a 100%);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 10px 15px -3px rgba(5, 57, 97, 0.4);
+  
+  /* Arrow icon styling */
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-cta .arrow-icon {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+  font-weight: bold;
 }
 
 .btn-cta:hover {
   transform: translateY(-2px);
+  box-shadow: 0 15px 20px -3px rgba(5, 57, 97, 0.5);
+}
+
+.btn-cta:hover .arrow-icon {
+  transform: translateX(3px);
 }
 
 .hero .cta-subtext {
   font-size: 0.9rem;
   color: #666;
   margin-top: 0.8rem;
-  text-align: center;
+  text-align: left;
 }
 
 .floating-card {
