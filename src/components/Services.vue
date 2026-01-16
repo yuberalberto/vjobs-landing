@@ -2,7 +2,7 @@
   <section class="services" id="services">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag">Nuestros Servicios</span>
+        <span class="section-tag">¿Cómo Te Ayudo?</span>
         <h2>Soluciones para tu éxito profesional</h2>
         <p class="section-subtitle">Elige el plan que mejor se adapte a tus objetivos</p>
       </div>
@@ -239,6 +239,8 @@ onUnmounted(() => {
 .section-header {
   text-align: center;
   margin-bottom: 3rem;
+  position: relative;
+  z-index: 1;
 }
 
 .section-tag {

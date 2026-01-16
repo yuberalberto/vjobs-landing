@@ -62,7 +62,7 @@ const route = useRoute()
 
 // Navigation labels mapping
 const navigationLabels = {
-  'services': 'Soluciones',
+  'services': '¿Cómo Te Ayudo?',
   'testimonials': 'Casos Reales', 
   'faqs': 'Sobre VJobs'
 }

@@ -409,14 +409,14 @@ const handleFormSubmit = () => {
 
 .stat-item h3 {
   color: var(--primary-color);
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
 
-.stat-item p {
+.hero-stats .stat-item p {
   color: var(--text-color);
-  font-size: 0.9rem;
+  font-size: 0.9rem; 
   opacity: 0.8;
 }
 
