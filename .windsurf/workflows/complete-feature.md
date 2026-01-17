@@ -13,7 +13,7 @@ Finish a feature cleanly and update tracking safely.
    - Console errors if applicable
    - Unused imports introduced by the change
 3. Propose a semantic commit message.
-4. Ask whether to update `docs/features_tracker.md` and only do it if approved.
+4. Move task document to `docs-project/archive/archived-tasks/` and only do it if approved.
 5. Provide the end of task summary.
 
 ## Integration with Rules
@@ -32,7 +32,7 @@ Invoke this workflow when:
 
 ## Project-Specific Behavior
 This workflow is specific to VJobs Landing because:
-- It references `docs/features_tracker.md` (project-specific tracking)
+- It references `docs-project/tasks/features_tracker.md` as main tracker (project-specific tracking)
 - It follows the project's conservative approval process
 - It respects the project's tracking structure and IDs
 
@@ -53,9 +53,10 @@ Proposed Commit Messages:
 
 Which commit message do you prefer? (1/2/3)
 
-Update docs/features_tracker.md?
+Update docs-project/features_tracker.md?
 - Mark feature #12 as completed
 - Add completion timestamp
+- Archives completed tasks to `docs-project/archive/archived-tasks/`
 Proceed? (Yes/No)
 
 End of Task Summary:

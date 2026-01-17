@@ -4,7 +4,7 @@
 - [P] Client customizations (see client-requirements.md)
 
 ## 📋 Next
-- [N1] Mobile optimization refinements → `docs/task-mobile-optimization.md`
+- [N1] Mobile optimization refinements → `docs-project/task-mobile-optimization.md`
 - [N2] About page development
 - [N3] Multi-language support (i18n implementation)
 - [N4] Content and copy polish

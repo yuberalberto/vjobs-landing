@@ -11,9 +11,9 @@ Complete subtasks in a task document, archive if fully done, and update main tra
 2. Update the task document to mark specified subtasks as [x]
 3. Check if ALL subtasks in the task document are now [x]
 4. If fully complete:
-   - Move task document to `docs/archive/archived-tasks/`
+   - Move task document to `docs-project/archive/archived-tasks/`
    - Rename file: `archived-[task-name]-YYYY-MM-DD.md`
-   - Update `docs/tasks/features_tracker.md` to move the main task to Done section
+   - Update `docs-project/tasks/features_tracker.md` to move the main task to Done section
 5. If partially complete:
    - Keep task document in current location
    - Update main tracker if needed
@@ -37,14 +37,14 @@ This workflow applies:
 
 ## Project-Specific Behavior
 This workflow is specific to VJobs Landing because:
-- Uses `docs/tasks/features_tracker.md` as main tracker
-- Archives completed tasks to `docs/archive/archived-tasks/`
+- Uses `docs-project/tasks/features_tracker.md` as main tracker
+- Archives completed tasks to `docs-project/archive/archived-tasks/`
 - Follows the project's task ID system ([P], [N1], [B1], etc.)
 - Respects the task document structure
 
 ## File Structure
 ```
-docs/
+docs-project/
 ├── tasks/
 │   ├── features_tracker.md     # Main tracker
 │   └── task-[task-name].md      # Individual task documents
@@ -57,10 +57,10 @@ docs/
 ```
 Input: /complete-task P P5,P6
 
-1. Reading docs/task-mobile-optimization.md
+1. Reading docs-project/task-mobile-optimization.md
 2. Marking P5 and P6 as [x]
 3. Checking completion status: All 6 subtasks now [x] ✓
-4. Moving to archive: docs/archive/archived-tasks/archived-mobile-optimization-2026-01-11.md
+4. Moving to archive: docs-project/archive/archived-tasks/archived-mobile-optimization-2026-01-11.md
 5. Updating main tracker: Moving [P] to Done section
 6. Summary: Task fully completed and archived
 ```
@@ -68,7 +68,7 @@ Input: /complete-task P P5,P6
 ## Safety Checks
 - Verify task document exists before editing
 - Confirm subtask IDs are valid
-- Check archive directory exists (docs/archive/archived-tasks/)
+- Check archive directory exists (docs-project/archive/archived-tasks/)
 - Backup task document before moving
 - Verify main tracker update is correct
 - Ensure no filename conflicts in archive directory

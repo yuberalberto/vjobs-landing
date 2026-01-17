@@ -29,7 +29,7 @@ Use these only. Do not invent new ones.
 
 <project_tracking>
 ## Tracking
-Single source of truth: `docs/features_tracker.md`
+Single source of truth: `docs-project/features_tracker.md`
 
 Rules:
 - Update it only after explicit user confirmation
@@ -40,7 +40,7 @@ Rules:
 
 <documentation_scope>
 ## Docs scope
-- Treat `docs/archive/` as historical reference only
+- Treat `docs-project/archive/` as historical reference only
 - Prefer current docs unless the user asks otherwise
 - When in doubt, ask which documentation version to use
 </documentation_scope>
