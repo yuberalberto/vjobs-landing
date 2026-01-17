@@ -32,7 +32,7 @@ Always test changes across all breakpoints before considering the task complete.
 - Ensure changes work across all defined breakpoints
 - Maintain visual consistency with existing components
 - Check for accessibility issues
-- Follow the UI guidelines in `docs/ui-guidelines.md` to ensure consistency
+- Follow the UI guidelines in `docs-project/ui-guidelines.md` to ensure consistency
 </ui_consistency>
 
 
