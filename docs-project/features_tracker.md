@@ -1,7 +1,8 @@
 # VJobs Landing - Progress Tracker
 
 ## 🔥 Progress
-- [P] Client customizations (see client-requirements.md)
+- [P1] Client customizations
+- [P2] Refactor services section → `docs-project/refactor-services-section.md`
 
 ## 📋 Next
 - [N1] Mobile optimization refinements → `docs-project/task-mobile-optimization.md`
@@ -16,6 +17,7 @@
 - [B4] Form auto-save functionality
 - [B5] Google Analytics setup
 - [B6] Performance monitoring
+- [B7] **[Tab Buttons Mobile Block](bugs/tab-buttons-mobile-block.md)** - Partially resolved, needs investigation
 
 ## ✅ Done
 - [D1] Responsive navbar with progress bar

@@ -3,230 +3,135 @@
     <div class="container">
       <div class="section-header">
         <span class="section-tag">¿Cómo Te Ayudo?</span>
-        <h2>Soluciones para tu éxito profesional</h2>
-        <p class="section-subtitle">Elige el plan que mejor se adapte a tus objetivos</p>
+        <h2>Elige tu ruta y descubre el plan ideal para ti</h2>
+              </div>
+
+      <div class="tab-selector">
+        <button 
+          @click="switchPath('canada')"
+          :class="{ 'tab-active': activePath === 'canada' }"
+          class="tab-button"
+        >
+          <i class="fas fa-flag"></i>
+          Busco Empleo En Canadá
+        </button>
+        <button 
+          @click="switchPath('it')"
+          :class="{ 'tab-active': activePath === 'it' }"
+          class="tab-button"
+        >
+          <i class="fas fa-laptop-code"></i>
+          Quiero Transicionar a IT
+        </button>
       </div>
-      
-      <div class="services-grid">
+
+      <transition name="fade" mode="out-in">
+        <div :key="activePath" class="dynamic-content">
+          <div class="pain-points-section">
+            <h3 class="pain-points-title">{{ servicesData[activePath].checklistTitle }}</h3>
+            <div class="pain-points-checklist">
+              <div class="checklist-column">
+                <div 
+                  v-for="(point, index) in currentContent.painPoints.slice(0, 2)" 
+                  :key="index"
+                  class="checklist-item"
+                >
+                  <div class="checklist-icon">
+                    <i class="fas fa-check"></i>
+                  </div>
+                  <p class="checklist-text">{{ point }}</p>
+                </div>
+              </div>
+              <div class="checklist-column">
+                <div 
+                  v-for="(point, index) in currentContent.painPoints.slice(2)" 
+                  :key="index + 2"
+                  class="checklist-item"
+                >
+                  <div class="checklist-icon">
+                    <i class="fas fa-check"></i>
+                  </div>
+                  <p class="checklist-text">{{ point }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="pain-points-title">Elige tu plan y desbloquea tu siguiente etapa profesional:</h3>
+
+          <div class="services-grid">
         <div 
-          v-for="(service, index) in services" 
+          v-for="(plan, index) in services" 
           :key="index"
           class="service-card"
-          :class="{ 'featured': service.featured }"
-          @mouseover="hoveredService = index"
-          @mouseleave="hoveredService = null"
+          :class="{ 'featured': plan.featured }"
         >
           <div class="service-content">
-            <div class="service-header">
-              <div class="service-icon">
-                <i :class="service.icon"></i>
-              </div>
-              <div class="service-badge" v-if="service.badge">
-                {{ service.badge }}
+            <div class="service-badge" v-if="plan.featured">
+              Más Popular
+            </div>
+
+            <h3>{{ plan.name.toUpperCase() }}{{ activePath === 'canada' ? ' - CA' : ' - IT' }}</h3>
+            <p class="service-subtitle">{{ plan.subtitle }}</p>
+            
+            <div class="service-pricing">
+              <div class="price">
+                <span class="amount">{{ plan.price }}</span>
               </div>
             </div>
 
-            <h3>{{ service.title }}</h3>
-            <p class="service-description">{{ service.shortDescription }}</p>
-
             <ul class="service-benefits">
-              <li v-for="(benefit, idx) in service.benefits" :key="idx">
+              <li v-for="(feature, idx) in plan.features" :key="idx">
                 <i class="fas fa-check"></i>
-                {{ benefit }}
+                {{ feature }}
               </li>
             </ul>
 
-            <div class="service-pricing" v-if="service.pricing">
-              <div class="price">
-                <span class="currency">$</span>
-                <span class="amount">{{ service.pricing.amount }}</span>
-                <span class="period">/{{ service.pricing.period }}</span>
-              </div>
-            </div>
-
             <button 
               class="btn btn-service" 
-              :class="service.featured ? 'btn-primary' : 'btn-outline'"
-              @click.stop="openService(index)"
+              :class="plan.featured ? 'btn-primary' : 'btn-outline'"
+              @click="acquireService(plan)"
             >
-              {{ service.buttonText }}
+              {{ plan.buttonText }}
               <i class="fas fa-arrow-right"></i>
             </button>
           </div>
         </div>
       </div>
+        </div>
+      </transition>
 
       <div class="services-footer">
         <p class="guarantee">
           <i class="fas fa-shield-alt"></i>
-          Garantía de satisfacción del 100% • Cancela en cualquier momento
+          Pago único y seguro • Cupos limitados por mes para garantizar la calidad del servicio.
         </p>
       </div>
     </div>
 
-    <!-- Service Popup -->
-    <div v-if="currentService !== null" class="service-popup-overlay" @click.self="closePopup">
-      <div class="service-popup">
-        <button class="close-btn" @click="closePopup">
-          <i class="fas fa-times"></i>
-        </button>
-        
-        <div class="popup-content">
-          <div class="popup-icon">
-            <i :class="services[currentService].icon"></i>
-          </div>
-          <h3>{{ services[currentService].title }}</h3>
-          <p class="popup-description">{{ services[currentService].description }}</p>
-          
-          <div class="popup-actions">
-            <button class="action-btn primary-btn" @click="acquireService">
-              Adquirir Servicio
-              <i class="fas fa-arrow-right"></i>
-            </button>
-          </div>
-          
-          <div class="popup-navigation">
-            <button 
-              class="nav-btn prev-btn" 
-              @click="navigate(-1)"
-              :disabled="currentService === 0"
-            >
-              <i class="fas fa-chevron-left"></i> Previous
-            </button>
-            <div class="pagination">
-              {{ currentService + 1 }} / {{ services.length }}
-            </div>
-            <button 
-              class="nav-btn next-btn" 
-              @click="navigate(1)"
-              :disabled="currentService === services.length - 1"
-            >
-              Next <i class="fas fa-chevron-right"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
   </section>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, computed } from 'vue';
+import { servicesData, generateWhatsAppUrl } from '@/data/services.js';
 
-const services = [
-  {
-    title: 'Sesión Diagnóstica',
-    icon: 'fas fa-compass',
-    badge: 'Gratuita',
-    shortDescription: 'Evalúa tu situación actual y define tu plan de acción personalizado.',
-    description: 'En esta sesión gratuita, analizaremos tu perfil profesional, objetivos y desafíos actuales para crear un plan de acción efectivo.',
-    benefits: [
-      'Evaluación personalizada',
-      'Plan de acción inicial',
-      'Sin compromiso'
-    ],
-    buttonText: 'Agendar Sesión',
-    featured: false
-  },
-  {
-    title: 'Plan Profesional',
-    icon: 'fas fa-rocket',
-    badge: 'Más Popular',
-    shortDescription: 'Asesoría completa para tu transición profesional exitosa.',
-    description: 'Programa integral que incluye coaching personalizado, revisión de CV, preparación para entrevistas y estrategia de búsqueda laboral.',
-    benefits: [
-      '4 sesiones de coaching',
-      'Optimización de LinkedIn y CV',
-      'Simulación de entrevistas',
-      'Acceso a red de contactos'
-    ],
-    pricing: {
-      amount: '299',
-      period: 'mes'
-    },
-    buttonText: 'Comenzar Ahora',
-    featured: true
-  },
-  {
-    title: 'Mentoría IT',
-    icon: 'fas fa-laptop-code',
-    shortDescription: 'Guía especializada para tu transición al sector tecnológico.',
-    description: 'Programa diseñado para profesionales que buscan hacer una transición exitosa al sector IT, con mentores expertos en la industria.',
-    benefits: [
-      'Mentor IT personalizado',
-      'Plan de estudio adaptado',
-      'Proyectos prácticos',
-      'Conexiones en la industria'
-    ],
-    pricing: {
-      amount: '399',
-      period: 'mes'
-    },
-    buttonText: 'Explorar Programa',
-    featured: false
-  },
-  {
-    title: 'Empleo en Canadá',
-    icon: 'fas fa-flag',
-    shortDescription: 'Estrategia integral para encontrar trabajo en Canadá.',
-    description: 'Programa especializado para profesionales que buscan oportunidades laborales en Canadá, incluyendo asesoría migratoria y laboral.',
-    benefits: [
-      'Asesoría migratoria',
-      'Búsqueda laboral local',
-      'Preparación cultural',
-      'Red de contactos en Canadá'
-    ],
-    pricing: {
-      amount: '499',
-      period: 'mes'
-    },
-    buttonText: 'Más Información',
-    featured: false
-  }
-];
+const activePath = ref('canada'); // Smart default
 
-const currentService = ref(null);
-const hoveredService = ref(null);
+// Computed property for current content
+const currentContent = computed(() => servicesData[activePath.value]);
 
-const openService = (index) => {
-  currentService.value = index;
-  document.body.style.overflow = 'hidden'; // Prevent scrolling when popup is open
+// Convert plans array to flat services for current template compatibility
+const services = computed(() => currentContent.value.plans);
+
+const switchPath = (path) => {
+  activePath.value = path;
 };
 
-const closePopup = () => {
-  currentService.value = null;
-  document.body.style.overflow = ''; // Re-enable scrolling
+const acquireService = (plan) => {
+  const whatsappUrl = generateWhatsAppUrl(activePath.value, plan.name);
+  window.open(whatsappUrl, '_blank');
 };
-
-const navigate = (direction) => {
-  const newIndex = currentService.value + direction;
-  if (newIndex >= 0 && newIndex < services.length) {
-    currentService.value = newIndex;
-  }
-};
-
-const acquireService = () => {
-  // Lógica para adquirir el servicio
-  alert(`¡Has solicitado el servicio: ${services[currentService.value].title}`);
-  // Aquí podrías redirigir a un formulario de contacto o carrito de compras
-};
-
-// Close popup when pressing Escape key
-const handleKeyDown = (e) => {
-  if (e.key === 'Escape' && currentService.value !== null) {
-    closePopup();
-  }
-};
-
-// Add event listener for Escape key
-onMounted(() => {
-  window.addEventListener('keydown', handleKeyDown);
-});
-
-// Remove event listener when component is unmounted
-onUnmounted(() => {
-  window.removeEventListener('keydown', handleKeyDown);
-});
 </script>
 
 <style scoped>
@@ -247,9 +152,9 @@ onUnmounted(() => {
   display: inline-block;
   background-color: rgba(102, 154, 207, 0.1);
   color: var(--accent-color);
-  padding: 0.5rem 1rem;
+  padding: 0.35rem 0.75rem;
   border-radius: 20px;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   margin-bottom: 1rem;
 }
 
@@ -265,16 +170,160 @@ onUnmounted(() => {
   opacity: 0.8;
 }
 
+/* Tab Selector Styles */
+.tab-selector {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 3rem 0 2rem;
+}
+
+.tab-button {
+  padding: 1rem 2rem;
+  border: 2px solid var(--primary-color);
+  background: white;
+  color: var(--primary-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tab-button:hover {
+  background: rgba(102, 154, 207, 0.1);
+  transform: translateY(-2px);
+}
+
+.tab-button.tab-active {
+  background: var(--primary-color);
+  color: white;
+  box-shadow: 0 4px 12px rgba(5, 57, 97, 0.2);
+}
+
+/* Dynamic Content Wrapper */
+.dynamic-content {
+  margin-top: 2rem;
+}
+
+/* Pain Points Section */
+.pain-points-section {
+  margin-bottom: 2rem;
+  padding: 1rem 0;
+}
+
+.pain-points-title {
+  text-align: center;
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  margin-bottom: 0;
+}
+
+.pain-points-checklist {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(5, 57, 97, 0.05);
+}
+
+.checklist-column {
+  padding: 0;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+}
+
+.checklist-icon {
+  color: #ff6b35;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.checklist-text {
+  margin: 0;
+  color: var(--text-color);
+  line-height: 1.3;
+  font-size: 0.85rem;
+}
+
+/* Services Grid - Updated for 3 columns */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   margin: 2rem 0;
+}
+
+/* Transition Animations */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fade-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .pain-points-checklist {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 768px) {
   .services-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .tab-selector {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .tab-button {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .tab-button:hover {
+    transform: none;
+  }
+  
+  .tab-button {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  
+  .pain-points-section {
+    padding: 1.5rem;
+  }
+  
+  .pain-points-title {
+    font-size: 1.25rem;
   }
 }
 
@@ -290,7 +339,7 @@ onUnmounted(() => {
 
 .service-card.featured {
   border: 2px solid var(--accent-color);
-  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(102, 154, 207, 0.2);
 }
 
 .service-card:hover {
@@ -307,6 +356,8 @@ onUnmounted(() => {
   border-radius: 12px;
   height: 100%;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 .service-header {
@@ -330,26 +381,33 @@ onUnmounted(() => {
 }
 
 .service-badge {
-  background-color: rgba(214, 125, 9, 0.1);
-  color: var(--secondary-color);
+  background-color: rgba(214, 125, 9, 0.9);
+  color: white;
   padding: 0.5rem 1rem;
   border-radius: 20px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  border: 1px solid rgba(214, 125, 9, 0.2);
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
 }
 
 .service-card h3 {
-  font-size: 1.5rem;
+  font-size: 2.2rem;
   color: var(--primary-color);
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+  text-align: left;
+  font-weight: 600;
 }
 
-.service-description {
+.service-subtitle {
   color: var(--text-color);
   opacity: 0.8;
   margin-bottom: 1.5rem;
-  line-height: 1.6;
+  line-height: 1.4;
+  text-align: left;
+  font-size: 1.05rem;
 }
 
 .service-benefits {
@@ -360,15 +418,17 @@ onUnmounted(() => {
 
 .service-benefits li {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  align-items: flex-start;
+  gap: 0.75rem;
   margin-bottom: 0.75rem;
   color: var(--text-color);
+  font-size: 1rem;
 }
 
 .service-benefits i {
-  color: var(--accent-color);
-  font-size: 0.9rem;
+  color: #4A90E2;
+  font-size: 1rem;
+  margin-top: 0.2rem;
 }
 
 .service-pricing {
@@ -389,7 +449,7 @@ onUnmounted(() => {
 
 .amount {
   font-size: 2.5rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--primary-color);
 }
 
@@ -400,17 +460,19 @@ onUnmounted(() => {
 
 .btn-service {
   width: 100%;
-  padding: 1rem;
+  padding: 1rem 1.5rem;
+  border: none;
   border-radius: 8px;
   font-size: 1rem;
   font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  border: none;
+  margin-top: auto;
 }
 
 .btn-primary {
