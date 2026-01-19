@@ -5,53 +5,52 @@ export const servicesData = {
     tabText: 'Ver Ruta 1',
     checklistTitle: 'Si tu busqueda de empleo se siente como:',
     painPoints: [
-      'Tengo CV, pero no genera llamadas.',
-      'Mi perfil no está adaptado al mercado canadiense.',
-      'Aplico a vacantes, pero LinkedIn no me da visibilidad.',
-      'No tengo experiencia laboral canadiense y no sé cómo compensarlo.',
-      'No sé si estoy aplicando a los roles correctos.',
-      'Llego a entrevistas, pero no avanzo.'
+      'Envías aplicaciones constantemente, pero tu CV y LinkedIn no generan llamadas.',
+      'Sientes que te descartan automáticamente por falta de "Experiencia Canadiense".',
+      'Dudas si estás aplicando a los roles correctos para tu nivel profesional.',
+      'Logras conseguir entrevistas, pero te cuesta avanzar hasta la oferta final.'
     ],
     plans: [
       {
-        name: 'Plan Profesional',
-        price: '$299/mes',
+        name: 'STARTER',
+        subtitle: 'Optimiza lo que ya tienes',
+        price: '$90 CAD',
         features: [
-          '4 sesiones de coaching',
-          'Optimización de LinkedIn y CV',
-          'Simulación de entrevistas',
-          'Acceso a red de contactos'
+          'Sin sesiones en vivo (Diagnóstico escrito)',
+          'Revisión de tu CV actual',
+          'Auditoría escrita de LinkedIn',
+          'Detección de errores críticos'
         ],
-        whatsappUrl: 'wa.me/1234567890?text=Interesado en Plan Profesional para Canadá',
-        buttonText: 'Comenzar Ahora',
-        featured: true
-      },
-      {
-        name: 'Plan Canada VIP',
-        price: '$499/mes',
-        features: [
-          'Todo Plan Profesional +',
-          'Asesoría migratoria personalizada',
-          'Búsqueda laboral local',
-          'Preparación cultural',
-          'Red exclusiva de contactos en Canadá'
-        ],
-        whatsappUrl: 'wa.me/1234567890?text=Interesado en Plan Canada VIP',
-        buttonText: 'Más Información',
+        whatsappUrl: 'wa.me/1234567890?text=Interesado en STARTER para Canadá',
+        buttonText: 'Pedir Diagnóstico',
         featured: false
       },
       {
-        name: 'Plan Premium Canada',
-        price: '$699/mes',
+        name: 'BUILDER',
+        subtitle: 'Tu perfil profesional desde cero',
+        price: '$160 CAD',
         features: [
-          'Todo Plan Canada VIP +',
-          'Acompañamiento completo',
-          'Soporte prioritario 24/7',
-          'Garantía de resultados',
-          'Acceso exclusivo a eventos'
+          'Sesión Estratégica 1:1 (En vivo)',
+          'Redacción de CV ATS desde cero',
+          'Optimización de LinkedIn interactiva',
+          'Evaluación de mercado laboral'
         ],
-        whatsappUrl: 'wa.me/1234567890?text=Interesado en Plan Premium Canada',
-        buttonText: 'Solicitar Info',
+        whatsappUrl: 'wa.me/1234567890?text=Interesado en BUILDER para Canadá',
+        buttonText: 'Agendar Sesión',
+        featured: true
+      },
+      {
+        name: 'VISIBILITY',
+        subtitle: 'Acompañamiento hasta la entrevista',
+        price: '$220 CAD',
+        features: [
+          'Todo lo del plan Builder +',
+          'Estrategia de búsqueda personalizada',
+          'Simulacro de Entrevista real',
+          'Soporte continuo'
+        ],
+        whatsappUrl: 'wa.me/1234567890?text=Interesado en VISIBILITY para Canadá',
+        buttonText: 'Quiero el Pack Completo',
         featured: false
       }
     ]
@@ -62,50 +61,52 @@ export const servicesData = {
     tabText: 'Ver Ruta 2',
     checklistTitle: 'Si tu transicion a IT se siente como:',
     painPoints: [
-      'No tengo experiencia técnica',
-      'No sé qué tecnología aprender',
-      'Mi edad puede ser un impedimento'
+      'Tienes experiencia previa, pero tu CV luce "Junior" ante los reclutadores.',
+      'Terminaste un Bootcamp o carrera, pero no consigues entrevistas reales.',
+      'Tienes estudios en IT, pero nunca ejerciste o estás fuera del área.',
+      'No sabes qué rol (QA, Data, Support, Dev) es tu mejor puerta de entrada.'
     ],
     plans: [
       {
-        name: 'Plan Profesional',
-        price: '$299/mes',
+        name: 'Starter',
+        subtitle: 'Enfoque para tu perfil actual',
+        price: '$90',
         features: [
-          '4 sesiones de coaching',
-          'Optimización de LinkedIn y CV',
-          'Simulación de entrevistas',
-          'Acceso a red de contactos'
+          'Diagnóstico escrito (sin sesiones en vivo)',
+          'Revisión de CV con enfoque Tech',
+          'Análisis de coherencia (Formación vs Rol)',
+          'Feedback de LinkedIn para IT'
         ],
-        whatsappUrl: 'wa.me/1234567890?text=Interesado en Plan Profesional para IT',
-        buttonText: 'Comenzar Ahora',
-        featured: true
-      },
-      {
-        name: 'Mentoría IT',
-        price: '$399/mes',
-        features: [
-          'Mentor IT personalizado',
-          'Plan de estudio adaptado',
-          'Proyectos prácticos',
-          'Conexiones en la industria',
-          'Preparación técnica específica'
-        ],
-        whatsappUrl: 'wa.me/1234567890?text=Interesado en Mentoría IT',
-        buttonText: 'Explorar Programa',
+        whatsappUrl: 'wa.me/1234567890?text=Interesado en Starter para IT',
+        buttonText: 'Pedir Diagnóstico',
         featured: false
       },
       {
-        name: 'Bootcamp IT Intensivo',
-        price: '$599/mes',
+        name: 'Builder',
+        subtitle: 'Define tu Rol y Estrategia',
+        price: '$160',
         features: [
-          'Todo Mentoría IT +',
-          'Programa intensivo acelerado',
-          'Portfolio profesional completo',
-          'Certificaciones incluidas',
-          'Job placement assistance'
+          'Sesión de Definición de Rol 1:1 (En vivo)',
+          'Roadmap de habilidades y prioridades',
+          'Redacción de CV IT alineado al rol',
+          'Traducción de habilidades transferibles'
         ],
-        whatsappUrl: 'wa.me/1234567890?text=Interesado en Bootcamp IT Intensivo',
-        buttonText: 'Ver Detalles',
+        whatsappUrl: 'wa.me/1234567890?text=Interesado en Builder para IT',
+        buttonText: 'Definir mi Rol',
+        featured: true
+      },
+      {
+        name: 'Visibility',
+        subtitle: 'Domina tu Narrativa y Pitch',
+        price: '$220',
+        features: [
+          'Todo lo del plan Builder +',
+          'Storytelling de transición profesional',
+          'Elevator Pitch para entrevistas',
+          'Estrategia para defender tu perfil'
+        ],
+        whatsappUrl: 'wa.me/1234567890?text=Interesado en Visibility para IT',
+        buttonText: 'Quiero el Pack Completo',
         featured: false
       }
     ]

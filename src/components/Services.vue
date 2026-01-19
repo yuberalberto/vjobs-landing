@@ -32,7 +32,7 @@
             <div class="pain-points-checklist">
               <div class="checklist-column">
                 <div 
-                  v-for="(point, index) in currentContent.painPoints.slice(0, 3)" 
+                  v-for="(point, index) in currentContent.painPoints.slice(0, 2)" 
                   :key="index"
                   class="checklist-item"
                 >
@@ -44,8 +44,8 @@
               </div>
               <div class="checklist-column">
                 <div 
-                  v-for="(point, index) in currentContent.painPoints.slice(3)" 
-                  :key="index + 3"
+                  v-for="(point, index) in currentContent.painPoints.slice(2)" 
+                  :key="index + 2"
                   class="checklist-item"
                 >
                   <div class="checklist-icon">
@@ -57,7 +57,7 @@
             </div>
           </div>
 
-          <h3 class="pain-points-title">Hemos diseñado 3 niveles de intensidad para resolver estos bloqueos:</h3>
+          <h3 class="pain-points-title">Elige tu plan y desbloquea tu siguiente etapa profesional:</h3>
 
           <div class="services-grid">
         <div 
@@ -67,17 +67,18 @@
           :class="{ 'featured': plan.featured }"
         >
           <div class="service-content">
-            <div class="service-header">
-              <div class="service-icon">
-                <i class="fas fa-rocket"></i>
-              </div>
-              <div class="service-badge" v-if="plan.featured">
-                Más Popular
-              </div>
+            <div class="service-badge" v-if="plan.featured">
+              Más Popular
             </div>
 
-            <h3>{{ plan.name }}</h3>
-            <p class="service-description">{{ currentContent.title }}</p>
+            <h3>{{ plan.name.toUpperCase() }}{{ activePath === 'canada' ? ' - CA' : ' - IT' }}</h3>
+            <p class="service-subtitle">{{ plan.subtitle }}</p>
+            
+            <div class="service-pricing">
+              <div class="price">
+                <span class="amount">{{ plan.price }}</span>
+              </div>
+            </div>
 
             <ul class="service-benefits">
               <li v-for="(feature, idx) in plan.features" :key="idx">
@@ -85,12 +86,6 @@
                 {{ feature }}
               </li>
             </ul>
-
-            <div class="service-pricing">
-              <div class="price">
-                <span class="amount">{{ plan.price }}</span>
-              </div>
-            </div>
 
             <button 
               class="btn btn-service" 
@@ -109,7 +104,7 @@
       <div class="services-footer">
         <p class="guarantee">
           <i class="fas fa-shield-alt"></i>
-          Garantía de satisfacción del 100% • Cancela en cualquier momento
+          Pago único y seguro • Cupos limitados por mes para garantizar la calidad del servicio.
         </p>
       </div>
     </div>
@@ -335,7 +330,7 @@ const acquireService = (plan) => {
 
 .service-card.featured {
   border: 2px solid var(--accent-color);
-  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(102, 154, 207, 0.2);
 }
 
 .service-card:hover {
@@ -352,6 +347,8 @@ const acquireService = (plan) => {
   border-radius: 12px;
   height: 100%;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 .service-header {
@@ -375,26 +372,33 @@ const acquireService = (plan) => {
 }
 
 .service-badge {
-  background-color: rgba(214, 125, 9, 0.1);
-  color: var(--secondary-color);
+  background-color: rgba(214, 125, 9, 0.9);
+  color: white;
   padding: 0.5rem 1rem;
   border-radius: 20px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  border: 1px solid rgba(214, 125, 9, 0.2);
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
 }
 
 .service-card h3 {
-  font-size: 1.5rem;
+  font-size: 2.2rem;
   color: var(--primary-color);
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+  text-align: left;
+  font-weight: 600;
 }
 
-.service-description {
+.service-subtitle {
   color: var(--text-color);
   opacity: 0.8;
   margin-bottom: 1.5rem;
-  line-height: 1.6;
+  line-height: 1.4;
+  text-align: left;
+  font-size: 1.05rem;
 }
 
 .service-benefits {
@@ -405,15 +409,17 @@ const acquireService = (plan) => {
 
 .service-benefits li {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  align-items: flex-start;
+  gap: 0.75rem;
   margin-bottom: 0.75rem;
   color: var(--text-color);
+  font-size: 1rem;
 }
 
 .service-benefits i {
-  color: var(--accent-color);
-  font-size: 0.9rem;
+  color: #4A90E2;
+  font-size: 1rem;
+  margin-top: 0.2rem;
 }
 
 .service-pricing {
@@ -434,7 +440,7 @@ const acquireService = (plan) => {
 
 .amount {
   font-size: 2.5rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--primary-color);
 }
 
@@ -445,17 +451,19 @@ const acquireService = (plan) => {
 
 .btn-service {
   width: 100%;
-  padding: 1rem;
+  padding: 1rem 1.5rem;
+  border: none;
   border-radius: 8px;
   font-size: 1rem;
   font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  border: none;
+  margin-top: auto;
 }
 
 .btn-primary {
