@@ -2,7 +2,7 @@
 
 ## 🔥 Progress
 - [P1] Client customizations
-- [P2] Refactor services section → `docs-project/refactor-services-section.md`
+- [P2] **COMPLETED** Refactor services section with tabbed interface, WhatsApp integration, and rate limiting
 
 ## 📋 Next
 - [N1] Mobile optimization refinements → `docs-project/task-mobile-optimization.md`
@@ -17,7 +17,7 @@
 - [B4] Form auto-save functionality
 - [B5] Google Analytics setup
 - [B6] Performance monitoring
-- [B7] **[Tab Buttons Mobile Block](bugs/tab-buttons-mobile-block.md)** - Partially resolved, needs investigation
+- [B7] **[Tab Buttons Mobile Block](bugs/tab-buttons-mobile-block.md)** - Partially resolved, needs monitoring
 
 ## ✅ Done
 - [D1] Responsive navbar with progress bar
@@ -29,7 +29,11 @@
 - [D7] Form validation and security (sanitization, honeypot)
 - [D8] UI animations and interactions
 - [D9] Mobile menu implementation
+- [D10] **Services section refactor** - Tabbed interface, WhatsApp integration, rate limiting
+- [D11] **WhatsApp protection** - Number obfuscation, cooldown, click limits
+- [D12] **Toast notifications** - Contextual messages with scroll blocking
+- [D13] **Modal scroll blocking** - All modals now properly block body scroll
 
 ---
-**Last updated**: January 15, 2026
-**Current branch**: feature/improve-navbar
+**Last updated**: January 19, 2026
+**Current branch**: refactor/services-section

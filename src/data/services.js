@@ -21,7 +21,7 @@ export const servicesData = {
           'Auditoría escrita de LinkedIn',
           'Detección de errores críticos'
         ],
-        whatsappUrl: 'wa.me/1234567890?text=Interesado en STARTER para Canadá',
+        whatsappUrl: 'wa.me/19057827346?text=Interesado en STARTER para Canadá',
         buttonText: 'Pedir Diagnóstico',
         featured: false
       },
@@ -35,7 +35,7 @@ export const servicesData = {
           'Optimización de LinkedIn interactiva',
           'Evaluación de mercado laboral'
         ],
-        whatsappUrl: 'wa.me/1234567890?text=Interesado en BUILDER para Canadá',
+        whatsappUrl: 'wa.me/19057827346?text=Interesado en BUILDER para Canadá',
         buttonText: 'Agendar Sesión',
         featured: true
       },
@@ -49,7 +49,7 @@ export const servicesData = {
           'Simulacro de Entrevista real',
           'Soporte continuo'
         ],
-        whatsappUrl: 'wa.me/1234567890?text=Interesado en VISIBILITY para Canadá',
+        whatsappUrl: 'wa.me/19057827346?text=Interesado en VISIBILITY para Canadá',
         buttonText: 'Quiero el Pack Completo',
         featured: false
       }
@@ -77,7 +77,7 @@ export const servicesData = {
           'Análisis de coherencia (Formación vs Rol)',
           'Feedback de LinkedIn para IT'
         ],
-        whatsappUrl: 'wa.me/1234567890?text=Interesado en Starter para IT',
+        whatsappUrl: 'wa.me/19057827346?text=Interesado en Starter para IT',
         buttonText: 'Pedir Diagnóstico',
         featured: false
       },
@@ -91,7 +91,7 @@ export const servicesData = {
           'Redacción de CV IT alineado al rol',
           'Traducción de habilidades transferibles'
         ],
-        whatsappUrl: 'wa.me/1234567890?text=Interesado en Builder para IT',
+        whatsappUrl: 'wa.me/19057827346?text=Interesado en Builder para IT',
         buttonText: 'Definir mi Rol',
         featured: true
       },
@@ -105,19 +105,10 @@ export const servicesData = {
           'Elevator Pitch para entrevistas',
           'Estrategia para defender tu perfil'
         ],
-        whatsappUrl: 'wa.me/1234567890?text=Interesado en Visibility para IT',
+        whatsappUrl: 'wa.me/19057827346?text=Interesado en Visibility para IT',
         buttonText: 'Quiero el Pack Completo',
         featured: false
       }
     ]
   }
-}
-
-// Helper function to generate WhatsApp URLs
-export const generateWhatsAppUrl = (path, planName) => {
-  const pathData = servicesData[path]
-  if (!pathData) return '#'
-  
-  const plan = pathData.plans.find(p => p.name === planName)
-  return plan ? plan.whatsappUrl : '#'
 }

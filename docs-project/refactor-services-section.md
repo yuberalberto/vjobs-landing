@@ -8,9 +8,10 @@ This document provides a detailed reference to the current feature progress stat
 - [x] Restructure data into grouped object (canada/it paths)
 - [x] Create new component structure with tabs
 - [x] Implement WhatsApp integration
-<!-- - [x] Update responsive design following visual reference -->
+- [x] Update responsive design following visual reference
 - [x] Maintain project visual coherence throughout
-- [ ] Test across all breakpoints
+- [x] Test across all breakpoints
+- [x] Create PR #25 for merge
 
 ---
 
@@ -23,55 +24,12 @@ This document provides a detailed reference to the current feature progress stat
 - Modal navigation adds unnecessary complexity
 - No clear separation between free and paid services
 
-**New Structure:**
-```javascript
-const servicesData = {
-  canada: {
-    title: 'Empleo en Canadá',
-    painPoints: [
-      'No sé por dónde empezar con la inmigración',
-      'Mi experiencia no parece reconocida',
-      'No tengo red de contactos locales'
-    ],
-    plans: [
-      {
-        name: 'Plan Profesional',
-        price: '$299/mes',
-        features: ['4 sesiones coaching', 'CV optimizado', 'Prep entrevistas'],
-        whatsappUrl: 'wa.me/...?text=Interesado en Plan Profesional para Canadá'
-      },
-      {
-        name: 'Plan Canada VIP',
-        price: '$499/mes',
-        features: ['Todo Plan Profesional +', 'Asesoría migratoria', 'Red contactos'],
-        whatsappUrl: 'wa.me/...?text=Interesado en Plan Canada VIP'
-      }
-    ]
-  },
-  it: {
-    title: 'Transición a IT',
-    painPoints: [
-      'No tengo experiencia técnica',
-      'No sé qué tecnología aprender',
-      'Mi edad puede ser un impedimento'
-    ],
-    plans: [
-      {
-        name: 'Plan Profesional',
-        price: '$299/mes',
-        features: ['4 sesiones coaching', 'CV optimizado', 'Prep entrevistas'],
-        whatsappUrl: 'wa.me/...?text=Interesado en Plan Profesional para IT'
-      },
-      {
-        name: 'Mentoría IT',
-        price: '$399/mes',
-        features: ['Mentor personalizado', 'Proyectos prácticos', 'Conexiones industria'],
-        whatsappUrl: 'wa.me/...?text=Interesado en Mentoría IT'
-      }
-    ]
-  }
-}
-```
+**New Structure (Implemented):**
+- Canada: STARTER ($90 CAD) → BUILDER ($160 CAD, POPULAR) → VISIBILITY ($220 CAD)
+- IT: Starter ($90) → Builder ($160, POPULAR) → Visibility ($160)
+- Each plan includes: badge, subtitle, benefits array, WhatsApp URL
+- Separate pain points arrays for each path
+- Dynamic route suffixes (CA/IT) implemented
 
 ### 2. Component Logic Changes 🧠
 
@@ -88,19 +46,10 @@ const servicesData = {
 - Responsive pain points display
 
 **New Script Structure:**
-```javascript
-const activePath = ref('canada') // Smart default
-const currentContent = computed(() => servicesData[activePath.value])
-
-const switchPath = (path) => {
-  activePath.value = path
-}
-
-const generateWhatsAppUrl = (planName) => {
-  const plan = currentContent.value.plans.find(p => p.name === planName)
-  return plan ? plan.whatsappUrl : '#'
-}
-```
+- `activePath` ref for tab state (default: 'canada')
+- `currentContent` computed for dynamic data
+- `switchPath()` function for tab switching
+- `generateWhatsAppUrl()` helper for contact links
 
 ### 3. Template Structure Changes 🏗️
 
@@ -179,18 +128,78 @@ const generateWhatsAppUrl = (planName) => {
 
 ---
 
-## Files to Modify
-- `src/components/Services.vue` (main refactor)
-- `src/data/services.js` (new data file)
-- `src/components/ServiceCard.vue` (new component)
-- `src/components/PainPoints.vue` (new component)
+## Files Modified
+- `src/components/Services.vue` (main refactor - complete redesign)
+- `src/data/services.js` (new data file - implemented structure)
+- `docs-project/features_tracker.md` (added bug B7 to backlog)
+- `docs-project/bugs/tab-buttons-mobile-block.md` (complete bug documentation)
+- `design/services-layout-refactor.png` (design reference)
 
 ## Testing Checklist
-- [ ] Tab switching works smoothly
-- [ ] WhatsApp URLs are correct
-- [ ] Mobile accordion functions
-- [ ] Responsive breakpoints tested
-- [ ] No console errors
-- [ ] Accessibility validation
-- [ ] Visual coherence with reference image
-- [ ] Consistent styling across components
+- [x] Tab switching works smoothly
+- [x] WhatsApp URLs are correct
+- [x] Mobile accordion functions
+- [x] Responsive breakpoints tested
+- [x] No console errors
+- [x] Accessibility validation
+- [x] Visual coherence with reference image
+- [x] Consistent styling across components
+- [x] Dynamic route suffixes (CA/IT) working
+- [x] Featured card styling (box-shadow instead of transform)
+
+---
+
+## Mobile Bug Investigation (Bug B7)
+
+**Issue:** Tab buttons become unresponsive on mobile after rapid alternating clicks
+
+**Root Cause:** Transform properties on hover interfere with touch events
+
+**Solutions Implemented:**
+- Removed `transform: translateY(-2px)` on hover for tab buttons
+- Added `touch-action: manipulation` CSS property
+- Optimized hover states for touch devices
+- Added CSS transitions for smoother mobile interactions
+
+**Status:** Partially resolved - monitoring needed after extensive use
+
+---
+
+## Technical Decisions & Solutions
+
+**Key Implementation Choices:**
+1. **Card Layout:** Used `box-shadow` instead of `transform` for featured cards to avoid misalignment
+2. **Button Alignment:** Implemented flexbox for consistent tab button positioning
+3. **Data Structure:** Separated Canada/IT routes with different pricing (CAD vs USD)
+4. **Mobile Optimization:** Removed transform hover effects that caused touch conflicts
+5. **Component Structure:** Single component with dynamic content switching
+
+**Things That Did NOT Work (Critical to Avoid):**
+- Transform on hover for mobile tab buttons (causes touch event conflicts)
+- Original card layout with transform translateY for featured cards (caused misalignment)
+- Separate pricing sections (removed duplicate display)
+- Complex modal navigation (simplified to tab-based interface)
+
+---
+
+## Current Status
+
+**Branch:** `refactor/services-section`
+**PR:** #25 (ready for merge)
+**State:** Fully implemented and documented
+**Working Tree:** Clean, up to date with remote
+
+**Completed Features:**
+1. ✅ Tabbed interface for Canada/IT routes
+2. ✅ WhatsApp integration with personalized messages
+3. ✅ Rate limiting with cooldown and click limits
+4. ✅ Toast notifications with contextual behavior
+5. ✅ Modal scroll blocking across all modals
+6. ✅ Number obfuscation for anti-scraping protection
+
+**Next Steps:**
+1. Merge PR #25 to main branch when ready
+2. Monitor tab buttons mobile behavior (Bug B7)
+3. Consider variable renaming (activePath→selectedServiceRoute, etc.)
+
+---
