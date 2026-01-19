@@ -17,6 +17,7 @@
 - [B4] Form auto-save functionality
 - [B5] Google Analytics setup
 - [B6] Performance monitoring
+- [B7] **[Tab Buttons Mobile Block](bugs/tab-buttons-mobile-block.md)** - Partially resolved, needs investigation
 
 ## ✅ Done
 - [D1] Responsive navbar with progress bar

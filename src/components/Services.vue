@@ -309,6 +309,15 @@ const acquireService = (plan) => {
     justify-content: center;
   }
   
+  .tab-button:hover {
+    transform: none;
+  }
+  
+  .tab-button {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  
   .pain-points-section {
     padding: 1.5rem;
   }
