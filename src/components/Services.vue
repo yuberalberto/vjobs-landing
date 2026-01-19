@@ -109,12 +109,33 @@
       </div>
     </div>
 
+    <!-- Toast Notification -->
+    <transition name="toast-fade">
+      <div v-if="showToast" class="toast-notification" :class="`toast-${toastType}`" @click.stop>
+        <i class="fas" :class="toastType === 'warning' ? 'fa-clock' : 'fa-info-circle'"></i>
+        <span>{{ toastMessage }}</span>
+        <button v-if="toastType === 'info'" @click="showToast = false" class="toast-close">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </transition>
+    
+    <!-- Toast overlay for info type -->
+    <div v-if="showToast && toastType === 'info'" class="toast-overlay" @click="showToast = false"></div>
+
   </section>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { servicesData, generateWhatsAppUrl } from '@/data/services.js';
+import { ref, computed, watch } from 'vue';
+import { servicesData } from '@/data/services.js';
+
+// Rate limiting configuration
+// 🔧 DEVELOPMENT FLAG: Change to true to enable rate limiting in production
+const ENABLE_RATE_LIMIT = true;
+const COOLDOWN_MS = 3000; // 3 seconds between clicks
+const MAX_CLICKS = 3; // Maximum clicks per session
+const RESET_AFTER_MS = 180000; // Reset counter after 3 minutes of inactivity
 
 const activePath = ref('canada'); // Smart default
 
@@ -124,12 +145,97 @@ const currentContent = computed(() => servicesData[activePath.value]);
 // Convert plans array to flat services for current template compatibility
 const services = computed(() => currentContent.value.plans);
 
+// Rate limiting state
+const lastClickTime = ref(0);
+const clickCount = ref(0);
+
+// Toast notification state
+const showToast = ref(false);
+const toastMessage = ref('');
+const toastType = ref('warning');
+
+const displayToast = (message, type = 'warning') => {
+  toastMessage.value = message;
+  toastType.value = type;
+  showToast.value = true;
+  
+  // Block scroll for info type (limit reached toast)
+  if (type === 'info') {
+    document.body.style.overflow = 'hidden';
+  }
+  
+  // Only auto-dismiss warning toasts, info toasts stay until closed
+  if (type === 'warning') {
+    setTimeout(() => {
+      showToast.value = false;
+    }, 3000);
+  }
+};
+
+// Watch for toast changes to handle scroll blocking
+watch(() => showToast.value, (newValue) => {
+  if (!newValue) {
+    // Toast is closing, restore scroll
+    document.body.style.overflow = '';
+  }
+});
+
 const switchPath = (path) => {
   activePath.value = path;
 };
 
+const generateSecureWhatsAppUrl = (path, planName, price) => {
+  // Obfuscated phone number (anti-scraping protection)
+  const p1 = '1226';
+  const p2 = '698';
+  const p3 = '5787';
+  const phoneNumber = p1 + p2 + p3;
+  
+  let message = '';
+  const routeName = path === 'canada' ? 'Empleo en Canadá' : 'Transición a IT';
+  
+  if (planName.toUpperCase() === 'STARTER' || planName === 'Starter') {
+    message = `Hola VJobs, estoy interesado en el Plan ${planName} (${price}) de ${routeName}. Necesito el diagnóstico escrito.`;
+  } else if (planName.toUpperCase() === 'BUILDER' || planName === 'Builder') {
+    message = `Hola VJobs, quiero el Plan ${planName} (${price}) de ${routeName}. Necesito agendar la sesión estratégica 1:1.`;
+  } else if (planName.toUpperCase() === 'VISIBILITY' || planName === 'Visibility') {
+    message = `Hola VJobs, me interesa el Plan ${planName} (${price}) de ${routeName}. Quiero el acompañamiento completo hasta la entrevista.`;
+  }
+  
+  const encodedMessage = encodeURIComponent(message);
+  return `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+};
+
 const acquireService = (plan) => {
-  const whatsappUrl = generateWhatsAppUrl(activePath.value, plan.name);
+  // Apply rate limiting only if enabled
+  if (ENABLE_RATE_LIMIT) {
+    const now = Date.now();
+    
+    // Reset counter if enough time has passed (3 minutes)
+    if (lastClickTime.value > 0 && now - lastClickTime.value > RESET_AFTER_MS) {
+      clickCount.value = 0;
+    }
+    
+    // Check cooldown period
+    if (now - lastClickTime.value < COOLDOWN_MS) {
+      const remainingSeconds = Math.ceil((COOLDOWN_MS - (now - lastClickTime.value)) / 1000);
+      displayToast(`Por favor espera ${remainingSeconds} segundo(s) antes de contactar nuevamente.`, 'warning');
+      return;
+    }
+    
+    // Check click limit
+    if (clickCount.value >= MAX_CLICKS) {
+      displayToast('Has alcanzado el límite de contactos. Si necesitas ayuda, escríbenos a hola@vjobs.ca', 'info');
+      return;
+    }
+    
+    // Update tracking counters
+    lastClickTime.value = now;
+    clickCount.value++;
+  }
+  
+  // Generate secure WhatsApp URL and open
+  const whatsappUrl = generateSecureWhatsAppUrl(activePath.value, plan.name, plan.price);
   window.open(whatsappUrl, '_blank');
 };
 </script>
@@ -646,6 +752,120 @@ const acquireService = (plan) => {
   font-weight: 500;
 }
 
+/* Toast Notification Styles */
+.toast-notification {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  background: white;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(5, 57, 97, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 9999;
+  max-width: 400px;
+  border-left: 4px solid var(--accent-color);
+}
+
+.toast-notification i {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.toast-notification span {
+  color: var(--text-color);
+  font-size: 0.95rem;
+  line-height: 1.4;
+  user-select: text;
+  cursor: text;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  opacity: 0.5;
+  cursor: pointer;
+  padding: 0.25rem;
+  margin-left: 0.5rem;
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
+}
+
+.toast-close:hover {
+  opacity: 1;
+}
+
+.toast-close i {
+  font-size: 1rem;
+}
+
+.toast-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(5, 57, 97, 0.3);
+  z-index: 9998;
+  backdrop-filter: blur(2px);
+}
+
+.toast-warning {
+  border-left-color: #ff6b35;
+}
+
+.toast-warning i {
+  color: #ff6b35;
+}
+
+.toast-info {
+  border-left-color: var(--accent-color);
+  z-index: 9999;
+}
+
+.toast-info i {
+  color: var(--accent-color);
+}
+
+.toast-info span {
+  cursor: text;
+  user-select: text;
+}
+
+/* Toast animations */
+.toast-fade-enter-active {
+  animation: toast-slide-in 0.3s ease-out;
+}
+
+.toast-fade-leave-active {
+  animation: toast-slide-out 0.3s ease-in;
+}
+
+@keyframes toast-slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes toast-slide-out {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
 /* Animations */
 @keyframes fadeIn {
   from { opacity: 0; }
@@ -664,6 +884,17 @@ const acquireService = (plan) => {
 
   .services-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .toast-notification {
+    top: 1rem;
+    right: 1rem;
+    left: 1rem;
+    max-width: none;
+  }
+  
+  .toast-close {
+    padding: 0.5rem;
     gap: 1.5rem;
     margin: 1rem 0;
   }

@@ -157,6 +157,10 @@ watch(() => props.modelValue, (newValue) => {
     // Modal is opening, reset everything
     resetForm();
     resetFormStatus();
+    document.body.style.overflow = 'hidden';
+  } else {
+    // Modal is closing, restore scroll
+    document.body.style.overflow = '';
   }
 });
 
