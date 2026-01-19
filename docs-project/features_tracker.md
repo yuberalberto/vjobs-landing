@@ -1,7 +1,8 @@
 # VJobs Landing - Progress Tracker
 
 ## 🔥 Progress
-- [P] Client customizations (see client-requirements.md)
+- [P1] Client customizations
+- [P2] Refactor services section → `docs-project/refactor-services-section.md`
 
 ## 📋 Next
 - [N1] Mobile optimization refinements → `docs-project/task-mobile-optimization.md`
