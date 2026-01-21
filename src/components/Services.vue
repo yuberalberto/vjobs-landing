@@ -127,7 +127,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, nextTick } from 'vue';
 import { servicesData } from '@/data/services.js';
 
 // Rate limiting configuration
@@ -144,6 +144,9 @@ const currentContent = computed(() => servicesData[activePath.value]);
 
 // Convert plans array to flat services for current template compatibility
 const services = computed(() => currentContent.value.plans);
+
+// Throttling state to prevent transition accumulation
+let isTransitioning = false;
 
 // Rate limiting state
 const lastClickTime = ref(0);
@@ -180,8 +183,23 @@ watch(() => showToast.value, (newValue) => {
   }
 });
 
-const switchPath = (path) => {
+const switchPath = async (path) => {
+  // Ignore if already on this path
+  if (activePath.value === path) return;
+  
+  // Prevent rapid switching during transition
+  if (isTransitioning) return;
+  
+  isTransitioning = true;
   activePath.value = path;
+  
+  // Wait for Vue to complete DOM updates
+  await nextTick();
+  
+  // Minimal delay to prevent double-clicks, much shorter than before
+  setTimeout(() => {
+    isTransitioning = false;
+  }, 50); // Reduced from 150ms to 50ms
 };
 
 const generateSecureWhatsAppUrl = (path, planName, price) => {
@@ -376,7 +394,7 @@ const acquireService = (plan) => {
 /* Transition Animations */
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.15s ease, transform 0.15s ease; /* Reduced from 0.3s to prevent accumulation */
 }
 
 .fade-enter-from {
@@ -413,6 +431,7 @@ const acquireService = (plan) => {
   .tab-button {
     width: 100%;
     justify-content: center;
+    transition: none !important; /* Disable transitions on mobile to prevent accumulation */
   }
   
   .tab-button:hover {
@@ -422,6 +441,8 @@ const acquireService = (plan) => {
   .tab-button {
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
   }
   
   .pain-points-section {
