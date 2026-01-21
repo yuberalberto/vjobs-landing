@@ -1,14 +1,14 @@
 # VJobs Landing - Progress Tracker
 
 ## 🔥 Progress
-- [P1] Client customizations
-- [P2] **COMPLETED** Refactor services section with tabbed interface, WhatsApp integration, and rate limiting
+- [P1] Replace contact form with Calendly widget → `docs-project/calendly-integration.md`
 
 ## 📋 Next
-- [N1] Mobile optimization refinements → `docs-project/task-mobile-optimization.md`
-- [N2] About page development
-- [N3] Multi-language support (i18n implementation)
-- [N4] Content and copy polish
+- [N1] Client customizations
+- [N2] Mobile optimization refinements → `docs-project/task-mobile-optimization.md`
+- [N3] About page development
+- [N4] Multi-language support (i18n implementation)
+- [N5] Content and copy polish
 
 ## 🔮 Backlog
 - [B1] Basic SEO (meta tags, sitemap, robots.txt)
@@ -36,4 +36,4 @@
 
 ---
 **Last updated**: January 20, 2026
-**Current branch**: refactor/services-section
+**Current branch**: main
