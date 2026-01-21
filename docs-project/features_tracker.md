@@ -17,7 +17,6 @@
 - [B4] Form auto-save functionality
 - [B5] Google Analytics setup
 - [B6] Performance monitoring
-- [B7] **[Tab Buttons Mobile Block](bugs/tab-buttons-mobile-block.md)** - Partially resolved, needs monitoring
 
 ## ✅ Done
 - [D1] Responsive navbar with progress bar
@@ -33,7 +32,8 @@
 - [D11] **WhatsApp protection** - Number obfuscation, cooldown, click limits
 - [D12] **Toast notifications** - Contextual messages with scroll blocking
 - [D13] **Modal scroll blocking** - All modals now properly block body scroll
+- [D14] **Tab Buttons Mobile Block Bug** - Completely resolved with optimized throttling and CSS transitions
 
 ---
-**Last updated**: January 19, 2026
+**Last updated**: January 20, 2026
 **Current branch**: refactor/services-section

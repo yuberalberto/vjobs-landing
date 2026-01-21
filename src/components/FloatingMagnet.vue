@@ -333,6 +333,7 @@ export default {
   flex-direction: column;
   align-items: flex-end;
   gap: 0.5rem;
+  pointer-events: none; /* Prevent wrapper from blocking clicks */
 }
 
 .floating-button {
@@ -348,6 +349,7 @@ export default {
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  pointer-events: auto; /* Re-enable pointer events for the button itself */
 }
 
 .button-content {
@@ -380,6 +382,7 @@ export default {
   border-radius: inherit;
   z-index: 1;
   transform: scale(1.2);
+  pointer-events: none; /* Prevent pulse effect from blocking clicks */
 }
 
 .floating-button:hover {
@@ -428,6 +431,7 @@ export default {
   top: -34px;
   z-index: 1001;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  pointer-events: auto; /* Re-enable pointer events for minimize button */
 }
 
 .minimize-button:hover {

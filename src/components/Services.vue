@@ -181,6 +181,10 @@ watch(() => showToast.value, (newValue) => {
 });
 
 const switchPath = (path) => {
+  // Ignore if already on this path (prevents unnecessary re-renders)
+  if (activePath.value === path) return;
+  
+  // Simply switch the path - no throttling needed for tabs
   activePath.value = path;
 };
 
@@ -297,6 +301,9 @@ const acquireService = (plan) => {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  position: relative;
+  z-index: 1001;
+  pointer-events: auto !important;
 }
 
 .tab-button:hover {
@@ -376,7 +383,7 @@ const acquireService = (plan) => {
 /* Transition Animations */
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.15s ease, transform 0.15s ease; /* Reduced from 0.3s to prevent accumulation */
 }
 
 .fade-enter-from {
@@ -400,6 +407,22 @@ const acquireService = (plan) => {
   }
 }
 
+/* Touch device optimizations - applies to ANY device with touch capability */
+@media (hover: none) and (pointer: coarse) {
+  .tab-button {
+    transition: none !important; /* Disable transitions on touch devices to prevent blocking */
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  
+  .tab-button:hover {
+    transform: none;
+  }
+}
+
+/* Responsive layout - screen size based */
 @media (max-width: 768px) {
   .services-grid {
     grid-template-columns: 1fr;
@@ -413,15 +436,6 @@ const acquireService = (plan) => {
   .tab-button {
     width: 100%;
     justify-content: center;
-  }
-  
-  .tab-button:hover {
-    transform: none;
-  }
-  
-  .tab-button {
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
   }
   
   .pain-points-section {
@@ -720,6 +734,8 @@ const acquireService = (plan) => {
   align-items: center;
   gap: 0.5rem;
   transition: all 0.3s ease;
+  z-index: 1000;
+  pointer-events: auto !important;
 }
 
 .nav-btn:disabled {
