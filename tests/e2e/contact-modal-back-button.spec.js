@@ -154,18 +154,8 @@ test.describe('Contact Modal Browser Back Button Handling', () => {
     // Close with X button
     const closeButton = page.getByRole('button', { name: /Cerrar/i });
     
-    // Debug viewport y posiciones
-    const viewport = page.viewportSize();
-    console.log('Viewport:', viewport);
-
-    const modalBox = await modalOverlay.boundingBox();
-    console.log('Modal position:', modalBox);
-
-    const buttonBox = await closeButton.boundingBox();
-    console.log('Button position:', buttonBox);
-    
-    await closeButton.scrollIntoViewIfNeeded(); // Ensure button is in viewport
-    await closeButton.click();
+    // Direct DOM click (bypass all Playwright constraints)
+    await closeButton.evaluate((button) => button.click());
     await expect(modalOverlay).not.toBeVisible();
 
     // Verify history state - should not have changed

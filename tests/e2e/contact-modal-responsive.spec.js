@@ -52,7 +52,7 @@ test.describe('Contact Modal Responsive Testing', () => {
       await ctaButton.click();
       
       let modalContent = page.locator('.modal-content');
-      let mobileStyles = await modalContent.evaluate((el) => {
+      const mobileStyles = await modalContent.evaluate((el) => {
         const styles = window.getComputedStyle(el);
         return {
           height: styles.height,
@@ -61,7 +61,8 @@ test.describe('Contact Modal Responsive Testing', () => {
         };
       });
       
-      expect(mobileStyles.height).toContain('vh');
+      expect(mobileStyles.height).toMatch(/\d+\.?\d*px/);
+      expect(parseFloat(mobileStyles.height)).toBeGreaterThan(500); // Should be ~600px for mobile viewport
       expect(mobileStyles.position).toBe('absolute');
 
       // Close modal
@@ -136,11 +137,13 @@ test.describe('Contact Modal Responsive Testing', () => {
         };
       });
 
-      expect(modalStyles.height).toContain('vh'); // Should be viewport-based
+      expect(modalStyles.height).toMatch(/\d+\.?\d*px/); // Should be viewport-based
+      expect(parseFloat(modalStyles.height)).toBeGreaterThan(500); // Should be ~566px for 85vh of 667px
       expect(modalStyles.position).toBe('absolute');
       expect(modalStyles.bottom).toBe('0px');
       expect(modalStyles.borderRadius).toBe('16px 16px 0px 0px');
-      expect(modalStyles.width).toBe('100%');
+      expect(modalStyles.width).toMatch(/\d+\.?\d*px/); // Width calculated as pixels
+      expect(parseFloat(modalStyles.width)).toBeGreaterThan(500); // Should be ~600px for mobile
     });
 
     test('should have visible border-radius on mobile', async ({ page }) => {
@@ -184,7 +187,8 @@ test.describe('Contact Modal Responsive Testing', () => {
       });
 
       expect(widgetStyles.minWidth).toBe('100%');
-      expect(widgetStyles.height).toContain('calc'); // Should be calculated
+      expect(widgetStyles.height).toMatch(/\d+\.?\d*px/); // Should be calculated
+      expect(parseFloat(widgetStyles.height)).toBeGreaterThan(400); // Should be ~470px
       expect(widgetStyles.borderRadius).toBe('8px');
     });
 
@@ -206,7 +210,8 @@ test.describe('Contact Modal Responsive Testing', () => {
         };
       });
 
-      expect(modalStyles.height).toContain('vh'); // Should be viewport-based
+      expect(modalStyles.height).toMatch(/\d+\.?\d*px/); // Should be viewport-based
+      expect(parseFloat(modalStyles.height)).toBeGreaterThan(450); // Should be ~511px for 90vh of 568px
       expect(modalStyles.borderRadius).toBe('12px 12px 0px 0px');
       expect(modalStyles.paddingTop).toBe('12px');
     });
@@ -243,7 +248,7 @@ test.describe('Contact Modal Responsive Testing', () => {
 
       // Verify desktop layout
       let modalContent = page.locator('.modal-content');
-      let desktopStyles = await modalContent.evaluate((el) => {
+      const desktopStyles = await modalContent.evaluate((el) => {
         return window.getComputedStyle(el).maxWidth;
       });
       expect(desktopStyles).toBe('600px');
@@ -263,7 +268,8 @@ test.describe('Contact Modal Responsive Testing', () => {
           position: styles.position
         };
       });
-      expect(mobileStyles.height).toContain('vh'); // Should be viewport-based
+      expect(mobileStyles.height).toMatch(/\d+\.?\d*px/); // Should be viewport-based
+      expect(parseFloat(mobileStyles.height)).toBeGreaterThan(500); // Should be ~600px for mobile viewport
       expect(mobileStyles.position).toBe('absolute');
     });
   });
@@ -299,6 +305,8 @@ test.describe('Contact Modal Responsive Testing', () => {
       // Check for console errors
       page.on('console', (message) => {
         if (message.type() === 'error') {
+          // Log console errors for debugging
+          // eslint-disable-next-line no-console
           console.log('Console error:', message.text());
         }
       });

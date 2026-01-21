@@ -1,0 +1,283 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - navigation [ref=e5]:
+    - generic [ref=e6]:
+      - link "VJobs Logo" [ref=e8] [cursor=pointer]:
+        - /url: /
+        - img "VJobs Logo" [ref=e9]
+      - button "Toggle menu" [ref=e10] [cursor=pointer]:
+        - generic [ref=e11]: 
+  - generic [ref=e13]:
+    - generic [ref=e15]:
+      - generic [ref=e17]:
+        - generic [ref=e18]:
+          - generic [ref=e20]:
+            - generic [ref=e21]: 
+            - text: Especialistas en Transición Laboral y Empleabilidad
+          - heading "Te ayudo a definir una estrategia laboral clara y realista" [level=1] [ref=e22]:
+            - text: Te ayudo a definir
+            - generic [ref=e23]: una estrategia laboral clara y realista
+          - paragraph [ref=e24]:
+            - text: Tanto si buscas empleo en Canadá como si quieres transicionar a IT, te ayudo a tomar decisiones informadas que se alineen con tu perfil y las exigencias del mercado actual.
+            - text: "Solicita tu sesión diagnóstica gratuita aqui:"
+          - generic [ref=e25]:
+            - button "Agendar mi Diagnóstico →" [active] [ref=e26] [cursor=pointer]:
+              - text: Agendar mi Diagnóstico
+              - generic [ref=e27]: →
+            - paragraph [ref=e28]: Sin compromiso • Cupos limitados
+          - generic [ref=e29]:
+            - generic [ref=e30]:
+              - heading "+500" [level=3] [ref=e31]
+              - paragraph [ref=e32]: Asesorías Profesionales Realizadas
+            - generic [ref=e33]:
+              - heading "+16" [level=3] [ref=e34]
+              - paragraph [ref=e35]: Profesionales Acompañados en América
+        - generic [ref=e36]:
+          - img "Vivian Castellanos - Especialista en Transición Laboral" [ref=e38]
+          - generic [ref=e39]:
+            - paragraph [ref=e40]: En VJobs creemos que el talento necesita estrategia para ser visible.
+            - paragraph [ref=e41]:
+              - text: Soy
+              - strong [ref=e42]: Vivian
+              - text: ", profesional en Recursos Humanos y migrante como tú. Acompaño a profesionales latinos a definir una estrategia clara para comunicar su perfil y avanzar en el mercado laboral o en su transición al sector IT."
+      - button "Cerrar [X]" [ref=e48] [cursor=pointer]
+    - generic [ref=e51]:
+      - generic [ref=e52]:
+        - generic [ref=e53]: ¿Cómo Te Ayudo?
+        - heading "Elige tu ruta y descubre el plan ideal para ti" [level=2] [ref=e54]
+      - generic [ref=e55]:
+        - button " Busco Empleo En Canadá" [ref=e56] [cursor=pointer]:
+          - generic [ref=e57]: 
+          - text: Busco Empleo En Canadá
+        - button " Quiero Transicionar a IT" [ref=e58] [cursor=pointer]:
+          - generic [ref=e59]: 
+          - text: Quiero Transicionar a IT
+      - generic [ref=e60]:
+        - generic [ref=e61]:
+          - heading "Si tu busqueda de empleo se siente como:" [level=3] [ref=e62]
+          - generic [ref=e63]:
+            - generic [ref=e64]:
+              - generic [ref=e65]:
+                - generic [ref=e67]: 
+                - paragraph [ref=e68]: Envías aplicaciones constantemente, pero tu CV y LinkedIn no generan llamadas.
+              - generic [ref=e69]:
+                - generic [ref=e71]: 
+                - paragraph [ref=e72]: Sientes que te descartan automáticamente por falta de "Experiencia Canadiense".
+            - generic [ref=e73]:
+              - generic [ref=e74]:
+                - generic [ref=e76]: 
+                - paragraph [ref=e77]: Dudas si estás aplicando a los roles correctos para tu nivel profesional.
+              - generic [ref=e78]:
+                - generic [ref=e80]: 
+                - paragraph [ref=e81]: Logras conseguir entrevistas, pero te cuesta avanzar hasta la oferta final.
+        - heading "Elige tu plan y desbloquea tu siguiente etapa profesional:" [level=3] [ref=e82]
+        - generic [ref=e83]:
+          - generic [ref=e85]:
+            - heading "STARTER - CA" [level=3] [ref=e86]
+            - paragraph [ref=e87]: Optimiza lo que ya tienes
+            - generic [ref=e90]: $90 CAD
+            - list [ref=e91]:
+              - listitem [ref=e92]:
+                - generic [ref=e93]: 
+                - text: Sin sesiones en vivo (Diagnóstico escrito)
+              - listitem [ref=e94]:
+                - generic [ref=e95]: 
+                - text: Revisión de tu CV actual
+              - listitem [ref=e96]:
+                - generic [ref=e97]: 
+                - text: Auditoría escrita de LinkedIn
+              - listitem [ref=e98]:
+                - generic [ref=e99]: 
+                - text: Detección de errores críticos
+            - button "Pedir Diagnóstico " [ref=e100] [cursor=pointer]:
+              - text: Pedir Diagnóstico
+              - generic [ref=e101]: 
+          - generic [ref=e103]:
+            - generic [ref=e104]: Más Popular
+            - heading "BUILDER - CA" [level=3] [ref=e105]
+            - paragraph [ref=e106]: Tu perfil profesional desde cero
+            - generic [ref=e109]: $160 CAD
+            - list [ref=e110]:
+              - listitem [ref=e111]:
+                - generic [ref=e112]: 
+                - text: Sesión Estratégica 1:1 (En vivo)
+              - listitem [ref=e113]:
+                - generic [ref=e114]: 
+                - text: Redacción de CV ATS desde cero
+              - listitem [ref=e115]:
+                - generic [ref=e116]: 
+                - text: Optimización de LinkedIn interactiva
+              - listitem [ref=e117]:
+                - generic [ref=e118]: 
+                - text: Evaluación de mercado laboral
+            - button "Agendar Sesión " [ref=e119] [cursor=pointer]:
+              - text: Agendar Sesión
+              - generic [ref=e120]: 
+          - generic [ref=e122]:
+            - heading "VISIBILITY - CA" [level=3] [ref=e123]
+            - paragraph [ref=e124]: Acompañamiento hasta la entrevista
+            - generic [ref=e127]: $220 CAD
+            - list [ref=e128]:
+              - listitem [ref=e129]:
+                - generic [ref=e130]: 
+                - text: Todo lo del plan Builder +
+              - listitem [ref=e131]:
+                - generic [ref=e132]: 
+                - text: Estrategia de búsqueda personalizada
+              - listitem [ref=e133]:
+                - generic [ref=e134]: 
+                - text: Simulacro de Entrevista real
+              - listitem [ref=e135]:
+                - generic [ref=e136]: 
+                - text: Soporte continuo
+            - button "Quiero el Pack Completo " [ref=e137] [cursor=pointer]:
+              - text: Quiero el Pack Completo
+              - generic [ref=e138]: 
+      - paragraph [ref=e140]:
+        - generic [ref=e141]: 
+        - text: Pago único y seguro • Cupos limitados por mes para garantizar la calidad del servicio.
+    - generic [ref=e144]:
+      - heading "What Our Users Say" [level=2] [ref=e145]
+      - paragraph [ref=e146]: Success stories from job seekers and employers
+      - generic [ref=e147]:
+        - generic [ref=e148]:
+          - paragraph [ref=e150]: "\"VJobs helped me find my dream job in tech. The platform is intuitive and the job matching is spot on!\""
+          - generic [ref=e151]:
+            - img "Sarah Johnson" [ref=e152]
+            - generic [ref=e153]:
+              - heading "Sarah Johnson" [level=4] [ref=e154]
+              - paragraph [ref=e155]: Software Engineer
+        - generic [ref=e156]:
+          - paragraph [ref=e158]: "\"As a hiring manager, I've found exceptional talent through VJobs. The quality of candidates is outstanding.\""
+          - generic [ref=e159]:
+            - img "Michael Chen" [ref=e160]
+            - generic [ref=e161]:
+              - heading "Michael Chen" [level=4] [ref=e162]
+              - paragraph [ref=e163]: HR Director
+        - generic [ref=e164]:
+          - paragraph [ref=e166]: "\"The career coaching feature helped me transition into a new industry. Highly recommended!\""
+          - generic [ref=e167]:
+            - img "Emily Rodriguez" [ref=e168]
+            - generic [ref=e169]:
+              - heading "Emily Rodriguez" [level=4] [ref=e170]
+              - paragraph [ref=e171]: Marketing Manager
+    - generic [ref=e174]:
+      - heading "Agenda tu sesión diagnóstica gratuita" [level=2] [ref=e175]
+      - paragraph [ref=e176]: Un experto te ayudará a evaluar tus opciones
+      - generic [ref=e177]:
+        - generic [ref=e178]:
+          - heading "¿Por qué agendar una sesión?" [level=3] [ref=e179]
+          - list [ref=e180]:
+            - listitem [ref=e181]:
+              - generic [ref=e182]: 
+              - text: Evaluación personalizada de tu perfil
+            - listitem [ref=e183]:
+              - generic [ref=e184]: 
+              - text: Plan de acción específico para tu caso
+            - listitem [ref=e185]:
+              - generic [ref=e186]: 
+              - text: Resolución de dudas con un experto
+            - listitem [ref=e187]:
+              - generic [ref=e188]: 
+              - text: Sin costo y sin compromiso
+        - generic [ref=e189]:
+          - textbox "Leave this empty" [ref=e190]
+          - textbox "Nombre completo *" [ref=e192]
+          - textbox "Correo electrónico *" [ref=e194]
+          - generic [ref=e195]:
+            - generic [ref=e196]:
+              - generic [ref=e198] [cursor=pointer]: US/CA (+1)
+              - textbox "Número de teléfono *" [ref=e200]
+            - paragraph [ref=e201]: Te contactaremos por teléfono para coordinar la sesión. El correo lo usaremos para enviarte recordatorios.
+          - combobox [ref=e203]:
+            - option "¿En qué etapa estás? *" [disabled] [selected]
+            - option "Buscando empleo en Canadá"
+            - option "En transición a IT"
+            - option "Explorando opciones"
+          - generic [ref=e204]:
+            - textbox "¿Algo más que debamos saber? (opcional)" [ref=e205]
+            - generic [ref=e206]: 0/500 caracteres
+          - button " Agendar mi sesión gratuita" [ref=e207] [cursor=pointer]:
+            - generic [ref=e208]:
+              - generic [ref=e209]: 
+              - text: Agendar mi sesión gratuita
+          - paragraph [ref=e210]:
+            - generic [ref=e211]: 
+            - text: Tu información está segura. No la compartiremos con nadie.
+    - generic [ref=e214]:
+      - heading "Frequently Asked Questions" [level=2] [ref=e215]
+      - paragraph [ref=e216]: Find answers to common questions about VJobs
+      - generic [ref=e217]:
+        - generic [ref=e218]:
+          - generic [ref=e219] [cursor=pointer]:
+            - heading "How does VJobs match me with jobs?" [level=3] [ref=e220]
+            - generic [ref=e221]: +
+          - paragraph [ref=e222]: Our advanced algorithm analyzes your skills, experience, and preferences to match you with the most relevant job opportunities. We consider factors like location, salary expectations, and company culture to ensure the best fit.
+        - generic [ref=e223]:
+          - generic [ref=e224] [cursor=pointer]:
+            - heading "Is it free to use VJobs?" [level=3] [ref=e225]
+            - generic [ref=e226]: +
+          - paragraph [ref=e227]: Yes, VJobs offers a free basic account that allows you to search and apply for jobs. We also offer premium features for users who want additional benefits like advanced search filters and priority application processing.
+        - generic [ref=e228]:
+          - generic [ref=e229] [cursor=pointer]:
+            - heading "How can I improve my profile visibility?" [level=3] [ref=e230]
+            - generic [ref=e231]: +
+          - paragraph [ref=e232]: To increase your profile visibility, make sure to complete your profile with detailed information about your skills and experience. Regularly update your profile, add relevant certifications, and maintain an active presence on the platform.
+        - generic [ref=e233]:
+          - generic [ref=e234] [cursor=pointer]:
+            - heading "Can employers contact me directly?" [level=3] [ref=e235]
+            - generic [ref=e236]: +
+          - paragraph [ref=e237]: Yes, employers can contact you directly through our messaging system if they're interested in your profile. You can control your privacy settings to manage who can contact you.
+  - contentinfo [ref=e238]:
+    - generic [ref=e239]:
+      - generic [ref=e240]:
+        - generic [ref=e241]:
+          - img "VJobs Logo" [ref=e242]
+          - paragraph [ref=e243]: Impulsando tu carrera profesional en el mundo digital
+          - generic [ref=e244]:
+            - link "LinkedIn" [ref=e245] [cursor=pointer]:
+              - /url: https://www.linkedin.com/company/vjobs-hr-advisory/
+              - generic [ref=e246]: 
+            - link "Instagram" [ref=e247] [cursor=pointer]:
+              - /url: https://instagram.com/vjobs.resume
+              - generic [ref=e248]: 
+            - link "YouTube" [ref=e249] [cursor=pointer]:
+              - /url: https://www.youtube.com/@VJobs.Resume
+              - generic [ref=e250]: 
+        - generic [ref=e251]:
+          - heading "Contacto" [level=4] [ref=e252]
+          - paragraph [ref=e253]:
+            - generic [ref=e254]: 
+            - text: contacto@vjobs.ca
+          - paragraph [ref=e255]:
+            - generic [ref=e256]: 
+            - text: Toronto, Canadá
+        - generic [ref=e257]:
+          - heading "Suscríbete" [level=4] [ref=e258]
+          - paragraph [ref=e259]: Recibe consejos y ofertas exclusivas
+          - generic [ref=e260]:
+            - textbox "Tu correo electrónico" [ref=e261]
+            - button "" [ref=e262] [cursor=pointer]:
+              - generic [ref=e263]: 
+      - generic [ref=e264]:
+        - paragraph [ref=e265]: © 2025 VJobs. Todos los derechos reservados.
+        - generic [ref=e266]:
+          - link "Términos de Servicio" [ref=e267] [cursor=pointer]:
+            - /url: /legal/terms
+          - generic [ref=e268]: "|"
+          - link "Política de Privacidad" [ref=e269] [cursor=pointer]:
+            - /url: /legal/privacy
+          - generic [ref=e270]: "|"
+          - link "Cookies" [ref=e271] [cursor=pointer]:
+            - /url: /legal/cookies
+  - generic:
+    - button " ¡GRATIS! Optimiza tu LinkedIn" [ref=e272] [cursor=pointer]:
+      - generic [ref=e273]:
+        - generic [ref=e274]: 
+        - generic [ref=e275]:
+          - strong [ref=e276]: ¡GRATIS!
+          - text: Optimiza tu LinkedIn
+    - text: 
+```

@@ -67,7 +67,7 @@ watch(() => props.modelValue, (newValue) => {
     // Initialize Calendly widget when modal opens
     setTimeout(() => {
       const widget = document.querySelector('.calendly-inline-widget');
-      if (window.Calendly && widget && widget.innerHTML === '') {
+      if (window.Calendly && widget && widget.childElementCount === 0) {
         window.Calendly.initInlineWidget({
           url: 'https://calendly.com/vjobs-2023/diagnostico-inicial-gratuito-vjobs',
           parentElement: widget,
