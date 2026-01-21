@@ -8,7 +8,7 @@
         </div>
       </div>
       
-      <div class="modal-header">
+      <div class="modal-footer">
         <button @click="closeModal" class="btn btn-text">
           Cerrar [X]
         </button>
@@ -131,7 +131,7 @@ const closeModal = () => {
   overflow: hidden;
 }
 
-.modal-header {
+.modal-footer {
     display: flex;
     justify-content: center;
     position: absolute;
@@ -139,9 +139,9 @@ const closeModal = () => {
     left: 0;
     right: 0;
     flex-shrink: 0;
-}
+  }
 
-.modal-header .btn-text {
+.modal-footer .btn-text {
   color: var(--primary-color);
   font-size: 1.5rem;
   font-weight: 600;
@@ -153,7 +153,7 @@ const closeModal = () => {
   cursor: pointer;
 }
 
-.modal-header .btn-text:hover {
+.modal-footer .btn-text:hover {
   transform: translateY(-2px);
   color: var(--accent-color);
 }
@@ -204,7 +204,7 @@ const closeModal = () => {
     overflow: hidden;
   }
   
-  .modal-header {
+  .modal-footer {
     display: flex;
     justify-content: center;
     position: absolute;
@@ -215,7 +215,7 @@ const closeModal = () => {
     padding: 1rem;
     background: white;
     border-top: 1px solid #f0f0f0;
-    z-index: 10; /* Ensure header is above content */
+    z-index: 10; /* Ensure footer is above content */
   }
 }
 
@@ -241,11 +241,11 @@ const closeModal = () => {
     padding: 0 12px;
   }
   
-  .modal-header {
+  .modal-footer {
     padding: 0.75rem;
   }
   
-  .modal-header .btn-text {
+  .modal-footer .btn-text {
     font-size: 1.25rem;
   }
   

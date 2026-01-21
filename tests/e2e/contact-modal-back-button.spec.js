@@ -153,6 +153,18 @@ test.describe('Contact Modal Browser Back Button Handling', () => {
 
     // Close with X button
     const closeButton = page.getByRole('button', { name: /Cerrar/i });
+    
+    // Debug viewport y posiciones
+    const viewport = page.viewportSize();
+    console.log('Viewport:', viewport);
+
+    const modalBox = await modalOverlay.boundingBox();
+    console.log('Modal position:', modalBox);
+
+    const buttonBox = await closeButton.boundingBox();
+    console.log('Button position:', buttonBox);
+    
+    await closeButton.scrollIntoViewIfNeeded(); // Ensure button is in viewport
     await closeButton.click();
     await expect(modalOverlay).not.toBeVisible();
 
@@ -188,7 +200,9 @@ test.describe('Contact Modal Browser Back Button Handling', () => {
         position: styles.position
       };
     });
-    expect(mobileStyles.height).toContain('vh'); // Should be viewport-based
+    // Accept calculated pixel values (browser converts vh to px)
+    expect(mobileStyles.height).toMatch(/\d+\.?\d*px/);
+    expect(parseFloat(mobileStyles.height)).toBeGreaterThan(500); // Should be ~566px for 85vh of 667px
     expect(mobileStyles.position).toBe('absolute');
 
     // Test back button on mobile
@@ -206,7 +220,10 @@ test.describe('Contact Modal Browser Back Button Handling', () => {
 
     // Simulate popstate event programmatically
     await page.evaluate(() => {
-      window.dispatchEvent(new PopStateEvent('popstate', { state: null }));
+      // Use a simple approach that doesn't require Event constructor
+      const popstateEvent = document.createEvent('Event');
+      popstateEvent.initEvent('popstate', true, true);
+      window.dispatchEvent(popstateEvent);
     });
 
     // Modal should close
