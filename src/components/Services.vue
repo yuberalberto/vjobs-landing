@@ -127,7 +127,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, nextTick } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { servicesData } from '@/data/services.js';
 
 // Rate limiting configuration
@@ -144,9 +144,6 @@ const currentContent = computed(() => servicesData[activePath.value]);
 
 // Convert plans array to flat services for current template compatibility
 const services = computed(() => currentContent.value.plans);
-
-// Throttling state to prevent transition accumulation
-let isTransitioning = false;
 
 // Rate limiting state
 const lastClickTime = ref(0);
@@ -183,23 +180,12 @@ watch(() => showToast.value, (newValue) => {
   }
 });
 
-const switchPath = async (path) => {
-  // Ignore if already on this path
+const switchPath = (path) => {
+  // Ignore if already on this path (prevents unnecessary re-renders)
   if (activePath.value === path) return;
   
-  // Prevent rapid switching during transition
-  if (isTransitioning) return;
-  
-  isTransitioning = true;
+  // Simply switch the path - no throttling needed for tabs
   activePath.value = path;
-  
-  // Wait for Vue to complete DOM updates
-  await nextTick();
-  
-  // Minimal delay to prevent double-clicks, much shorter than before
-  setTimeout(() => {
-    isTransitioning = false;
-  }, 50); // Reduced from 150ms to 50ms
 };
 
 const generateSecureWhatsAppUrl = (path, planName, price) => {
@@ -315,6 +301,9 @@ const acquireService = (plan) => {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  position: relative;
+  z-index: 1001;
+  pointer-events: auto !important;
 }
 
 .tab-button:hover {
@@ -418,6 +407,22 @@ const acquireService = (plan) => {
   }
 }
 
+/* Touch device optimizations - applies to ANY device with touch capability */
+@media (hover: none) and (pointer: coarse) {
+  .tab-button {
+    transition: none !important; /* Disable transitions on touch devices to prevent blocking */
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  
+  .tab-button:hover {
+    transform: none;
+  }
+}
+
+/* Responsive layout - screen size based */
 @media (max-width: 768px) {
   .services-grid {
     grid-template-columns: 1fr;
@@ -431,18 +436,6 @@ const acquireService = (plan) => {
   .tab-button {
     width: 100%;
     justify-content: center;
-    transition: none !important; /* Disable transitions on mobile to prevent accumulation */
-  }
-  
-  .tab-button:hover {
-    transform: none;
-  }
-  
-  .tab-button {
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-    user-select: none;
-    -webkit-user-select: none;
   }
   
   .pain-points-section {
@@ -741,6 +734,8 @@ const acquireService = (plan) => {
   align-items: center;
   gap: 0.5rem;
   transition: all 0.3s ease;
+  z-index: 1000;
+  pointer-events: auto !important;
 }
 
 .nav-btn:disabled {
