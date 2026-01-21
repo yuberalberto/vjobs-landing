@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { watch, onMounted, onUnmounted } from 'vue';
+import { watch, onMounted, onUnmounted, ref } from 'vue';
 
 const props = defineProps({
   modelValue: Boolean
@@ -26,9 +26,20 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue']);
 
+// Browser back button handling
+const isBrowserBack = ref(false);
+
 // Handle ESC key to close modal
 const handleEscapeKey = (event) => {
   if (event.key === 'Escape' && props.modelValue) {
+    closeModal();
+  }
+};
+
+// Handle browser back button
+const handlePopState = () => {
+  if (props.modelValue) {
+    isBrowserBack.value = true;
     closeModal();
   }
 };
@@ -39,6 +50,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   document.removeEventListener('keydown', handleEscapeKey);
+  document.removeEventListener('popstate', handlePopState);
 });
 
 // Reset modal scroll behavior when opening/closing
@@ -46,6 +58,11 @@ watch(() => props.modelValue, (newValue) => {
   if (newValue === true) {
     // Modal is opening, block body scroll
     document.body.style.overflow = 'hidden';
+    
+    // Add browser history entry for back button handling
+    window.history.pushState({ modalOpen: true }, '', window.location.href);
+    document.addEventListener('popstate', handlePopState);
+    
     // Initialize Calendly widget when modal opens
     setTimeout(() => {
       const widget = document.querySelector('.calendly-inline-widget');
@@ -61,6 +78,17 @@ watch(() => props.modelValue, (newValue) => {
   } else {
     // Modal is closing, restore scroll
     document.body.style.overflow = '';
+    
+    // Clean up browser history and event listeners
+    document.removeEventListener('popstate', handlePopState);
+    
+    // Only go back if modal was closed by back button
+    if (isBrowserBack.value) {
+      isBrowserBack.value = false;
+    } else {
+      // Remove the history entry we added when opening modal
+      window.history.back();
+    }
   }
 });
 
@@ -141,16 +169,59 @@ const closeModal = () => {
 }
 
 @media (max-width: 768px) {
+  .modal-overlay {
+    padding: 0;
+  }
+  
   .modal-content {
-    padding: 0.75rem;
-    margin: 1rem;
+    background: white;
+    border-radius: 0;
+    padding: 0;
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    animation: modalSlideIn 0.3s ease-out;
+    display: flex;
+    flex-direction: column;
+    box-shadow: none;
+  }
+  
+  .modal-body {
+    flex: 1;
+    overflow: hidden;
+  }
+  
+  .calendly-inline-widget {
+    min-width: 100% !important;
+    height: calc(100vh - 80px) !important;
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    flex-shrink: 0;
+    padding: 1rem;
+    background: white;
+    border-top: 1px solid #f0f0f0;
   }
 }
 
 @media (max-width: 576px) {
-  .modal-content {
-    padding: 0.5rem;
-    margin: 0.5rem;
+  .modal-header {
+    padding: 0.75rem;
+  }
+  
+  .modal-header .btn-text {
+    font-size: 1.25rem;
+  }
+  
+  .calendly-inline-widget {
+    height: calc(100vh - 70px) !important;
   }
 }
 </style>

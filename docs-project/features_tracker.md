@@ -2,6 +2,7 @@
 
 ## 🔥 Progress
 - [P1] Replace contact form with Calendly widget → `docs-project/calendly-integration.md`
+- [P2] Contact modal full screen mobile → `docs-project/contact-modal-fullscreen-mobile.md`
 
 ## 📋 Next
 - [N1] Client customizations
@@ -35,5 +36,5 @@
 - [D14] **Tab Buttons Mobile Block Bug** - Completely resolved with optimized throttling and CSS transitions
 
 ---
-**Last updated**: January 20, 2026
-**Current branch**: main
+**Last updated**: January 21, 2026
+**Current branch**: feature/contact-modal-fullscreen-mobile
