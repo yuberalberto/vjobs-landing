@@ -3,13 +3,14 @@
 This document provides detailed specifications for implementing full screen contact modal experience on mobile devices.
 
 ## Progress
-- [ ] Analyze current ContactModal.vue structure
-- [ ] Implement mobile media queries (≤768px)
-- [ ] Modify modal-overlay for full screen on mobile
-- [ ] Update modal-content for mobile layout
-- [ ] Adjust modal-body and modal-header for mobile
-- [ ] Optimize Calendly widget for mobile
-- [ ] Implement browser back button handling
+- [x] Analyze current ContactModal.vue structure
+- [x] Implement mobile media queries (≤768px)
+- [x] Modify modal-overlay for full screen on mobile
+- [x] Update modal-content for mobile layout
+- [x] Adjust modal-body and modal-header for mobile
+- [x] Optimize Calendly widget for mobile
+- [x] Implement browser back button handling
+- [x] Fix border-radius visibility issues
 - [ ] Test responsive behavior across breakpoints
 - [ ] Update documentation
 
@@ -24,9 +25,11 @@ This document provides detailed specifications for implementing full screen cont
 - Same behavior across all devices
 
 **Required Changes:**
-- Mobile (≤768px): Full screen modal experience
+- Mobile (≤768px): Viewport-based modal experience (85vh height)
 - Desktop (>768px): Maintain current behavior
 - Responsive breakpoints following project standards
+- Border-radius visibility with proper padding
+- Slide-up animation from bottom
 
 ### 2. CSS Media Queries Implementation 🏗️
 **Keep Existing:**
@@ -34,9 +37,12 @@ This document provides detailed specifications for implementing full screen cont
 - All existing functionality and interactions
 
 **Replace/Update:**
-- Add mobile-specific styles for full screen experience
+- Add mobile-specific styles for viewport-based experience
 - Modify overlay, content, body, and header styles
 - Optimize Calendly widget dimensions for mobile
+- Add proper padding for border-radius visibility
+- Implement slide-up animation from bottom
+- Add overflow control for clean borders
 
 ### 3. Browser Back Button Handling 🔄
 **Current State:**
@@ -60,12 +66,14 @@ This document provides detailed specifications for implementing full screen cont
 2. Identify all CSS classes and styles to modify
 3. Plan responsive breakpoint strategy
 
-### Phase 2: Mobile Full Screen Implementation
+### Phase 2: Mobile Viewport Implementation
 1. Add media query for mobile devices (≤768px)
-2. Modify `.modal-overlay` for full screen coverage
-3. Update `.modal-content` to remove borders and shadows
-4. Adjust `.modal-body` and `.modal-header` for mobile layout
-5. Optimize Calendly widget for mobile dimensions
+2. Modify `.modal-overlay` for viewport coverage (no padding)
+3. Update `.modal-content` for 85vh height with border-radius
+4. Add proper padding for border-radius visibility
+5. Adjust `.modal-body` and `.modal-header` for mobile layout
+6. Optimize Calendly widget for mobile dimensions
+7. Add slide-up animation and overflow control
 
 ### Phase 3: Browser Back Button Integration
 1. Add `isBrowserBack` semaphore variable
@@ -77,8 +85,10 @@ This document provides detailed specifications for implementing full screen cont
 ### Phase 4: Testing and Refinement
 1. Test across all responsive breakpoints
 2. Verify desktop behavior unchanged
-3. Validate mobile full screen experience
-4. Performance and accessibility testing
+3. Validate mobile viewport experience
+4. Test browser back button functionality
+5. Verify border-radius visibility
+6. Performance and accessibility testing
 
 ---
 
@@ -140,11 +150,14 @@ This document provides detailed specifications for implementing full screen cont
 - Small mobile: <=576px
 
 ### Mobile Specific Requirements:
-- 100% width and height for modal-overlay
-- border-radius: 0 for modal-content
-- box-shadow: none for modal-content
-- No padding in overlay on mobile
-- Calendly widget optimized for mobile viewport
+- 85vh height for modal-content (90vh on small mobile)
+- border-radius: 16px 16px 0 0 (12px on small mobile)
+- padding: 16px 0 0 0 for border-radius visibility
+- box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15)
+- position: absolute; bottom: 0; slide-up from bottom
+- Calendly widget with border-radius: 8px (6px on small mobile)
+- Horizontal padding: 16px (12px on small mobile)
+- Animation: modalSlideUp from translateY(100%)
 
 ### Browser Back Button Requirements:
 - `isBrowserBack` boolean semaphore variable
@@ -177,17 +190,27 @@ This document provides detailed specifications for implementing full screen cont
 
 ## Current Status
 
-**State:** Planning phase
+**State:** Implementation complete, ready for testing
 **Priority:** P1 (High priority - Core UX improvement)
 **Dependencies:** None (isolated component enhancement)
 **Estimated Effort:** 3-5 hours (including back button implementation)
 
+**Implementation Status:**
+- ✅ Mobile viewport-based modal (85vh height)
+- ✅ Browser back button handling with semaphore
+- ✅ Border-radius visibility with proper padding
+- ✅ Slide-up animation from bottom
+- ✅ Responsive breakpoints implemented
+- ✅ Overflow control and widget styling
+
 ---
 
 **Next Steps:**
-1. Review current ContactModal.vue implementation
-2. Implement mobile media queries
-3. Add browser back button handling with semaphore
-4. Test responsive behavior
-5. Validate user experience on mobile devices
-6. Test browser navigation thoroughly
+1. ✅ Review current ContactModal.vue implementation
+2. ✅ Implement mobile media queries
+3. ✅ Add browser back button handling with semaphore
+4. ✅ Fix border-radius visibility issues
+5. [ ] Test responsive behavior
+6. [ ] Validate user experience on mobile devices
+7. [ ] Test browser navigation thoroughly
+8. [ ] Update final documentation
