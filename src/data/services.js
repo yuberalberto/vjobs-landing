@@ -70,7 +70,7 @@ export const servicesData = {
       {
         name: 'Starter',
         subtitle: 'Enfoque para tu perfil actual',
-        price: '$90',
+        price: '$90 CAD',
         features: [
           'Diagnóstico escrito (sin sesiones en vivo)',
           'Revisión de CV con enfoque Tech',
@@ -84,7 +84,7 @@ export const servicesData = {
       {
         name: 'Builder',
         subtitle: 'Define tu Rol y Estrategia',
-        price: '$160',
+        price: '$160 CAD',
         features: [
           'Sesión de Definición de Rol 1:1 (En vivo)',
           'Roadmap de habilidades y prioridades',
@@ -98,7 +98,7 @@ export const servicesData = {
       {
         name: 'Visibility',
         subtitle: 'Domina tu Narrativa y Pitch',
-        price: '$220',
+        price: '$220 CAD',
         features: [
           'Todo lo del plan Builder +',
           'Storytelling de transición profesional',
