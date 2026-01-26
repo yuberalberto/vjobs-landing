@@ -27,7 +27,7 @@
       <div class="nav-content" :class="{ 'mobile-visible': isMenuOpen }">
         <div class="nav-links">
           <router-link 
-            v-for="section in ['services', 'testimonials', 'faqs']"
+            v-for="section in ['services', 'testimonials', 'about', 'faqs']"
             :key="section"
             :to="{ path: '/', hash: `#${section}` }"
             class="nav-link"
@@ -40,9 +40,9 @@
         
         <div class="nav-buttons">
           <router-link
-            :to="{ path: '/', hash: '#contact' }"
+            :to="{ path: '/', hash: '#about-cta' }"
             class="btn btn-primary"
-            @click="handleNavClick('contact')"
+            @click="handleNavClick('about-cta')"
           >
             <span class="desktop-text">Diagnóstico<br>Gratuito</span>
             <span class="mobile-text">Contacto</span>
@@ -64,7 +64,8 @@ const route = useRoute()
 const navigationLabels = {
   'services': '¿Cómo Te Ayudo?',
   'testimonials': 'Casos Reales', 
-  'faqs': 'Sobre VJobs'
+  'faqs': 'FAQs',
+  'about': 'Sobre VJobs'
 }
 
 // Reactive state
@@ -141,7 +142,12 @@ const scrollToSection = (sectionId) => {
   if (route.path === '/') {
     const section = document.getElementById(sectionId)
     if (section) {
-      section.scrollIntoView({ behavior: 'smooth' })
+      // Special handling for about-cta to scroll to start of container
+      if (sectionId === 'about-cta') {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      } else {
+        section.scrollIntoView({ behavior: 'smooth' })
+      }
       activeSection.value = sectionId
     }
   }

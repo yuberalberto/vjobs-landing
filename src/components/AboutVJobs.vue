@@ -54,7 +54,7 @@
     </div>
     
     <!-- CTA Section Outside Content Wrapper -->
-    <div class="cta-container">
+    <div id="about-cta" class="cta-container">
       <div class="cta-grid">
         <!-- Left Column: Benefits -->
         <div class="benefits-column">
@@ -91,18 +91,23 @@
         </div>
       </div>
     </div>
+    
+    <!-- ContactModal - Custom version without history manipulation -->
+    <ContactModal 
+      v-model="showModal" 
+      :disable-history="true"
+    />
   </section>
 </template>
 
 <script setup>
+import { ref } from 'vue';
+import ContactModal from './ContactModal.vue';
+
+const showModal = ref(false);
+
 const scrollToContact = () => {
-  const contactSection = document.getElementById('contact');
-  if (contactSection) {
-    contactSection.scrollIntoView({ 
-      behavior: 'smooth',
-      block: 'start'
-    });
-  }
+  showModal.value = true;
 };
 </script>
 
@@ -125,7 +130,7 @@ const scrollToContact = () => {
   background: linear-gradient(135deg, var(--accent-color) 0%, var(--primary-color) 100%);
   opacity: 0.05;
   border-radius: 0 0 0 100%;
-  z-index: 1;
+  z-index: 0;
 }
 
 /* Section Header */
@@ -293,6 +298,8 @@ const scrollToContact = () => {
   border: 1px solid rgba(102, 154, 207, 0.1);
   margin: 2rem auto 0;
   max-width: 1200px;
+  position: relative;
+  z-index: 1;
 }
 
 .cta-grid {
