@@ -9,6 +9,9 @@
     <section id="testimonials">
       <Testimonials />
     </section>
+    <section id="about">
+      <AboutVJobs />
+    </section>
     <section id="contact">
       <ContactSection />
     </section>
@@ -22,6 +25,7 @@
 import HeroSection from '@/components/HeroSection.vue'
 import Services from '@/components/Services.vue'
 import Testimonials from '@/components/Testimonials.vue'
+import AboutVJobs from '@/components/AboutVJobs.vue'
 import FAQs from '@/components/FAQs.vue'
 import ContactSection from '@/components/ContactSection.vue'
 
@@ -31,6 +35,7 @@ export default {
     HeroSection,
     Services,
     Testimonials,
+    AboutVJobs,
     FAQs,
     ContactSection
   }

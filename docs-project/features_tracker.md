@@ -1,15 +1,16 @@
 # VJobs Landing - Progress Tracker
 
 ## 🔥 Progress
-- [P1] Replace contact form with Calendly widget → `docs-project/calendly-integration.md`
-- [P2] Contact modal full screen mobile → `docs-project/contact-modal-fullscreen-mobile.md`
+- [P1] About VJobs section development → `docs-project/about-vjobs-section.md`
+- [P2] Replace contact form with Calendly widget → `docs-project/calendly-integration.md`
+- [P3] Contact modal full screen mobile → `docs-project/contact-modal-fullscreen-mobile.md`
 
 ## 📋 Next
 - [N1] Client customizations
 - [N2] Mobile optimization refinements → `docs-project/task-mobile-optimization.md`
-- [N3] About page development
-- [N4] Multi-language support (i18n implementation)
-- [N5] Content and copy polish
+- [N3] Multi-language support (i18n implementation)
+- [N4] Content and copy polish
+- [N5] Performance optimization
 
 ## 🔮 Backlog
 - [B1] Basic SEO (meta tags, sitemap, robots.txt)
@@ -36,5 +37,5 @@
 - [D14] **Tab Buttons Mobile Block Bug** - Completely resolved with optimized throttling and CSS transitions
 
 ---
-**Last updated**: January 21, 2026
-**Current branch**: feature/contact-modal-fullscreen-mobile
+**Last updated**: January 25, 2026
+**Current branch**: main
