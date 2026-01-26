@@ -33,7 +33,8 @@
 - [D13] **Modal scroll blocking** - All modals now properly block body scroll
 - [D14] **Tab Buttons Mobile Block Bug** - Completely resolved with optimized throttling and CSS transitions
 - [D15] **About VJobs section** - Complete implementation with photo, story, CTA, and enhanced contact functionality
+- [D16] **Section tags and SEO optimizations** - Consistent section tags, Spanish translations, enhanced user navigation
 
 ---
-**Last updated**: January 25, 2026
-**Current branch**: main
+**Last updated**: January 26, 2026
+**Current branch**: feature/about-vjobs-section
