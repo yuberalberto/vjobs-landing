@@ -21,7 +21,11 @@
 import { watch, onMounted, onUnmounted, ref } from 'vue';
 
 const props = defineProps({
-  modelValue: Boolean
+  modelValue: Boolean,
+  disableHistory: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -60,9 +64,11 @@ watch(() => props.modelValue, (newValue) => {
     // Modal is opening, block body scroll
     document.body.style.overflow = 'hidden';
     
-    // Add browser history entry for back button handling
-    window.history.pushState({ modalOpen: true }, '', window.location.href);
-    window.addEventListener('popstate', handlePopState); // ✅ Justo después de pushState
+    // Add browser history entry for back button handling (only if not disabled)
+    if (!props.disableHistory) {
+      window.history.pushState({ modalOpen: true }, '', window.location.href);
+      window.addEventListener('popstate', handlePopState); // Justo después de pushState
+    }
     
     // Initialize Calendly widget when modal opens
     setTimeout(() => {
@@ -80,15 +86,17 @@ watch(() => props.modelValue, (newValue) => {
     // Modal is closing, restore scroll
     document.body.style.overflow = '';
     
-    // Clean up browser history and event listeners
-    window.removeEventListener('popstate', handlePopState); // ✅ Primero
-    
-    // Only go back if modal was closed by back button
-    if (isBrowserBack.value) {
-      isBrowserBack.value = false;
-    } else {
-      // Remove the history entry we added when opening modal
-      window.history.back();
+    // Clean up browser history and event listeners (only if not disabled)
+    if (!props.disableHistory) {
+      window.removeEventListener('popstate', handlePopState); // Primero
+      
+      // Only go back if modal was closed by back button
+      if (isBrowserBack.value) {
+        isBrowserBack.value = false;
+      } else {
+        // Remove the history entry we added when opening modal
+        window.history.back();
+      }
     }
   }
 });

@@ -15,12 +15,15 @@
             <a href="https://www.youtube.com/@VJobs.Resume" target="_blank" rel="noopener" class="social-link" aria-label="YouTube">
               <i class="fab fa-youtube"></i>
             </a>
+            <a href="https://www.tiktok.com/@vjobs1" target="_blank" rel="noopener" class="social-link" aria-label="TikTok">
+              <i class="fab fa-tiktok"></i>
+            </a>
           </div>
         </div>
 
         <div class="footer-contact">
           <h4>Contacto</h4>
-          <p><i class="fas fa-envelope"></i> contacto@vjobs.ca</p>
+          <p><i class="fas fa-envelope"></i> vjobs.2023@gmail.com</p>
           <p><i class="fas fa-map-marker-alt"></i> Toronto, Canadá</p>
         </div>
 
@@ -37,7 +40,7 @@
       </div>
       
       <div class="footer-bottom">
-        <p>&copy; 2025 VJobs. Todos los derechos reservados.</p>
+        <p>&copy; 2026 VJobs. Todos los derechos reservados.</p>
         <div class="legal-links">
           <router-link to="/legal/terms" class="legal-link">Términos de Servicio</router-link>
           <span>|</span>
