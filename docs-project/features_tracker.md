@@ -1,9 +1,6 @@
 # VJobs Landing - Progress Tracker
 
 ## 🔥 Progress
-- [P1] About VJobs section development → `docs-project/about-vjobs-section.md`
-- [P2] Replace contact form with Calendly widget → `docs-project/calendly-integration.md`
-- [P3] Contact modal full screen mobile → `docs-project/contact-modal-fullscreen-mobile.md`
 
 ## 📋 Next
 - [N1] Client customizations
@@ -35,6 +32,7 @@
 - [D12] **Toast notifications** - Contextual messages with scroll blocking
 - [D13] **Modal scroll blocking** - All modals now properly block body scroll
 - [D14] **Tab Buttons Mobile Block Bug** - Completely resolved with optimized throttling and CSS transitions
+- [D15] **About VJobs section** - Complete implementation with photo, story, CTA, and enhanced contact functionality
 
 ---
 **Last updated**: January 25, 2026

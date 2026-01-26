@@ -1,7 +1,10 @@
 <template>
   <section class="faqs" id="faqs">
     <div class="container">
-      <h2>Frequently Asked Questions</h2>
+      <div class="section-header">
+        <span class="section-tag">FAQs</span>
+        <h2>Frequently Asked Questions</h2>
+      </div>
       <p class="section-subtitle">Find answers to common questions about VJobs</p>
 
       <div class="faqs-grid">
@@ -56,8 +59,22 @@ const toggleFaq = (index) => {
   background-color: white;
 }
 
-.faqs h2 {
+.section-tag {
+  display: inline-block;
+  background-color: rgba(102, 154, 207, 0.1);
+  color: var(--accent-color);
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.section-header {
   text-align: center;
+  margin-bottom: 1rem;
+}
+
+.section-header h2 {
   font-size: 2.5rem;
   color: var(--primary-color);
   margin-bottom: 1rem;

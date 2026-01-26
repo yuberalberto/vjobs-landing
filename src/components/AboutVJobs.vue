@@ -3,6 +3,7 @@
     <div class="container">
       <!-- Section Title -->
       <div class="section-header">
+        <span class="section-tag">Sobre VJobs</span>
         <h2 class="section-main-title">Sobre VJobs</h2>
       </div>
       
@@ -136,9 +137,19 @@ const scrollToContact = () => {
 /* Section Header */
 .section-header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   position: relative;
   z-index: 2;
+}
+
+.section-tag {
+  display: inline-block;
+  background-color: rgba(102, 154, 207, 0.1);
+  color: var(--accent-color);
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  margin-bottom: 1rem;
 }
 
 .section-main-title {

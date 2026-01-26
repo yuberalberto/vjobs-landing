@@ -253,7 +253,7 @@ const acquireService = (plan) => {
 
 .section-header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   position: relative;
   z-index: 1;
 }
