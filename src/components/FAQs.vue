@@ -1,8 +1,11 @@
 <template>
   <section class="faqs" id="faqs">
     <div class="container">
-      <h2>Frequently Asked Questions</h2>
-      <p class="section-subtitle">Find answers to common questions about VJobs</p>
+      <div class="section-header">
+        <span class="section-tag">FAQs</span>
+        <h2>Preguntas Frecuentes</h2>
+      </div>
+      <p class="section-subtitle">Encuentra respuestas a las preguntas más comunes sobre VJobs</p>
 
       <div class="faqs-grid">
         <div class="faq-item" v-for="(faq, index) in faqs" :key="index">
@@ -24,23 +27,23 @@ import { ref } from 'vue'
 
 const faqs = ref([
   {
-    question: "How does VJobs match me with jobs?",
-    answer: "Our advanced algorithm analyzes your skills, experience, and preferences to match you with the most relevant job opportunities. We consider factors like location, salary expectations, and company culture to ensure the best fit.",
+    question: "¿Cómo me ayuda VJobs a encontrar trabajo?",
+    answer: "Nuestro algoritmo avanzado analiza tus habilidades, experiencia y preferencias para coincidirte con las oportunidades laborales más relevantes. Consideramos factores como ubicación, expectativas salariales y cultura empresarial para asegurar el mejor ajuste.",
     isOpen: false
   },
   {
-    question: "Is it free to use VJobs?",
-    answer: "Yes, VJobs offers a free basic account that allows you to search and apply for jobs. We also offer premium features for users who want additional benefits like advanced search filters and priority application processing.",
+    question: "¿Es gratis usar VJobs?",
+    answer: "Sí, VJobs ofrece una cuenta básica gratuita que te permite buscar y aplicar a trabajos. También ofrecemos funciones premium para usuarios que quieren beneficios adicionales como filtros de búsqueda avanzados y procesamiento prioritario de aplicaciones.",
     isOpen: false
   },
   {
-    question: "How can I improve my profile visibility?",
-    answer: "To increase your profile visibility, make sure to complete your profile with detailed information about your skills and experience. Regularly update your profile, add relevant certifications, and maintain an active presence on the platform.",
+    question: "¿Cómo puedo mejorar la visibilidad de mi perfil?",
+    answer: "Para aumentar la visibilidad de tu perfil, asegúrate de completarlo con información detallada sobre tus habilidades y experiencia. Actualiza tu perfil regularmente, agrega certificaciones relevantes y mantén una presencia activa en la plataforma.",
     isOpen: false
   },
   {
-    question: "Can employers contact me directly?",
-    answer: "Yes, employers can contact you directly through our messaging system if they're interested in your profile. You can control your privacy settings to manage who can contact you.",
+    question: "¿Pueden los empleadores contactarme directamente?",
+    answer: "Sí, los empleadores pueden contactarte directamente a través de nuestro sistema de mensajería si están interesados en tu perfil. Puedes controlar tu configuración de privacidad para administrar quién puede contactarte.",
     isOpen: false
   }
 ])
@@ -56,8 +59,22 @@ const toggleFaq = (index) => {
   background-color: white;
 }
 
-.faqs h2 {
+.section-tag {
+  display: inline-block;
+  background-color: rgba(102, 154, 207, 0.1);
+  color: var(--accent-color);
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.section-header {
   text-align: center;
+  margin-bottom: 1rem;
+}
+
+.section-header h2 {
   font-size: 2.5rem;
   color: var(--primary-color);
   margin-bottom: 1rem;
@@ -85,10 +102,12 @@ const toggleFaq = (index) => {
 .faq-question {
   padding: 1.5rem;
   background-color: #f8f9fa;
-  cursor: pointer;
+  cursor: not-allowed;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  pointer-events: none;
+  opacity: 0.6;
 }
 
 .faq-question h3 {

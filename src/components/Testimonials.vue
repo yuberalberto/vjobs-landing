@@ -1,8 +1,11 @@
 <template>
   <section class="testimonials" id="testimonials">
     <div class="container">
-      <h2>What Our Users Say</h2>
-      <p class="section-subtitle">Success stories from job seekers and employers</p>
+      <div class="section-header">
+        <span class="section-tag">Casos Reales</span>
+        <h2>Casos de Éxito de Nuestros Clientes</h2>
+      </div>
+      <p class="section-subtitle">Historias de éxito de profesionales y empleadores que confían en VJobs</p>
 
       <div class="testimonials-grid">
         <div class="testimonial-card">
@@ -58,10 +61,24 @@
   background-color: #f8f9fa;
 }
 
-.testimonials h2 {
+.section-header {
   text-align: center;
+  margin-bottom: 1rem;
+}
+
+.section-tag {
+  display: inline-block;
+  background-color: rgba(102, 154, 207, 0.1);
+  color: var(--accent-color);
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.section-header h2 {
   font-size: 2.5rem;
-  color: var(--secondary-color);
+  color: var(--primary-color);
   margin-bottom: 1rem;
 }
 
